@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.1" xml:lang="hu"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">    
+    <info>
+        <title>A Robotautó Világbajnokság - Robocar City Emulator szoftverkövetelmény specifikációja</title>
+        <subtitle>Az intelligens város és a robotautók kapcsolata vizsgálatának kutatási platformja</subtitle>
+        <titleabbrev>RCEMU</titleabbrev>
+        <author>
+            <personname>
+                <honorific>Dr.</honorific>
+                <surname>Bátfai</surname>
+                <firstname>Norbert</firstname>        
+            </personname>    
+            <affiliation>
+                <shortaffil>E. adjunktus, DEIK.</shortaffil>
+                <jobtitle>Egyetemi adjunktus</jobtitle>
+                <orgname>Debreceni Egyetem, Informatikai Kar</orgname>
+                <orgdiv>Információtechnológiai Tanszék</orgdiv>
+                <address>
+                    <email>batfai.norbert@inf.unideb.hu</email>
+                    <email>nbatfai@gmail.com</email>
+                </address>
+            </affiliation>
+            <address>
+                <street>Kassai út 26.</street>
+                <city>Debrecen</city>
+                <postcode>4028</postcode>
+                <country>Magyarország</country>
+                <email>batfai.norbert@inf.unideb.hu</email>
+                <otheraddr>
+                    <link xlink:href="http://www.inf.unideb.hu/~nbatfai">http://www.inf.unideb.hu/~nbatfai</link>
+                </otheraddr>
+            </address>
+        </author>
+        <edition>SRS, Robocar City Emulator, v. 0.0.1</edition>
+        <pubdate>2014</pubdate>
+        <copyright>
+            <year>2014</year>
+            <holder>Dr. Bátfai Norbert</holder>
+        </copyright>
+        <legalnotice>
+            <para>Robocar World Championship/Robocar City Emulator
+            </para>
+            <para>                
+                Copyright (C) 2014, Norbert Bátfai. Ph.D., batfai.norbert@inf.unideb.hu
+            </para>
+            <para>
+                This program is free software: you can redistribute it and/or modify
+                it under the terms of the GNU General Public License as published by
+                the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.
+            </para>
+            <para>
+                This program is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                GNU General Public License for more details.
+            </para>
+            <para>
+                You should have received a copy of the GNU General Public License
+                along with this program.  If not, see 
+                <link xlink:href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</link>.
+            </para>
+            <para>
+                Ez a program szabad szoftver; terjeszthető illetve módosítható a 
+                Free Software Foundation által kiadott GNU General Public License
+                dokumentumában leírtak; akár a licenc 3-as, akár (tetszőleges) későbbi 
+                változata szerint.
+            </para>
+            <para>
+                Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz, 
+                de minden egyéb GARANCIA NÉLKÜL, az ELADHATÓSÁGRA vagy VALAMELY CÉLRA 
+                VALÓ ALKALMAZHATÓSÁGRA való származtatott garanciát is beleértve. 
+                További részleteket a GNU General Public License tartalmaz.
+            </para>
+            <para>
+                A felhasználónak a programmal együtt meg kell kapnia a GNU General 
+                Public License egy példányát; ha mégsem kapta meg, akkor
+                tekintse meg a
+                <link xlink:href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</link>
+                oldalon.
+            </para>
+            <para>
+                <link xlink:href="http://gnu.hu/gplv3.html">http://gnu.hu/gplv3.html</link>                
+            </para>
+        </legalnotice>            
+        <revhistory>
+            <revision>
+                <revnumber>0.0.1</revnumber>
+                <date>2014-10-05</date>
+                <revremark>Initial document release for comment.</revremark>
+            </revision>
+        </revhistory>
+    </info>   
+    <glossary>
+        <title>Szójegyzék</title>
+        <glossdiv>
+            <title>I</title>
+            <glossentry xml:id="ieee1998">
+                <glossterm>IEEE Recommended Practice for Software Requirements Specifications</glossterm>
+                <acronym>IEEE, 1998</acronym>
+                <abbrev>IEEE Std 830-1998</abbrev>
+                <glossdef>
+                    <para>A szoftverkövetelmény dokumentum 
+                        <link xlink:href="http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5841">IEEE szabványa</link>.
+                    </para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>
+        <glossdiv>
+            <title>J</title>
+            <glossentry xml:id="jusztina">
+                <glossterm>Jusztina feladat</glossterm>
+                <glossdef>
+                    <para>A 
+                        <emphasis>Robotautó Világbajnokság/Robocar World Championship</emphasis> című 
+                        <link xlink:href="http://robocar.inf.unideb.hu/~norbi/RobotautoVBKutatasiTerv.pdf">kutatási terv</link>
+                        emulátorral kapcsolatos, az aktuális programozás képzés <link xlink:href="https://www.facebook.com/groups/udprog/">UDPROG közösségnek</link> kiírt 
+                        <link xlink:href="http://sourceforge.net/projects/udprog/">feladata</link>.</para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>        
+        <glossdiv>
+            <title>O</title>
+            <glossentry xml:id="osm">
+                <glossterm>OpenStreetMap</glossterm>
+                <acronym>OSM</acronym>
+                <abbrev>OSM</abbrev>                
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>        
+        <glossdiv>
+            <title>R</title>
+            <glossentry xml:id="rcemu">
+                <glossterm>Robocar World Championship</glossterm>
+                <abbrev>rcemu</abbrev>
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+            <glossentry xml:id="robocarcup">
+                <glossterm>Robocar City Emulator</glossterm>
+                <abbrev>robocarcup</abbrev>
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>        
+        <glossdiv>
+            <title>U</title>
+            <glossentry xml:id="udprog">
+                <glossterm>The Yearbook of the Programmers of University of Debrecen</glossterm>
+                <abbrev>UDPROG</abbrev>
+                <glossdef>
+                    <para>A Debreceni Egyetem <link xlink:href="http://progpater.blog.hu/2014/05/31/ez_a_prog1_mi_lesz_a">reguláris programozás oktatásához</link> kapcsolódó,
+                        Linkedin-en szervezett  
+                        <link xlink:href="https://www.linkedin.com/groups/Yearbook-Programmers-University-Debrecen-7446358?homeNewMember=&amp;gid=7446358&amp;fromEmail=&amp;ut=2mVSHNO5Dwwm41&amp;trk=eml-grp-sub">fejlesztői közösség</link>,
+                        melynek egyik gyújtópontjában <link xlink:href="http://sourceforge.net/p/udprog/code/ci/master/tree/">szoftverek</link>, 
+                        a másikban maga az 
+                        <link xlink:href="http://sourceforge.net/projects/udprog/files/?source=navbar">évkönyv</link> áll.
+                    </para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>                
+    </glossary>        
+    <chapter>
+        <info>
+            <title>Bevezetés</title>
+            <keywordset>
+                <keyword></keyword>
+            </keywordset>
+        </info>
+        <section>
+            <title>Célok</title>
+            <para>
+                A jelen dokumentum célja a <emphasis>Robotautó Világbajnokság</emphasis> elnevezésű 
+                kezdeményezés szoftverei megtervezésének
+                támogatása. A Robotautó Világbajnokság egy kutatási kezdeményezés, melynek célja egy olyan
+                kutatási platform kialakítása, amely lehetővé teszi az intelligens városok és a robotautók 
+                kapcsolatának vizsgálatát. A fejlesztendő rendszer központi eleme az emulátor, amely egyrészt
+                szimulálja egy város forgalmát, másrészt a forgalomirányítás szempontjából emulálja a város autóit. 
+                A kifejlesztendő platform egyik feladata lesz a (robot)autók forgalomirányítási bemenetének és 
+                kimenetének finomítása, akár iterálása. 
+            </para>
+        </section>
+        <section>
+            <title>Célközönség</title>
+            <para>
+                A Robotautó Világbajnokság célközönsége rövid távon az egyetemi oktatás és kutatás:
+                egy olyan egységes platformot akarunk
+                kialakítani, amely de facto szabványává tud vállni a várhatóan elterjedő robotautók és intelligens városok 
+                közötti kapcsolatokkal foglalkozó kutatásoknak. 
+                (Hasonlóan szerepet szánunk tehát ennek a platformnak, mint például 
+                amilyen a <link xlink:href="http://dl.acm.org/citation.cfm?doid=267658.267738">robotfoci</link>
+                platform a 
+                <emphasis>mesterséges intelligencia/multiágens technológia</emphasis> kutatásokban.) 
+            </para>
+            <para>
+                A legközvetlenebb célterület az egyetemi oktatás, 
+                az előző ponttal összhangban a 
+                <link xlink:href="http://progpater.blog.hu/2014/05/31/ez_a_prog1_mi_lesz_a">programozás oktatásának</link> támogatása.
+            </para>            
+            <para>
+                Távolabbi cél, hogy ez a kifejlesztendő kutatási platform elterjedésével képes legyen kialakítani 
+                egy olyan nyílt ipari platformot, amely
+                az autógyártók számára lehet érdekes, mert az emulátornak éppen abban az értelemben akarunk emulátor jelleget adni, 
+                hogy kialakítjuk a robotautók forgalomirányítási aspektusokból értelmezett majdani valóságos bemenetét és kimenetét.
+            </para>
+        </section>
+        <section>
+            <title>A dokumentum szervezése</title>
+            <para>
+                A dokumentum szervezése követi a <link xlink:href="#ieee1998">IEEE Std 830-1998</link> 
+                szabvány ajánlásait, de nem a 
+                kapcsolódó szabvány-sablon kitöltése, hanem számos egyéni elemet tartalmaz. Mert egyrészt a tervezés és 
+                fejlesztés ugyanabban a körben fog realizálódni, amelyben a  jelen dokumentum is készül 
+                (a saját egyetemi közegünkben: reguláris egyetemi oktatásoktatás, egyetemi kutatócsoport) 
+                így nem kell erős hangsúly a pontosságra. 
+                Másrészt agilis szemléletünk és a 
+                projektcél természetesen nem élesen definiált volta miatt a 
+                <link xlink:href="http://robocar.inf.unideb.hu/~norbi/RobotautoVBKutatasiTerv.pdf">kutatási tervben</link> 
+                rögzített célok egy része máris 
+                túlhaladotta, korrigált, tovább finomodott már e sorok leírásakor is. 
+                Mindezekmiatt a dokumentumban központi szerepet kap egy gyors prototípus (a 
+                <link xlink:href="#jusztina">Jusztina</link>) bemutatása.     
+            </para>
+        </section>
+    </chapter>        
+    <chapter>
+        <info>
+            <title>A fejlesztendő rendszer áttekintése</title>
+            <keywordset>
+                <keyword></keyword>
+            </keywordset>
+        </info>
+        <section>
+            <title>A Robotautó Világbajnokság/Robocar City Emulator bevezetése</title>   
+            <para>        
+                Bizonyos, hogy a nem túl távoli jövőben a városokban, az okos városokban emberi irányítás
+                nélküli járművek, intuitíven robot autók is közlekedhetnek majd. A jövő persze bizonytalan, így ez a bizonyosság is
+                pro és kontra vitatható, de hogy ennek elejét vegyük, azonnal le kell szögeznünk: számunkra ez csupán
+                egy egyszerű kiindulási absztrakció, amelyre építve megkezdjük kutatásainkat és fejlesztéseinket a
+                robotautók (okos)városi (forgalomirányító) vezérlése területén.
+            </para>
+            <para>
+                A Robotautó Világbajnokság egy forgalomirányító algoritmusokat versenyeztető (open source)
+                platform, amelyet mindig egy adott városon lehet értelmezni, jelesül a szóban forgó verseny
+                formájában. További bevezetés, illetve a források tekintetében lásd még a következő posztot is:
+                <link xlink:href="http://progpater.blog.hu/2014/09/17/robot_car_world_championship">http://progpater.blog.hu/2014/09/17/robot_car_world_championship</link>.
+            </para>                 
+            <section>
+                <title>A Robocar City Emulator koncepciója</title>
+                <para>
+                    A projektben fejlesztendő sw-komponensek legtöbbje kapcsolatba kerül a térképpel (Map), 
+                    most konkrétan az OpenStreetMap-el. A közlekedést mindig egy adott városban (City) vizsgáljuk, 
+                    amelyről a priori bírunk információkkal, illetve automatikusan (ASA) vagy emberi beavatkozással
+                    segítve (HSA) gyűjtünk adatokat. Előbbire példa, amikor egy bekötőút bejövő forgalmát egy kamera
+                    alapú alkalmazás számolja adott időszakban, utóbbira, amikor ugyanezt egy emberi megfigyelő teszi.  
+                    Az emulátor (Robocar City Emulator) a járművek mozgatását emulálja a vizsgált városban, miközben 
+                    minden járművet ugyanazzal a vezérlő algoritmussal (The competition) látunk el. Egy-egy leemulált nap
+                    eredményei (Results) alapján hirdetjük ki a versengő vezérlő algoritmusok között a győztest. 
+                    A versengés alapja például a járművek átlagos utazási idejének, azok szórásának a minimalizálása.
+                    Az emulációk
+                    mindenféle izgalmas környezetben lesznek megjeleníthetők (Monitors) például a Google Maps vagy OpenStreetMap 
+                    alapú megjelenítőkben.
+                </para>
+                <figure>
+                    <title>A projekt &#x201E;Tetris-terve&#x201D;.</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/tetris_plan2_400x.png" scale="45"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>
+                                A projekt &#x201E;Tetris-terve&#x201D;.
+                            </phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>                
+                <section>
+                    <title>A Robocar City Emulator koncepciójának finomítása</title>
+                    <para>
+                        A nyers 
+                        <link xlink:href="http://robocar.inf.unideb.hu/~norbi/RobotautoVBKutatasiTerv.pdf">kutatási terv</link> 
+                        alapján nem könnyű kialakítani egy olyan fejlesztendő
+                        rendszer koncepcióját, amely képes a térképen kezelni a (MIT-s 
+                        <link xlink:href="http://dspace.mit.edu/handle/1721.1/82904">cikk</link> alapján akár) 
+                        10<superscript>6</superscript> nagyságrendű számú járművet. Mi sem bizonyítja ezt jobban,
+                        hogy az UDPROG agilis közösségben versengésre kiadott ez irányú rövid koncepcionális skiccek
+                        nem készültek, vagy legalábbis kevés számban készülnek még a jelen pillanatban is. 
+                    </para>
+                    <note>
+                        <title>A nehézségek forrása</title>
+                        <para>
+                            A valóságban a járművek fizikai léte biztosítja például hogy adott útszakaszon nem férnek el többen, mint 
+                            amennyien elférnek, rendelkeznek az ennek a triviális tulajdonságnak megfelelő GPS koordinátákkal, külön 
+                            célszámítógépeket tudnak használni az útvonalkijelöléshez. Nekünk mindezt, de legalábbi ennek valamilyen
+                            egyszerű modelljét kezelnünk kell egy szoftverben a járművek forglamirányítási emulációja során. A nehézséget
+                            a járművek nagy száma okozza.
+                        </para>
+                    </note>
+                    <para>
+                        Ennek a dokumentumnak részben a koncepcionális tervezés katalizásása a feladata azzal, hogy
+                        felvázolunk egy eldobható (evolúciós) gyors protót az emulátorra. Közben természetesen 
+                        fimomítjuk a <link xlink:href="http://robocar.inf.unideb.hu/~norbi/RobotautoVBKutatasiTerv.pdf">kutatási terv</link> 
+                        célját, ám az előzetes kutatási követelmények nem változtak:            
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    A koncepció térjen ki az emulátor emulátor-jellegére egy autó inputjának és outputjának megadásával.
+                                </para>
+                            </listitem>                
+                            <listitem>
+                                <para>
+                                    A térkép nagyszámú csomópontot tartalmaz, amelyeket gráfként kell tudni kezelni
+                                    például az routing-hoz.
+                                </para>
+                            </listitem>  
+                            <listitem>
+                                <para>
+                                    A program tudjon kezelni 10<superscript>6</superscript> autót a térképen (olyan értelemben valóságosan,
+                                    hogy adott úton két csomópont közötti terület akár telítődhessen is járművekkel! 
+                                </para>
+                            </listitem>                                
+                        </itemizedlist>
+                    </para>
+                </section>             
+                <section>
+                    <title>Gyors protó a Jusztinára</title>
+                    <para>
+                        A <link xlink:href="http://robocar.inf.unideb.hu/~norbi/RobotautoVBKutatasiTerv.pdf">kutatási terv</link>         
+                        Jusztina feladata
+                        az emulátor eldobható, evolúciós gyors prototípusa.
+                    </para>
+                    <section>
+                        <title>Jusztina koncepció</title>
+                        <para>
+                            Azt az előzetes követelményt puhítjuk fel, hogy a városban csak robotautók vannak, azzal, hogy
+                            két tipikus járművet különböztetünk meg az emulátorban (a fejlesztendő emulátor jelen gyors protójában).
+                            <itemizedlist>
+                                <listitem>
+                                    <para>
+                                        Vannak és túlnyomó többségben vannak az olyan autók, amelyek a szokásos napi rutint futják be
+                                        (ahogy az előadáson/laborokon érveltem: elmegyek a munkahelyemre, aztán a gyerekeket viszem az
+                                        uszodába, aztán boltba aztán haza, tipikusan a megszokott fix útvonalon). Ez leveszi a vállunkról
+                                        azt a terhet, hogy a nagyszámú autónak útvonalat tervezzünk, mert ugye a valóságban ennek nincs akadálya,
+                                        hiszen az autó a saját GPS navigációs célszámítógépével ezt megteheti, de nekünk mindezt szimulálnunk kell!
+                                        (A &#x201E;szokásos napi rutin&#x201D; alatt intuitíven a Barabási 
+                                        <link xlink:href="http://www.barabasilab.com/pubs/CCNR-ALB_Publications/200806-05_Nature-MobilityPatterns/200806-05_Nature-MobilityPatterns.pdfhttp://www.barabasilab.com/pubs/CCNR-ALB_Publications/200806-05_Nature-MobilityPatterns/200806-05_Nature-MobilityPatterns.pdf">cikk</link>
+                                        "human mobility pattern"-jeiként gondolhatunk, de
+                                        hasonló munkát találhatunk már célzottan is például ebben az ugyancsak Nature 
+                                        <link xlink:href="http://www.nature.com/srep/2012/121220/srep01001/fig_tab/srep01001_F2.html">cikkben</link>.)
+                                        Persze azt megemlíthetjük, hogy útvonaltervezésre itt is szükség lehet, de ez az emulációs verseny 
+                                        (a Robotautó Világbajnokság) előtt megtehető, hogy az emulátor már ezeknek a járműveknek olyan
+                                        csomópont listáját kapja, amelynek csomópont elemi folyamatosan a valódi útjára illeszkednek.                         
+                                    </para>
+                                </listitem>                
+                                <listitem>
+                                    <para>
+                                        Vannak és elenyésző kisebbségben vannak olyan autók, akik inputot vesznek át a 
+&#x201E;várostól&#x201D; és ezt felhasználják
+                                        az útvonaltervezéshez. 
+                                    </para>
+                                </listitem>  
+                            </itemizedlist>
+                            Az első pontba eső járműveket nevezzük a Jusztina modelljében <emphasis>rutin</emphasis>, 
+                            a másodikba esőket <emphasis>okos</emphasis> járműveknek. 
+                        </para>
+                        <para>
+                            Megjegyezhetjük, hogy ez a modell valószínűleg jobban is fog illeszkedni ahhoz a folyamathoz, amely szerint majd a
+                            robotautók elterjednek.
+                        </para>       
+                        <section>
+                            <title>A Jusztina protó szereplői</title>
+                            <para>                    
+                            </para>
+                            <itemizedlist>
+                                <listitem>
+                                    <para>Az adott város OSM térképe. A térkép alapján kell egy gráf-csővezeték jellegű
+                                        modell, amelyben a járműveket mozgatjuk.
+                                    </para>
+                                </listitem>                
+                                <listitem>
+                                    <para>A szimuláció működtetéséhez a gráf megadott részei információkat szolgáltatnak a 
+                                        járműveknek (például hogy a csővezeték szóban forgó része mennyire telítődött járművekkel, lásd
+                                        még a kutatási terv forgalmi-videó feldolgozásos feladatait is).
+                                        Ugyanez az információ lehet a (forgalomirányítás tekintetében emulált) járművek bemenete.
+                                    </para>
+                                </listitem>                
+                                <listitem>
+                                    <para>
+                                        Megjelenésében egyetlen fajta (r sugarú kör), működésében kétféle viselkedést 
+                                        (a rutin és az okos viselkedést) mutató járművek. A jármű tudja magáról a jellegét,
+                                        az x, y GPS koordinátáját, az r sugarát és rendelkezik a beutazandó csomópontok listájával. 
+                                    </para>
+                                </listitem>  
+                            </itemizedlist>                
+                        </section> 
+                        <section>
+                            <title>A Jusztina protó működése</title>
+                            <para>                    
+                                A verseny előzetes koncepcióján szintén finomítunk, miszerint nem egy napot, hanem egy kritikus 
+                                időintervallumot (például a reggeli vagy délutáni csúcsforgalom) szimulál le az emulátor program.
+                                A Robotautó Világbajnokság versengő csapatai pedig az okos autókat (forgalom)irányítják.
+                            </para>
+                        </section> 
+                        <section>
+                            <title>A Jusztina protó architektúrája</title>
+                            <para>                    
+                                A protó tartalmaz egy monolitikus (vagy elosztott) szervezésű emulátort, ez a program kezeli 
+                                az útvonal hálózat csővezetékét a realisztikus szimulációhoz. Ebbe behuzalozottak vagy
+                                kapcsolódnak a rutin kliensek; a versengő okos kliensek (vagy valamilyen stub-skeleton alapon azok
+                                forgalomirányító algoritmusai) valamilyen IPC mechanizmussal kapcsolódnak. A protó egy megjelenítőt is tartalmaz, hogy a 
+                                protó működését könnyebben tudjuk tanulmányozni a követelmény-specifikáció elkészítéséhez.
+                            </para>
+                        </section> 
+                    </section>        
+                </section>
+            </section>                                                            
+        </section>         
+        <section>
+            <title>A Robotautó Világbajnokság/Robocar City Emulator tárgyalása</title>   
+            <para> 
+            </para>
+            <section>
+                <title>Áttekintő kép</title>   
+                <para> 
+                    TODO
+                </para>            
+            </section>
+            <section>
+                <title>Funkcionalitás</title>   
+                <para> 
+                    TODO
+                </para>            
+            </section>
+            <section>
+                <title>Használati esetek</title>   
+                <para> 
+                    A fejlesztendő rendszer felhasználói:
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Kutatók: szimulációs számítások az okos város - robotautó kapcsolat vizsgálatában. 
+                        </para>
+                    </listitem>                
+                    <listitem>
+                        <para>
+                            Hallgatók: ágens-programozási feladatok a reguláris képzésben.
+                        </para>
+                    </listitem>  
+                    <listitem>
+                        <para>
+                            Versenyzők: (város, autó) programozási feladatok a Robotautó Világbajnokságon.
+                        </para>
+                    </listitem>                      
+                    <listitem>
+                        <para>
+                            Okos városok: forgalom szabályozási szimulációk, előrejelzések, on-line forgalmi monitorozás.
+                        </para>
+                    </listitem>                                                    
+                    <listitem>
+                        <para>
+                            Média: forgalmi előrejelzések, tanácsadás, on-line forgalmi monitorozás.
+                        </para>
+                    </listitem>                    
+                    <listitem>
+                        <para>
+                            Rendőrség: rendezvény szervezési, biztosítási lezárások szimulációja.
+                        </para>
+                    </listitem>                                                    
+                    <listitem>
+                        <para>
+                            Autógyártók: az okos városok és az autók forgalomirányítási emulációjának vizsgálata.
+                        </para>
+                    </listitem>                                
+                </itemizedlist>                            
+                <para> 
+                    A fejlesztendő rendszer egy tipikus használati esete:
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Kutatók: TODO
+                        </para>
+                    </listitem>                
+                    <listitem>
+                        <para>
+                            Hallgatók: TODO
+                        </para>
+                    </listitem>  
+                    <listitem>
+                        <para>
+                            Versenyzők: TODO
+                        </para>
+                    </listitem>                                          
+                    <listitem>
+                        <para>
+                            Okos városok: TODO
+                        </para>
+                    </listitem>                                                    
+                    <listitem>
+                        <para>
+                            Rendőrség: TODO
+                        </para>
+                    </listitem>                                                    
+                    <listitem>
+                        <para>
+                            Média: TODO
+                        </para>
+                    </listitem>                                        
+                    <listitem>
+                        <para>
+                            Autógyártók: TODO
+                        </para>
+                    </listitem>                                
+                </itemizedlist>                                            
+            </section>            
+            <section>
+                <title>Dokumentálás</title>   
+                <para> 
+                    A dokumentálás agilis, főleg a források alapján automatikusan, akár reverse engineering jelleggel generált dokumentumok. 
+                    Egyetlen dokumentum kiemelt szerepű, a platform <emphasis>Programozói kézikönyve</emphasis>, amely a platform 
+                    (kutató, hallgató, autógyártó besorolású) felhasználóit
+                    segíti a rendszer programozásában, amikoris elképzeléseiket kipróbálhatján a város szimulációkban - autó emulációkban.                    
+                </para>            
+            </section>            
+        </section>
+        <section>
+            <title>Követelmények</title>   
+            <para> 
+                TODO
+            </para>
+            <section>
+                <title>Funkcionális követelmények</title>   
+                <para> 
+                    TODO
+                </para>            
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Az emulátor program támogassa az Robotautó Világbajnokságnak, mint versenynek a lebonyolítását, azaz
+                            a versengő csapatok tudjanak saját algoritmusaikkal csatlakozni az emulátorhoz!
+                        </para>
+                    </listitem>  
+                    <listitem>
+                        <para>
+                            A platform tartalmazzon az adott város forgalmát monitorozni képes megfigyelő programokat!
+                        </para>
+                    </listitem>                      
+                    <listitem>
+                        <para>
+                            A platform támogassa, hogy az adott város forgalmát monitorozó megfigyelő program szolgáltatta
+                            adatok mellett az adott várost jellemző heurisztikus adatokkal is el lehessen látni a szimulátort!
+                        </para>
+                    </listitem>                                          
+                    <listitem>
+                        <para>
+                            A platform tartalmazzon az autó emulációhoz/város szimulációhoz megjelenítőket!
+                        </para>
+                    </listitem>  
+                    <listitem>
+                        <para>
+                            TODO                            
+                        </para>
+                    </listitem>                        
+                </itemizedlist>                
+            </section>            
+            <section>
+                <title>Nem funkcionális követelmények</title>   
+                <para>
+                    TODO 
+                </para>        
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Az emulátor program támogassa az emulátor-jelleg, azaz egy autó inputja és outputja definíciójának 
+                            iterálhatóságát.
+                        </para>
+                    </listitem>                
+                    <listitem>
+                        <para>
+                            Az emulátor program tudjon kezelni 10<superscript>6</superscript> nagyságrendű számú autót a térképen 
+                            olyan értelemben valóságosan,
+                            hogy egy adott útszakasz akár telítődhessen is járművekkel! 
+                        </para>
+                    </listitem>                                
+                    <listitem>
+                        <para>
+                            Az emulátor alapértelmezett szimulációs üzemmódja mellett legyen képes valós időben is futni
+                            (emulált vagy valódi járművekkel valós időben együttműködni).
+                        </para>
+                    </listitem>                                    
+                    <listitem>
+                        <para>
+                            TODO                            
+                        </para>
+                    </listitem>                                
+                    <listitem>
+                        <para>
+                            A platform legyen open source alapú, lehetőleg GNU GPL v3. A dokumentálás nyelve DocBook XML 5.1, 
+                            a fejlesztés implementációs nyelve (akár a felmerülő interfészek, például CORBA) C++11, Java 
+                            és Pyton. A referencia tároló ez 
+                            <link xlink:href="https://code.google.com/p/robocar-emulator/">https://code.google.com/p/robocar-emulator/</link>. 
+                            Részeredmények átmenetileg az UDPROG tárolóiban is megtalálhatóak.
+                        </para>
+                    </listitem>                                                    
+                </itemizedlist>                    
+                <section>
+                    <title>Szervezési és személyi követelmények</title>   
+                    <para>
+                        A jelen dokumentumban hivatkozott kutatási terv 
+                        a &#x201E;FIRST/Jövő Internet közösségi alkalmazások; Szabó Róbert (ETIK) - Fehér Gábor (BME TMIT)/6.3
+                        Intelligens város alkalmazások; Farkas Károly (ETIK)&#x201D; alprojekten belül jött létre a kutatás utolsó
+                        negyedévében.
+                    </para>
+                    <para>
+                        A szélesebb fejlesztői közösség szervezése itt történik:
+                        <link xlink:href="https://www.facebook.com/udprog">https://www.facebook.com/udprog</link>. 
+                        A projekt levelezési listája itt található: 
+                        <link xlink:href="https://groups.google.com/forum/?hl=hu#!members/rcemu">https://groups.google.com/forum/?hl=hu#!members/rcemu</link>.
+                    </para>
+                    <para>                        
+                        A kutatás-fejlesztés párhuzamosan folyik a DEIK Informatikai Kar UDPROG reguláris oktatási
+                        kurzusában és FIRST keretében erre a célra alakuló alábbi kutatócsoportban és remélhetően a FIRST2-ben is:
+
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    Dr. habil. Ispány Márton, a projekt vezetője.
+                                    További részfeladatok: Matlab alapú versengő csapat szervezése és irányítása
+                                    Címkék: The competition
+                                </para>
+                            </listitem>                                                    
+
+                            <listitem>
+                                <para>
+                                    Dr. Bátfai Norbert, a szoftverfejlesztéssel kapcsolatos kutatás-fejlesztés vezetője.
+                                    További részfeladatok: az emulátor tervezése és megvalósítása
+                                    Címkék: Robocar City Emulator
+                                </para>
+                            </listitem>                                                    
+                            <listitem>
+                                <para>
+                                    Dr. Jeszenszky Péter, a városok adatfelhőinek tervezése és megvalósítása.
+                                    További részfeladatok: R alapú versengő csapat szervezése és irányítása
+                                    Címkék: City, The competition, Open Linked Data
+                                </para>
+                            </listitem>                                                    
+                            <listitem>
+                                <para>
+                                    Dr. Szathmári László, További részfeladatok: Python alapú versengő csapat szervezése és irányítása
+                                    Címkék: The competition
+                                </para>
+                            </listitem>                                                    
+                            <listitem>
+                                <para>
+                                    Mamenyák András, BSc. hallgató, vezető programozó.
+                                    További részfeladatok: UDPROG-os hallgatók felvétele és koordinálása a sw fejlesztésben
+                                    Címkék: Robocar City Emulator, Monitors
+                                </para>
+                            </listitem>                                                    
+                            <listitem>
+                                <para>
+                                    Kóti Balázs, BSc. hallgató, a projekt dizájnere.
+                                    További részfeladatok: Qt alapú versengő csapat szervezése és irányítása
+                                    Címkék: The competition
+                                </para>
+                            </listitem>                                                    
+                            <listitem>
+                                <para>
+                                    Besenczi Renátó, BSc. hallgató, a városi adatfelhőt töltő automatikus sw komponensek tervezése és
+                                    megvalósítása.
+                                    További részfeladatok: Java alapú versengő csapat szervezése és irányítása
+                                    Címkék: ASA, The competition
+                                </para>
+                            </listitem>                                                    
+                        </itemizedlist>                                            
+                        Illetve 
+                        a teljes nyiltság következtében a fejlesztői közösség természetes és szokásos módokon bővíthető. 
+                    </para>        
+                </section>                                
+            </section>                        
+            <section>
+                <title>Interfészek</title>   
+                <para>
+                    TODO 
+                </para>        
+                <para>
+                    Külső interfésznek tekinthető a meghajtó OpenStreetMap XML és a versenyzők felé nyújtott
+                    programozói interfész, TODO. Belső interfész TODO.  
+                </para>        
+                <para>
+                    Belső interfész TODO.  
+                </para>                        
+            </section>                        
+        </section>                
+        <section>
+            <title>Összefoglalás</title>   
+            <para> 
+                TODO
+            </para>
+        </section>        
+    </chapter>
+</book>
