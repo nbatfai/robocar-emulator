@@ -207,10 +207,17 @@ public class CarWindow extends javax.swing.JFrame {
 
         } while (!scan.hasNext());
 
-        org.jxmapviewer.viewer.TileFactoryInfo tfInfo = new org.jxmapviewer.OSMTileFactoryInfo();
-        org.jxmapviewer.viewer.DefaultTileFactory dTileFactory
-                = new org.jxmapviewer.viewer.DefaultTileFactory(tfInfo);
-        dTileFactory.setThreadPoolSize(8);
+        final org.jxmapviewer.viewer.TileFactory tileFactoryArray[] = {
+            new org.jxmapviewer.viewer.DefaultTileFactory(
+                    new org.jxmapviewer.OSMTileFactoryInfo()),
+            new org.jxmapviewer.viewer.DefaultTileFactory(
+                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.MAP)),
+            new org.jxmapviewer.viewer.DefaultTileFactory(
+                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.SATELLITE)),
+            new org.jxmapviewer.viewer.DefaultTileFactory(
+                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.HYBRID))
+
+        };
 
         org.jxmapviewer.viewer.GeoPosition debrecen
                 = new org.jxmapviewer.viewer.GeoPosition(lat, lon);
@@ -226,7 +233,7 @@ public class CarWindow extends javax.swing.JFrame {
         jXMapViewer.addKeyListener(
                 new org.jxmapviewer.input.PanKeyListener(jXMapViewer));
 
-        jXMapViewer.setTileFactory(dTileFactory);
+        jXMapViewer.setTileFactory(tileFactoryArray[0]);
 
         ClassLoader classLoader = this.getClass().getClassLoader();
 
@@ -270,12 +277,22 @@ public class CarWindow extends javax.swing.JFrame {
         jXMapViewer.setAddressLocation(debrecen);
         jXMapViewer.setCenterPosition(debrecen);
 
-        setTitle(
-                "Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
-        getContentPane()
-                .add(jXMapViewer);
-        setSize(
-                800, 600);
+        jXMapViewer.addKeyListener(new java.awt.event.KeyAdapter() {
+            int index = 0;
+
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
+                    jXMapViewer.setTileFactory(tileFactoryArray[++index % 4]);
+                    jXMapViewer.repaint();
+                    repaint();
+                }
+            }
+        });
+
+        setTitle("Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
+        getContentPane().add(jXMapViewer);
+        setSize(800, 600);
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 
         new javax.swing.Timer(
@@ -300,12 +317,14 @@ public class CarWindow extends javax.swing.JFrame {
                 lon = scan.nextDouble();
 
                 lmap.put(ref, new Loc(lat, lon));
+
             }
 
         } catch (Exception e) {
 
             java.util.logging.Logger.getLogger(
-                    CarWindow.class.getName()).log(java.util.logging.Level.SEVERE, "hibás noderef2GPS leképezés", e);
+                    CarWindow.class
+                    .getName()).log(java.util.logging.Level.SEVERE, "hibás noderef2GPS leképezés", e);
 
         }
 
