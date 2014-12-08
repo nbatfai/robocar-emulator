@@ -67,7 +67,7 @@ namespace robocar {
 class Traffic {
 public:
 
-  Traffic ( int size, const char * shm_segment ) :m_size ( size ) {
+     Traffic ( int size, const char * shm_segment ) :m_size ( size ) {
 
 #ifdef DEBUG
           std::cout << "Attaching shared memory... " << std::endl;
@@ -75,7 +75,7 @@ public:
 
           segment = new boost::interprocess::managed_shared_memory (
                boost::interprocess::open_only,
-	       shm_segment );
+               shm_segment );
 
           shm_map =
                segment->find<shm_map_Type> ( "JustineMap" ).first;
@@ -98,7 +98,7 @@ public:
 #ifdef DEBUG
           std::cout << "All routine cars initialized." <<"\n";
 #endif
-	  
+
           m_cv.notify_one();
 
      }
@@ -121,8 +121,13 @@ public:
 
 
           for ( ; m_run; ) {
-               std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
-               traffic_run();
+
+               if ( ++m_time > ( 10*60*1000 ) /m_delay )
+                    m_run = false;
+
+	       traffic_run();
+	       
+	       std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
           }
      }
 
@@ -135,8 +140,6 @@ public:
      }
 
      virtual void traffic_run() {
-
-          ++m_time;
 
           // activities that may occur in the traffic flow
 
@@ -181,10 +184,10 @@ public:
 
           for ( auto car:cars ) {
                car->step();
-
+/*
                std::cout << *car
                          <<  " " << std::endl;
-
+*/
           }
      }
 
@@ -303,7 +306,7 @@ protected:
      boost::interprocess::managed_shared_memory *segment;
      boost::interprocess::offset_ptr<shm_map_Type> shm_map;
 
-     int m_delay {100};
+     int m_delay {200};
      bool m_run {true};
 
 private:
