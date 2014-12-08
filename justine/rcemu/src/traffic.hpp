@@ -184,10 +184,10 @@ public:
 
           for ( auto car:cars ) {
                car->step();
-/*
+
                std::cout << *car
                          <<  " " << std::endl;
-*/
+
           }
      }
 
