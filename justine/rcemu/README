@@ -1,0 +1,28 @@
+GNU Robocar City Emulator, Robocar World Championshin in Debrecen
+===
+
+Police Edition
+--------------
+This is the "Police Edition" of Justine prototype for development 
+of Robocar City Emulator. This edition includes the smartcity and 
+the traffic servers and a shared memory based sample client agent. 
+
+[nbatfai@desteny justine]$ src/smartcity --osm=../debrecen.osm --city=Debrecen --shm=JustineSharedMemory
+[nbatfai@desteny justine]$ src/traffic 10007|java -jar ../justine-car-window-0.0.1-jar-with-dependencies.jar ../lmap.txt 
+[nbatfai@desteny justine]$ src/sampleshmclient 
+[nbatfai@desteny justine]$ (sleep 1; echo "<init Norbi 100 g>"; sleep 1)|telnet localhost 10007
+
+Install and Usage
+-----------------
+autoreconf --install
+./configure
+make
+src/bstops ../../debrecen.osm
+
+if the libosmium headers are installed in a user's home directory, use 
+the option AM_CXXFLAGS=-I/home/user/libosmium/include in the configure command:
+
+./configure  AM_CXXFLAGS=-I/home/user/libosmium/include
+
+To turn on debug logs, set the DEBUG environment variable:
+./configure  AM_CXXFLAGS=-DDEBUG

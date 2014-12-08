@@ -1,0 +1,10 @@
+Download ${project.name}
+
+  * Download
+
+    * {{{../${project.artifactId}-${project.version}-project.zip}${project.artifactId}-${project.version}-project.zip}}
+
+    * {{{../${project.artifactId}-${project.version}-project.tar.gz}${project.artifactId}-${project.version}-project.tar.gz}}
+
+    * {{{../${project.artifactId}-${project.version}-project.tar.bz2}${project.artifactId}-${project.version}-project.tar.bz2}}
+

@@ -1,0 +1,29 @@
+0.0.10,  2014-12-07,  Norbert Bátfai
+
+  * Justine/"Police Edition", https://code.google.com/p/robocar-emulator/
+
+0.0.9,  2014-12-06,  Norbert Bátfai
+
+  * Sample SHM Client, http://youtu.be/5udY6ZnOhYI 
+  
+0.0.8,  2014-12-05,  Norbert Bátfai
+
+  * "route" command implemented, http://youtu.be/Uo2oOOjJvvY
+
+0.0.7,  2014-12-03,  Norbert Bátfai
+
+  * In Debrecen a police car in pursuit of a gangster, http://youtu.be/PRFPvOcg00M
+
+0.0.3,  2014-11-30,  Norbert Bátfai
+
+  * How to use logplayer as an online visualization tool?,  http://youtu.be/YskNWKTysiQ
+
+0.0.2,  2014-11-25,  Norbert Bátfai
+
+  * Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen), http://youtu.be/Gv0T_Y69GiU
+
+0.0.1,  2014-11-23,  Norbert Bátfai
+
+  * Improvement of the routing model of random cars
+  * Added copyrights to all source files.
+  * Added aminclude.am for doxygen support
