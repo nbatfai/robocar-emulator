@@ -339,8 +339,8 @@ public class CarWindow extends javax.swing.JFrame {
 
         } else {
 
-            System.out.println("To use as a logplayer:\n java -jar target/justineroadwindow-0.0.1-jar-with-dependencies.jar lmap.txt traffic.txt");
-            System.out.println("       as an on-line player:\njava -jar target/justineroadwindow-0.0.1-jar-with-dependencies.jar lmap.txt traffic.txt");
+            System.out.println("To use as a logplayer:\njava -jar target/justineroadwindow-0.0.1-jar-with-dependencies.jar lmap.txt traffic.txt");
+            System.out.println("       as an on-line player:\nsrc/traffic 10007|java -jar ../justine-car-window-0.0.1-jar-with-dependencies.jar lmap.txt");
         }
 
     }
