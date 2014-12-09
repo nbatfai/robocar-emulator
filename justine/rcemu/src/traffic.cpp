@@ -34,13 +34,13 @@
 
 void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket client_socket )
 {
+     const int network_buffer_size = 524288;
+     char data[524288]; // TODO buffered write...
 
      try {
           for ( ;; ) {
 
                CarLexer cl;
-
-               char data[8192];
 
                boost::system::error_code err;
                size_t length = client_socket.read_some ( boost::asio::buffer ( data ), err );
@@ -123,9 +123,9 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
 
                } else if ( cl.get_cmd() == 1002 ) {
 
-                    if ( m_smart_cars_map.find ( cl.get_id() ) != m_smart_cars_map.end() ) {
+                    std::lock_guard<std::mutex> lock ( cars_mutex );
 
-                         std::shared_ptr<SmartCar> c = m_smart_cars_map[cl.get_id()];
+                    if ( m_smart_cars_map.find ( cl.get_id() ) != m_smart_cars_map.end() ) {
 
                          bool hasGangsters {false};
                          for ( auto c:m_smart_cars ) {
@@ -133,13 +133,18 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
                                    length += std::sprintf ( data+length,
                                                             "<OK %d %u %u %u>", cl.get_id(), c->from(),
                                                             c->to_node(), c->get_step() );
+
+                                   if ( length > network_buffer_size - 512 ) {
+                                        length += std::sprintf ( data+length,
+                                                                 "<WARN too many gangsters to send through this implementation...>" );
+                                        break;
+                                   }
+                                   
                                    hasGangsters = true;
                               }
                          }
                          if ( !hasGangsters )
-                              length += std::sprintf ( data+length,
-                                                       "<WARN %d there is no gangsters>", cl.get_id(), c->from(),
-                                                       c->to_node(), c->get_step() );
+                              length += std::sprintf ( data+length, "<WARN there is no gangsters>" );
 
                     } else
                          length += std::sprintf ( data+length, "<ERR unknown car id>" );

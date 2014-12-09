@@ -90,10 +90,11 @@ void justine::sampleclient::ShmClient::foo ( void )
 
 }
 
+char data[524288];
+
 void justine::sampleclient::ShmClient::gangsters ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     char data[8192];
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data, "<gangsters " );
@@ -120,7 +121,6 @@ void justine::sampleclient::ShmClient::gangsters ( boost::asio::ip::tcp::socket 
 int justine::sampleclient::ShmClient::init ( boost::asio::ip::tcp::socket & socket )
 {
 
-     char data[8192];
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data, "<init guided Norbi 1 c>" );
@@ -152,7 +152,6 @@ int justine::sampleclient::ShmClient::init ( boost::asio::ip::tcp::socket & sock
 void justine::sampleclient::ShmClient::pos ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     char data[8192];
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data, "<pos " );
@@ -178,7 +177,7 @@ void justine::sampleclient::ShmClient::pos ( boost::asio::ip::tcp::socket & sock
 
 void justine::sampleclient::ShmClient::car ( boost::asio::ip::tcp::socket & socket, int id, unsigned *f, unsigned *t, unsigned* s )
 {
-     char data[8192];
+
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data, "<car " );
@@ -208,7 +207,6 @@ void justine::sampleclient::ShmClient::car ( boost::asio::ip::tcp::socket & sock
 void justine::sampleclient::ShmClient::route1 ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     char data[8192];
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data,
@@ -236,7 +234,6 @@ void justine::sampleclient::ShmClient::route1 ( boost::asio::ip::tcp::socket & s
 void justine::sampleclient::ShmClient::route2 ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     char data[8192];
      boost::system::error_code err;
 
      size_t length = std::sprintf ( data,
