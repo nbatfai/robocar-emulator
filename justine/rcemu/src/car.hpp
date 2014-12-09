@@ -69,7 +69,7 @@ public:
      void set_type ( CarType type ) {
           m_type = type;
      }
-
+     
      osmium::unsigned_object_id_type to_node() const;
      osmium::unsigned_object_id_type get_max_steps() const;
      virtual void nextEdge ( void );
@@ -124,6 +124,20 @@ private:
 
      std::vector<unsigned int> route;
 
+};
+
+class CopCar : public SmartCar {
+public:
+  CopCar ( Traffic & traffic, bool guided );
+  
+  int get_num_captured_gangsters() const {
+    return m_num_captured_gangsters;
+  }
+  
+protected:
+  
+  int m_num_captured_gangsters{0};
+  
 };
 
 }

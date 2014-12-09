@@ -125,9 +125,9 @@ public:
                if ( ++m_time > ( 10*60*1000 ) /m_delay )
                     m_run = false;
 
-	       traffic_run();
-	       
-	       std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
+               traffic_run();
+
+               std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
           }
      }
 
@@ -145,34 +145,13 @@ public:
 
           // std::cout << *this;
 
-          for ( auto car1:m_smart_cars ) {
+          pursuit();
 
-               if ( car1->get_type() == CarType::POLICE ) {
-
-                    double lon1 {0.0}, lat1 {0.0};
-                    toGPS ( car1->from(), car1->to() , car1->get_step(), &lon1, &lat1 );
-
-                    double lon2 {0.0}, lat2 {0.0};
-                    for ( auto car:m_smart_cars ) {
-
-                         if ( car->get_type() == CarType::GANGSTER ) {
-
-                              toGPS ( car->from(), car->to() , car->get_step(), &lon2, &lat2 );
-
-                              double d = dst ( lon1, lat1, lon2, lat2 );
-
-                              if ( d<10.0 )
-                                   car->set_type ( CarType::CAUGHT );
-                         }
-                    }
-               }
-          }
-
-          log();
+          steps();
 
      }
 
-     void log() {
+     void steps() {
 
           std::lock_guard<std::mutex> lock ( cars_mutex );
 
@@ -188,6 +167,34 @@ public:
                std::cout << *car
                          <<  " " << std::endl;
 
+          }
+     }
+
+     inline void pursuit ( void ) {
+       
+          for ( auto car1:m_smart_cars ) {
+
+               if ( car1->get_type() == CarType::POLICE ) {
+
+                    double lon1 {0.0}, lat1 {0.0};
+                    toGPS ( car1->from(), car1->to() , car1->get_step(), &lon1, &lat1 );
+
+                    double lon2 {0.0}, lat2 {0.0};
+                    for ( auto car:m_smart_cars ) {
+
+                         if ( car->get_type() == CarType::GANGSTER ) {
+
+                              toGPS ( car->from(), car->to() , car->get_step(), &lon2, &lat2 );
+                              double d = dst ( lon1, lat1, lon2, lat2 );
+
+                              if ( d<10.0 ) {
+				
+                                   car->set_type ( CarType::CAUGHT );
+				    
+			      }
+                         }
+                    }
+               }
           }
      }
 

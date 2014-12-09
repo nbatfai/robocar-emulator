@@ -42,8 +42,13 @@ justine::robocar::Car::Car (
 
 justine::robocar::SmartCar::SmartCar ( justine::robocar::Traffic & traffic,
                                        justine::robocar::CarType type,
-                                       bool guided
-                                     ) : justine::robocar::Car ( traffic, type ), m_guided ( guided )
+                                       bool guided ) : justine::robocar::Car ( traffic, type ), m_guided ( guided )
+{
+
+}
+
+justine::robocar::CopCar::CopCar ( justine::robocar::Traffic & traffic,
+                                   bool guided ) : justine::robocar::SmartCar ( traffic, CarType::POLICE, guided )
 {
 
 }
@@ -180,7 +185,7 @@ void justine::robocar::SmartCar::nextEdge ( void )
      }
 
 }
-
+/*
 void justine::robocar::SmartCar::nextGuidedEdge ( void )
 {
      if ( traffic.hasNode ( to_node() ) ) {
@@ -226,6 +231,64 @@ void justine::robocar::SmartCar::nextGuidedEdge ( void )
      }
 
 }
+*/
+
+void justine::robocar::SmartCar::nextGuidedEdge ( void )
+{
+     if ( traffic.hasNode ( to_node() ) ) {
+
+          if ( m_step >= traffic.palist ( m_from, m_to ) ) {
+
+               std::vector<unsigned int>::iterator i = std::find ( route.begin(), route.end(), to_node() );
+
+               if ( i == route.end() )
+                    return;
+
+
+               osmium::unsigned_object_id_type next_m_to;
+               osmium::unsigned_object_id_type next_m_from;
+
+               if ( std::distance ( route.begin(), i ) == route.size()-1 ) {
+		 
+                    next_m_to = 0;
+                    next_m_from = to_node();
+		    
+               } else {
+		 
+                    next_m_to;
+                    osmium::unsigned_object_id_type inv = traffic.alist_inv ( to_node(), * ( i+1 ) );
+		    
+                    if ( inv != -1 )
+                         next_m_to = inv;
+                    else
+                         return;
+
+                    next_m_from = to_node();
+               }
+
+               if ( traffic.palist ( next_m_from, next_m_to ) >
+                         traffic.salist ( next_m_from, next_m_to ) ) {
+
+                    traffic.set_salist ( m_from, m_to, traffic.salist ( m_from, m_to )-1 );
+
+                    m_from = next_m_from;
+                    m_to = next_m_to;
+                    m_step = 0;
+
+                    traffic.set_salist ( m_from, m_to, traffic.salist ( m_from, m_to ) +1 );
+               }
+
+          } else
+               ++m_step;
+
+     } else {
+
+          // car stopped
+
+     }
+
+}
+
 
 void justine::robocar::SmartCar::step()
 {

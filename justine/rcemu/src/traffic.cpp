@@ -65,10 +65,12 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
 
                     for ( int i {0}; i<cl.get_num(); ++i ) {
 
-                         std::shared_ptr<SmartCar> c (
-                              std::make_shared<SmartCar> ( *this,
-                                                           cl.get_role() =='c'?CarType::POLICE:CarType::GANGSTER,
-                                                           cl.get_guided() ) );
+                         std::shared_ptr<SmartCar> c;
+
+                         if ( cl.get_role() =='c' )
+                              c = std::make_shared<CopCar> ( *this, cl.get_guided() );
+                         else
+                              c = std::make_shared<SmartCar> ( *this, CarType::GANGSTER, cl.get_guided() );
 
                          //TODO majd ráér később inicializálni, hogy ne lassítsa a szimulációt
                          c->init();

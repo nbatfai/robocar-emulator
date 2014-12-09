@@ -7,17 +7,20 @@ This is the "Police Edition" of Justine prototype for development
 of Robocar City Emulator. This edition includes the smartcity and 
 the traffic servers and a shared memory based sample client agent. 
 
-[nbatfai@desteny justine]$ src/smartcity --osm=../debrecen.osm --city=Debrecen --shm=JustineSharedMemory
-[nbatfai@desteny justine]$ src/traffic 10007|java -jar ../justine-car-window-0.0.1-jar-with-dependencies.jar ../lmap.txt 
-[nbatfai@desteny justine]$ src/sampleshmclient 
-[nbatfai@desteny justine]$ (sleep 1; echo "<init Norbi 100 g>"; sleep 1)|telnet localhost 10007
+Usage
+-----
 
-Install and Usage
------------------
+[nbatfai@desteny rcemu]$ src/smartcity --osm=../debrecen.osm --city=Debrecen --shm=JustineSharedMemory
+[nbatfai@desteny rclog]$ ../rcemu/src/traffic 10007|tee traffic.log|java -jar target/site/justine-car-window-0.0.10-jar-with-dependencies.jar ../../../lmap.txt
+[nbatfai@desteny rcemu]$ src/sampleshmclient 
+[nbatfai@desteny ~]$ (sleep 1; echo "<init Norbi 200 c>"; sleep 1)|telnet localhost 10007
+
+Install
+-------
+
 autoreconf --install
 ./configure
 make
-src/bstops ../../debrecen.osm
 
 if the libosmium headers are installed in a user's home directory, use 
 the option AM_CXXFLAGS=-I/home/user/libosmium/include in the configure command:
