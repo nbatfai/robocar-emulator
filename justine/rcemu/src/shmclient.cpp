@@ -279,7 +279,7 @@ void justine::sampleclient::ShmClient::start ( boost::asio::io_service& io_servi
 
      for ( ;; ) {
 
-          std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
+          std::this_thread::sleep_for ( std::chrono::milliseconds ( 400 ) );
 
           gangsters ( socket, id );
 
@@ -288,11 +288,11 @@ void justine::sampleclient::ShmClient::start ( boost::asio::io_service& io_servi
           unsigned int s {0u};
 
           car ( socket, id, &f, &t, &s );
-
+	  
           if ( f == 2969934868 && !fto ) {
                route1 ( socket, id );
                std::swap<bool> ( fto, ffrom );
-          } else if ( f == 320900594 && !ffrom ) {
+	  } else if ( f == 1348670117 && !ffrom ) {
                route2 ( socket, id );
                std::swap<bool> ( fto, ffrom );
           }
