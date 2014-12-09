@@ -263,7 +263,7 @@ public class CarWindow extends javax.swing.JFrame {
                             g2d.drawImage(markerImgGangster, (int) point.getX() - markerImgGangster.getWidth(jXMapV),
                                     (int) point.getY() - markerImgGangster.getHeight(jXMapV), null);
                         } else if (w instanceof WaypointCaught) {
-                            g2d.drawImage(markerImgGangster, (int) point.getX() - markerImgCaught.getWidth(jXMapV),
+                            g2d.drawImage(markerImgCaught, (int) point.getX() - markerImgCaught.getWidth(jXMapV),
                                     (int) point.getY() - markerImgCaught.getHeight(jXMapV), null);
                         } else {
                             g2d.drawImage(markerImg, (int) point.getX() - markerImg.getWidth(jXMapV),
