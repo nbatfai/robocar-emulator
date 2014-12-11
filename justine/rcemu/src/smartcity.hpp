@@ -46,6 +46,7 @@
 #include <exception>
 #include <stdexcept>
 
+#include <iomanip>
 
 namespace justine {
 namespace robocar {
@@ -141,19 +142,20 @@ public:
                }
 
 #ifdef DEBUG
-               std::cout << "!!!" << alist.size() << std::endl;
-               std::cout << "!!!" << shm_map_n->size() << std::endl;
+               std::cout << " alist.size = " << alist.size() << " (deg- >= 1)"<< std::endl;
+               std::cout << " SHM/alist.size = " << shm_map_n->size() << std::endl;
 #endif
 
 
           } catch ( boost::interprocess::bad_alloc e ) {
 
-               std::cerr << "Out of shared memory..." << std::cerr;
+               std::cerr << " Out of shared memory..." << std::cerr;
                std::cout << e.what() <<std::endl;
 
                std::cerr
-                         << "Shared memory usage: "
+                         << " Shared memory usage: "
                          << segment->get_free_memory() /1024.0/1024.0 << " Mbytes "
+                         << std::setprecision ( 2 )
                          << 100.0- ( 100.0*segment->get_free_memory() ) /segment->get_size()
                          << "% is free"
                          << std::endl;
@@ -168,8 +170,9 @@ public:
 
 #ifdef DEBUG
           std::cout
-                    << "Shared memory usage: "
+                    << " Shared memory usage: "
                     << segment->get_free_memory() /1024.0/1024.0 << " Mbytes "
+                    << std::setprecision ( 2 )
                     << 100.0- ( 100.0*segment->get_free_memory() ) /segment->get_size()
                     << "% is free"
                     << std::endl;

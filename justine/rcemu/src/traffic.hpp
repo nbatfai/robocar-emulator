@@ -84,7 +84,7 @@ public:
           std::cout << "Initializing routine cars ... " << std::endl;
 #endif
 
-          for ( int i {0}; i<m_size; ++i ) {
+          for ( int i {0}; i < m_size; ++i ) {
 
                //std::unique_ptr<Car> car(std::make_unique<Car>(*this)); //14, 4.9
                //std::unique_ptr<Car> car(new Car {*this});
@@ -171,7 +171,7 @@ public:
      }
 
      inline void pursuit ( void ) {
-       
+
           for ( auto car1:m_smart_cars ) {
 
                if ( car1->get_type() == CarType::POLICE ) {
@@ -188,10 +188,10 @@ public:
                               double d = dst ( lon1, lat1, lon2, lat2 );
 
                               if ( d<10.0 ) {
-				
+
                                    car->set_type ( CarType::CAUGHT );
-				    
-			      }
+
+                              }
                          }
                     }
                }

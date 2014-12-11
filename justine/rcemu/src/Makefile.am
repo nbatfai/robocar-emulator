@@ -17,7 +17,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-bin_PROGRAMS = smartcity traffic sampleshmclient
+bin_PROGRAMS = smartcity traffic sampleshmclient samplemyshmclient
 
 smartcity_CXXFLAGS = $(CXXFLAGS) $(BOOST_CPPFLAGS)
 smartcity_LDFLAGS = $(BOOST_LDFLAGS) $(BOOST_PROGRAM_OPTIONS_LDFLAGS) $(BOOST_GRAPH_LDFLAGS) $(SHM_OPEN_LIBS) $(LIBS) $(BOOST_SYSTEM_LDFLAGS)  $(BOOST_THREAD_LDFLAGS)
@@ -50,3 +50,9 @@ sampleshmclient_LDFLAGS = $(BOOST_LDFLAGS) $(BOOST_PROGRAM_OPTIONS_LDFLAGS) $(BO
 sampleshmclient_LIBS = $(BOOST_PROGRAM_OPTIONS_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_ASIO_LIBS) $(SHM_OPEN_LIBS) $(LIBS) $(BOOST_SYSTEM_LIBS) $(BOOST_LOG_LIBS)
 sampleshmclient_LDADD = $(BOOST_LDFLAGS) $(BOOST_PROGRAM_OPTIONS_LIBS) $(BOOST_THREAD_LDFLAGS) $(BOOST_ASIO_LDFLAGS) $(SHM_OPEN_LIBS) $(LIBS) $(BOOST_SYSTEM_LDFLAGS) $(BOOST_LOG_LDFLAGS)
 sampleshmclient_SOURCES = smartcity.hpp car.hpp shmclient.hpp shmclient.cpp shmclient-main.cpp
+
+samplemyshmclient_CXXFLAGS = $(CXXFLAGS)
+samplemyshmclient_LDFLAGS = $(BOOST_LDFLAGS) $(BOOST_PROGRAM_OPTIONS_LDFLAGS) $(BOOST_THREAD_LDFLAGS) $(BOOST_ASIO_LDFLAGS) $(SHM_OPEN_LIBS) $(BOOST_LOG_LDFLAGS) $(LIBS) $(BOOST_SYSTEM_LDFLAGS)
+samplemyshmclient_LIBS = $(BOOST_PROGRAM_OPTIONS_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_ASIO_LIBS) $(SHM_OPEN_LIBS) $(LIBS) $(BOOST_SYSTEM_LIBS) $(BOOST_LOG_LIBS)
+samplemyshmclient_LDADD = $(BOOST_LDFLAGS) $(BOOST_PROGRAM_OPTIONS_LIBS) $(BOOST_THREAD_LDFLAGS) $(BOOST_ASIO_LDFLAGS) $(SHM_OPEN_LIBS) $(LIBS) $(BOOST_SYSTEM_LDFLAGS) $(BOOST_LOG_LDFLAGS)
+samplemyshmclient_SOURCES = smartcity.hpp car.hpp shmclient.hpp myshmclient.hpp myshmclient.cpp myshmclient-main.cpp

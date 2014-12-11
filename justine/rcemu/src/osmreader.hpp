@@ -84,7 +84,7 @@ public:
           try {
 
 #ifdef DEBUG
-               std::cout << "OSMReader is running... " << std::endl;
+               std::cout << "\n OSMReader is running... " << std::endl;
 #endif
 
                osmium::io::File infile ( osm_file );
@@ -97,30 +97,30 @@ public:
                reader.close();
 
 #ifdef DEBUG
-               std::cout << "#OSM Nodes: " << nOSM_nodes << "\n";
-               std::cout << "#OSM Highways: " << nOSM_ways << "\n";
-               std::cout << "#Kms (Total length of highways) = " << sum_highhway_length/1000.0 << std::endl;
-               std::cout << "#OSM Relations: " << nOSM_relations << "\n";
-               std::cout << "#Highway Nodes: " << sum_highhway_nodes << "\n";
-               std::cout << "#Unique Highway Nodes: " << sum_unique_highhway_nodes << "\n";
-               std::cout << "E= (#Highway Nodes - #OSM Highways): " << sum_highhway_nodes - nOSM_ways << "\n";
-               std::cout << "V= (#Unique Highway Nodes):" << sum_unique_highhway_nodes << "\n";
-               std::cout << "V^2/E= "
+               std::cout << " #OSM Nodes: " << nOSM_nodes << "\n";
+               std::cout << " #OSM Highways: " << nOSM_ways << "\n";
+               std::cout << " #Kms (Total length of highways) = " << sum_highhway_length/1000.0 << std::endl;
+               std::cout << " #OSM Relations: " << nOSM_relations << "\n";
+               std::cout << " #Highway Nodes: " << sum_highhway_nodes << "\n";
+               std::cout << " #Unique Highway Nodes: " << sum_unique_highhway_nodes << "\n";
+               std::cout << " E= (#Highway Nodes - #OSM Highways): " << sum_highhway_nodes - nOSM_ways << "\n";
+               std::cout << " V= (#Unique Highway Nodes):" << sum_unique_highhway_nodes << "\n";
+               std::cout << " V^2/E= "
                          <<
                          ( ( long ) sum_unique_highhway_nodes * ( long ) sum_unique_highhway_nodes )
                          / ( double ) ( sum_highhway_nodes - nOSM_ways )
                          << "\n";
-               std::cout << "Edge_multiplicity: " << edge_multiplicity << std::endl;
-               std::cout << "max edle length: " << max_edge_length << std::endl;
-               std::cout << "edle length mean: " << mean_edge_length/cedges << std::endl;
-               std::cout << "cedges: " << cedges << std::endl;
+               std::cout << " Edge_multiplicity: " << edge_multiplicity << std::endl;
+               std::cout << " max edle length: " << max_edge_length << std::endl;
+               std::cout << " edle length mean: " << mean_edge_length/cedges << std::endl;
+               std::cout << " cedges: " << cedges << std::endl;
 
-               std::cout << "#Buses = " << busWayNodesMap.size() << std::endl;
+               std::cout << " #Buses = " << busWayNodesMap.size() << std::endl;
 
-               std::cout << "Node locations " << locations.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
-               std::cout << "Waynode locations " << waynode_locations.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
-               std::cout << "Vertices " << vert.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
-               std::cout << "way2nodes " << way2nodes.size() << "" << std::endl;
+               std::cout << " Node locations " << locations.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
+               std::cout << " Waynode locations " << waynode_locations.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
+               std::cout << " Vertices " << vert.used_memory() /1024.0/1024.0 << " Mbytes" << std::endl;
+               std::cout << " way2nodes " << way2nodes.size() << "" << std::endl;
 
                std::set<osmium::unsigned_object_id_type> sum_vertices;
                std::map<osmium::unsigned_object_id_type, size_t>  word_map;
@@ -136,10 +136,10 @@ public:
                     }
 
                }
-               std::cout << "#citymap edges = "<< sum_edges<< std::endl;
-               std::cout << "#citymap vertices = "<< sum_vertices.size() << std::endl;
-               std::cout << "#citymap vertices (deg- >= 1) = "<< alist.size() << std::endl;
-               std::cout << "#onewayc = "<< onewayc<< std::endl;
+               std::cout << " #citymap edges = "<< sum_edges<< std::endl;
+               std::cout << " #citymap vertices = "<< sum_vertices.size() << std::endl;
+               std::cout << " #citymap vertices (deg- >= 1) = "<< alist.size() << std::endl;
+               std::cout << " #onewayc = "<< onewayc<< std::endl;
 
 #endif
 

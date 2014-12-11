@@ -54,7 +54,7 @@ namespace justine {
 namespace sampleclient {
 
 /**
- * @brief A sample class used for testing.
+ * @brief A sample class used for testing IPC mechanisms (SHM and sockets) which are used by the city emulator.
  *
  * This sample class shows how client agents can connect and communicate with traffic emulator using shared memory.
  *
@@ -68,7 +68,7 @@ public:
       * @brief This constructor initializes the shared memory segment.
       * @param shm_segment the shared memory object name
       *
-      * aaa
+      * This constructor attaches the shared memory segment identified by the param shm_segment.
       */
      ShmClient ( const char * shm_segment ) {
 
@@ -79,7 +79,6 @@ public:
           shm_map =
                segment->find<justine::robocar::shm_map_Type> (
                     "JustineMap" ).first;
-
      }
 
      ~ShmClient() {
@@ -194,15 +193,16 @@ public:
 protected:
 
      /**
-      * \brief The shared memory object.
-      */
-     boost::interprocess::managed_shared_memory *segment;
-     /**
       * \brief The OSM map data stored in a shared memory segment.
       */
      boost::interprocess::offset_ptr<justine::robocar::shm_map_Type> shm_map;
 
 private:
+
+     /**
+      * \brief The shared memory object.
+      */
+     boost::interprocess::managed_shared_memory *segment;
 
      void foo ( void );
      int init ( boost::asio::ip::tcp::socket & socket );
