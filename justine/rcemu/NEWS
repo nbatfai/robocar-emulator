@@ -1,3 +1,7 @@
+0.0.14,  2014-12-13, Norbert Bátfai
+
+  * Added MyShmClient class to make routing easier, http://youtu.be/CTQdcxYMZrk 
+
 0.0.11,  2014-12-09, Norbert Bátfai
   
   * Capturing a gangster driven car by accident, http://youtu.be/mPDKr0zJoL4

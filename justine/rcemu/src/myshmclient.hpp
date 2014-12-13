@@ -374,7 +374,7 @@ private:
      }
 
      int init ( boost::asio::ip::tcp::socket & socket );
-     unsigned gangsters ( boost::asio::ip::tcp::socket & socket, int id );
+     unsigned gangsters ( boost::asio::ip::tcp::socket & socket, int id, osmium::unsigned_object_id_type cop );
      void pos ( boost::asio::ip::tcp::socket & socket, int id );
      void car ( boost::asio::ip::tcp::socket & socket, int id, unsigned *f, unsigned *t, unsigned* s );
      void route ( boost::asio::ip::tcp::socket & socket, int id, std::vector<osmium::unsigned_object_id_type> & );

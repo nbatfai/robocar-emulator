@@ -32,61 +32,14 @@
 #include <shmclient.hpp>
 //#include <trafficlexer.hpp>
 
-double justine::sampleclient::ShmClient::dst ( osmium::unsigned_object_id_type n1, osmium::unsigned_object_id_type n2 ) const
-{
-
-     justine::robocar::shm_map_Type::iterator iter1=shm_map->find ( n1 );
-     justine::robocar::shm_map_Type::iterator iter2=shm_map->find ( n2 );
-
-     osmium::geom::Coordinates c1 {iter1->second.lon/10000000.0, iter1->second.lat/10000000.0};
-     osmium::geom::Coordinates c2 {iter2->second.lon/10000000.0, iter2->second.lat/10000000.0};
-
-     return osmium::geom::haversine::distance ( c1, c2 );
-
-}
-
-double justine::sampleclient::ShmClient::dst ( double lon1, double lat1, double lon2, double lat2 ) const
-{
-
-     osmium::geom::Coordinates c1 {lon1, lat1};
-     osmium::geom::Coordinates c2 {lon2, lat2};
-
-     return osmium::geom::haversine::distance ( c1, c2 );
-
-}
-
-void justine::sampleclient::ShmClient::toGPS ( osmium::unsigned_object_id_type from,
-          osmium::unsigned_object_id_type to,
-          osmium::unsigned_object_id_type step, double *lo, double *la ) const
-{
-
-     justine::robocar::shm_map_Type::iterator iter1=shm_map->find ( from );
-     double lon1 {iter1->second.lon/10000000.0}, lat1 {iter1->second.lat/10000000.0};
-
-     justine::robocar::shm_map_Type::iterator iter2=shm_map->find ( alist ( from, to ) );
-     double lon2 {iter2->second.lon/10000000.0}, lat2 {iter2->second.lat/10000000.0};
-
-     osmium::unsigned_object_id_type maxstep = palist ( from, to );
-
-     if ( maxstep == 0 ) {
-          maxstep = 1;
-     }
-
-     lat1 += step * ( ( lat2 - lat1 ) / maxstep );
-     lon1 += step * ( ( lon2 - lon1 ) / maxstep );
-
-     *lo = lon1;
-     *la = lat1;
-
-}
 
 void justine::sampleclient::ShmClient::foo ( void )
 {
 
-     osmium::unsigned_object_id_type random_node = get_random_node();
+  osmium::unsigned_object_id_type random_node = get_random_node();
 
-     std::cout << random_node << std::endl;
-     std::cout << num_edges ( random_node ) << std::endl;
+  std::cout << random_node << std::endl;
+  std::cout << num_edges ( random_node ) << std::endl;
 
 }
 
@@ -95,166 +48,184 @@ char data[524288];
 void justine::sampleclient::ShmClient::gangsters ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data, "<gangsters " );
-     length += std::sprintf ( data+length, "%d>", id );
+  size_t length = std::sprintf ( data, "<gangsters " );
+  length += std::sprintf ( data+length, "%d>", id );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
-     }
+      throw boost::system::system_error ( err );
+    }
 
-     std::cout.write ( data, length );
-     std::cout << "Command GANGSTER sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command GANGSTER sent." << std::endl;
 
 }
 
 int justine::sampleclient::ShmClient::init ( boost::asio::ip::tcp::socket & socket )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data, "<init guided Norbi 1 c>" );
+  size_t length = std::sprintf ( data, "<init guided Norbi 1 c>" );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
+      throw boost::system::system_error ( err );
 
-     }
+    }
 
-     int id {0};
-     std::sscanf ( data, "<OK %d", &id );
+  int id {0};
+  std::sscanf ( data, "<OK %d", &id );
 
-     std::cout.write ( data, length );
-     std::cout << "Command INIT sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command INIT sent." << std::endl;
 
-     return id;
+  return id;
 
 }
 
 void justine::sampleclient::ShmClient::pos ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data, "<pos " );
-     length += std::sprintf ( data+length, "%d %u %u>", id, 2969934868u, 651365957u );
+  size_t length = std::sprintf ( data, "<pos " );
+  length += std::sprintf ( data+length, "%d %u %u>", id, 2969934868u, 651365957u );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
+      throw boost::system::system_error ( err );
 
-     }
+    }
 
-     std::cout.write ( data, length );
-     std::cout << "Command POS sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command POS sent." << std::endl;
 }
 
 void justine::sampleclient::ShmClient::car ( boost::asio::ip::tcp::socket & socket, int id, unsigned *f, unsigned *t, unsigned* s )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data, "<car " );
-     length += std::sprintf ( data+length, "%d>", id );
+  size_t length = std::sprintf ( data, "<car " );
+  length += std::sprintf ( data+length, "%d>", id );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
-     }
+      throw boost::system::system_error ( err );
+    }
 
-     int idd {0};
-     std::sscanf ( data, "<OK %d %u %u %u", &idd, f, t, s );
+  int idd {0};
+  std::sscanf ( data, "<OK %d %u %u %u", &idd, f, t, s );
 
-     std::cout.write ( data, length );
-     std::cout << "Command CAR sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command CAR sent." << std::endl;
 
 }
 
 void justine::sampleclient::ShmClient::route1 ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data,
-                                    "<route 6 %d 2969934868 651365957 320900801 1348670109 320900594 1348670117>", id );
+  size_t length = std::sprintf ( data,
+                                 "<route 6 %d 2969934868 651365957 320900801 1348670109 320900594 1348670117>", id );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
+      throw boost::system::system_error ( err );
 
-     }
+    }
 
-     std::cout.write ( data, length );
-     std::cout << "Command ROUTE1 sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command ROUTE1 sent." << std::endl;
 
 }
 
 void justine::sampleclient::ShmClient::route2 ( boost::asio::ip::tcp::socket & socket, int id )
 {
 
-     boost::system::error_code err;
+  boost::system::error_code err;
 
-     size_t length = std::sprintf ( data,
-                                    "<route 6 %d 1348670117 320900594 1348670109 320900801 651365957 2969934868>", id );
+  size_t length = std::sprintf ( data,
+                                 "<route 6 %d 1348670117 320900594 1348670109 320900801 651365957 2969934868>", id );
 
-     socket.send ( boost::asio::buffer ( data, length ) );
+  socket.send ( boost::asio::buffer ( data, length ) );
 
-     length = socket.read_some ( boost::asio::buffer ( data ), err );
+  length = socket.read_some ( boost::asio::buffer ( data ), err );
 
-     if ( err == boost::asio::error::eof ) {
+  if ( err == boost::asio::error::eof )
+    {
 
-          // TODO
+      // TODO
 
-     } else if ( err ) {
+    }
+  else if ( err )
+    {
 
-          throw boost::system::system_error ( err );
+      throw boost::system::system_error ( err );
 
-     }
+    }
 
-     std::cout.write ( data, length );
-     std::cout << "Command ROUTE2 sent." << std::endl;
+  std::cout.write ( data, length );
+  std::cout << "Command ROUTE2 sent." << std::endl;
 
 }
 
@@ -262,39 +233,43 @@ void justine::sampleclient::ShmClient::route2 ( boost::asio::ip::tcp::socket & s
 void justine::sampleclient::ShmClient::start ( boost::asio::io_service& io_service, const char * port )
 {
 
-     foo();
+  foo();
 
-     boost::asio::ip::tcp::resolver resolver ( io_service );
-     boost::asio::ip::tcp::resolver::query query ( boost::asio::ip::tcp::v4(), "localhost", port );
-     boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve ( query );
+  boost::asio::ip::tcp::resolver resolver ( io_service );
+  boost::asio::ip::tcp::resolver::query query ( boost::asio::ip::tcp::v4(), "localhost", port );
+  boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve ( query );
 
-     boost::asio::ip::tcp::socket socket ( io_service );
-     boost::asio::connect ( socket, iterator );
+  boost::asio::ip::tcp::socket socket ( io_service );
+  boost::asio::connect ( socket, iterator );
 
-     int id = init ( socket );
+  int id = init ( socket );
 
-     pos ( socket, id );
+  pos ( socket, id );
 
-     bool fto {false}, ffrom {true};
+  bool fto {false}, ffrom {true};
 
-     for ( ;; ) {
+  for ( ;; )
+    {
 
-          std::this_thread::sleep_for ( std::chrono::milliseconds ( 400 ) );
+      std::this_thread::sleep_for ( std::chrono::milliseconds ( 400 ) );
 
-          gangsters ( socket, id );
+      gangsters ( socket, id );
 
-          unsigned int f {0u};
-          unsigned int t {0u};
-          unsigned int s {0u};
+      unsigned int f {0u};
+      unsigned int t {0u};
+      unsigned int s {0u};
 
-          car ( socket, id, &f, &t, &s );
-	  
-          if ( f == 2969934868 && !fto ) {
-               route1 ( socket, id );
-               std::swap<bool> ( fto, ffrom );
-	  } else if ( f == 1348670117 && !ffrom ) {
-               route2 ( socket, id );
-               std::swap<bool> ( fto, ffrom );
-          }
-     }
+      car ( socket, id, &f, &t, &s );
+
+      if ( f == 2969934868 && !fto )
+        {
+          route1 ( socket, id );
+          std::swap<bool> ( fto, ffrom );
+        }
+      else if ( f == 1348670117 && !ffrom )
+        {
+          route2 ( socket, id );
+          std::swap<bool> ( fto, ffrom );
+        }
+    }
 }

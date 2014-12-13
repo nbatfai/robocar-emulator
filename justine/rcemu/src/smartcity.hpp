@@ -134,7 +134,7 @@ public:
 
                          v.m_alist.push_back ( *noderefi );
                          v.m_salist.push_back ( 0u );
-                         v.m_palist.push_back ( palist[iter->first][std::distance ( iter->second.begin(), noderefi )] );
+                         v.m_palist.push_back ( palist[iter->first][std::distance ( iter->second.begin(), noderefi )]+1 );
                     }
 
                     map_pair_Type p ( iter->first, v );
