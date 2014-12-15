@@ -217,7 +217,6 @@ void justine::robocar::SmartCar::nextGuidedEdge ( void )
           if ( i == route.end() )
             return;
 
-
           osmium::unsigned_object_id_type next_m_to;
           osmium::unsigned_object_id_type next_m_from;
 
@@ -316,11 +315,16 @@ void justine::robocar::SmartCar::set_route ( std::vector<unsigned int> & route )
 {
   this->route = route;
   m_routed = true;
+  
   if ( m_from == route[0] )
     {
-      m_to = traffic.alist_inv ( m_from, route[1] );
-      m_step = 0;
+      int next_m_to = traffic.alist_inv ( m_from, route[1] );
 
+      if ( next_m_to != m_to )
+        {
+          m_to = next_m_to;
+          m_step = 0;
+        }
     }
 }
 

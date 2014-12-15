@@ -36,108 +36,126 @@
 #include <iostream>
 #include <vector>
 
-namespace justine {
-namespace robocar {
+namespace justine
+{
+namespace robocar
+{
 
-enum class CarType: unsigned int {
-     NORMAL=0, POLICE, GANGSTER, CAUGHT
+enum class CarType: unsigned int
+{
+  NORMAL=0, POLICE, GANGSTER, CAUGHT
 };
 
 class Traffic;
 
-class Car {
+class Car
+{
 public:
 
-     Car ( Traffic & traffic , CarType type = CarType::NORMAL );
+  Car ( Traffic & traffic , CarType type = CarType::NORMAL );
 
-     virtual void init();
+  virtual void init();
 
-     virtual void step();
+  virtual void step();
 
-     osmium::unsigned_object_id_type from() const {
-          return m_from;
-     }
-     osmium::unsigned_object_id_type to() const {
-          return m_to;
-     }
-     osmium::unsigned_object_id_type get_step() const {
-          return m_step;
-     }
-     CarType get_type() const {
-          return m_type;
-     }
-     void set_type ( CarType type ) {
-          m_type = type;
-     }
-     
-     osmium::unsigned_object_id_type to_node() const;
-     osmium::unsigned_object_id_type get_max_steps() const;
-     virtual void nextEdge ( void );
-     virtual void nextSmarterEdge ( void );
+  osmium::unsigned_object_id_type from() const
+  {
+    return m_from;
+  }
+  osmium::unsigned_object_id_type to() const
+  {
+    return m_to;
+  }
+  osmium::unsigned_object_id_type get_step() const
+  {
+    return m_step;
+  }
+  CarType get_type() const
+  {
+    return m_type;
+  }
+  void set_type ( CarType type )
+  {
+    m_type = type;
+  }
 
-     friend std::ostream & operator<< ( std::ostream & os, Car & c ) {
+  osmium::unsigned_object_id_type to_node() const;
+  osmium::unsigned_object_id_type get_max_steps() const;
+  virtual void nextEdge ( void );
+  virtual void nextSmarterEdge ( void );
 
-          std::cout
-                    << c.m_from
-                    << " "
-                    << c.to_node()
-                    << " "
-                    << c.get_max_steps()
-                    << " "
-                    << c.get_step()
-                    << " "
-                    << static_cast<unsigned int> ( c.get_type() );
+  friend std::ostream & operator<< ( std::ostream & os, Car & c )
+  {
 
-          return os;
+    std::cout
+        << c.m_from
+        << " "
+        << c.to_node()
+        << " "
+        << c.get_max_steps()
+        << " "
+        << c.get_step()
+        << " "
+        << static_cast<unsigned int> ( c.get_type() );
 
-     }
+    return os;
+
+  }
 
 protected:
-     Traffic & traffic;
-     CarType m_type {CarType::NORMAL};
-     osmium::unsigned_object_id_type m_from {3130863972};
-     osmium::unsigned_object_id_type m_to {0};
-     osmium::unsigned_object_id_type m_step {0};
+  Traffic & traffic;
+  CarType m_type {CarType::NORMAL};
+  osmium::unsigned_object_id_type m_from {3130863972};
+  osmium::unsigned_object_id_type m_to {0};
+  osmium::unsigned_object_id_type m_step {0};
 
 private:
 
 };
 
-class SmartCar : public Car {
+class SmartCar : public Car
+{
 public:
-     SmartCar ( Traffic & traffic, CarType type, bool guided );
+  SmartCar ( Traffic & traffic, CarType type, bool guided );
 
-     virtual void step();
-     virtual void init();
+  virtual void step();
+  virtual void init();
 
-     bool get_guided() const {
-          return m_guided;
-     }
-     void set_route ( std::vector<unsigned int> & route );
-     virtual void nextEdge ( void );
-     virtual void nextGuidedEdge ( void );
-     bool set_fromto ( unsigned int from, unsigned int to );
+  bool get_guided() const
+  {
+    return m_guided;
+  }
+  void set_route ( std::vector<unsigned int> & route );
+  virtual void nextEdge ( void );
+  virtual void nextGuidedEdge ( void );
+  bool set_fromto ( unsigned int from, unsigned int to );
 
 private:
-     bool m_guided {false};
-     bool m_routed {false};
+  bool m_guided {false};
+  bool m_routed {false};
 
-     std::vector<unsigned int> route;
+  std::vector<unsigned int> route;
 
 };
 
-class CopCar : public SmartCar {
+class CopCar : public SmartCar
+{
 public:
   CopCar ( Traffic & traffic, bool guided );
-  
-  int get_num_captured_gangsters() const {
+
+  int get_num_captured_gangsters() const
+  {
     return m_num_captured_gangsters;
   }
-  
+
+  void captured_gangster ( void )
+  {
+    ++m_num_captured_gangsters;
+  }
 protected:
-  
-  int m_num_captured_gangsters{0};
-  
+
+  int m_num_captured_gangsters {0};
+
 };
 
 }

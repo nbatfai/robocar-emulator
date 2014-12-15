@@ -42,66 +42,79 @@
 #include <cstdio>
 #include <vector>
 
-namespace justine {
-namespace robocar {
+namespace justine
+{
+namespace robocar
+{
 
-class CarLexer : public yyFlexLexer {
+class CarLexer : public yyFlexLexer
+{
 public:
 
-     virtual int yylex ();
+  virtual int yylex ();
 
-     friend std::ostream & operator<< ( std::ostream & os, CarLexer & cl ) {
-          os
-                    << cl.name
-                    << " "
-                    << cl.role
-                    << std::endl;
+  friend std::ostream & operator<< ( std::ostream & os, CarLexer & cl )
+  {
+    os << cl.name
+       << " "
+       << cl.role
+       << std::endl;
 
-          return os;
-     }
+    return os;
+  }
 
-     char* get_name() {
-          return name;
-     }
-     char get_role() const {
-          return role;
-     }
-     int get_num() const {
-          return num;
-     }
-     int get_errnumber() const {
-          return m_errnumber;
-     }
-     bool get_guided() const {
-          return m_guided;
-     }
-     int get_cmd() const {
-          return m_cmd;
-     }
-     int get_id() const {
-          return m_id;
-     }
-     std::vector<unsigned int> & get_route ( void ) {
-          return route;
-     }
-     unsigned int get_from() const {
-          return from;
-     }
-     unsigned int get_to() const {
-          return to;
-     }
+  char* get_name()
+  {
+    return name;
+  }
+  char get_role() const
+  {
+    return role;
+  }
+  int get_num() const
+  {
+    return num;
+  }
+  int get_errnumber() const
+  {
+    return m_errnumber;
+  }
+  bool get_guided() const
+  {
+    return m_guided;
+  }
+  int get_cmd() const
+  {
+    return m_cmd;
+  }
+  int get_id() const
+  {
+    return m_id;
+  }
+  std::vector<unsigned int> & get_route ( void )
+  {
+    return route;
+  }
+  unsigned int get_from() const
+  {
+    return from;
+  }
+  unsigned int get_to() const
+  {
+    return to;
+  }
 
 private:
-     int m_cmd {0};
-     char name[128];
-     int num {0};
-     char role;
-     int m_errnumber {0};
-     bool m_guided {false};
-     std::vector<unsigned int> route;
-     int m_id {0};
-     unsigned int from {0u};
-     unsigned int to {0u};
+  int m_cmd {0};
+  char name[128];
+  int num {0};
+  char role;
+  int m_errnumber {0};
+  bool m_guided {false};
+  std::vector<unsigned int> route;
+  int m_id {0};
+  unsigned int from {0u};
+  unsigned int to {0u};
 
 };
 

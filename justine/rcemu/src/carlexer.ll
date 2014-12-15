@@ -49,6 +49,7 @@ ROUTE	"<route"
 CAR	"<car"
 POS	"<pos"
 GANGSTERS	"<gangsters"
+STAT	"<stat"
 %% 
 {POS}{WS}{INT}{WS}{INT}{WS}{INT}	{
 					  std::sscanf(yytext, "<pos %d %u %u", &m_id, &from, &to);
@@ -57,6 +58,10 @@ GANGSTERS	"<gangsters"
 {CAR}{WS}{INT}				{
 					  std::sscanf(yytext, "<car %d", &m_id);
 					  m_cmd = 1001;
+					}
+{STAT}{WS}{INT}				{
+					  std::sscanf(yytext, "<stat %d", &m_id);
+					  m_cmd = 1003;
 					}
 {GANGSTERS}{WS}{INT}			{
 					  std::sscanf(yytext, "<gangsters %d", &m_id);

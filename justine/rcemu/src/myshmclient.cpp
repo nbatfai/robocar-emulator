@@ -32,10 +32,9 @@
 #include <myshmclient.hpp>
 //#include <trafficlexer.hpp>
 
-
 char data[524288];
 
-unsigned justine::sampleclient::MyShmClient::gangsters ( boost::asio::ip::tcp::socket & socket, int id,
+std::vector<justine::sampleclient::MyShmClient::Gangster> justine::sampleclient::MyShmClient::gangsters ( boost::asio::ip::tcp::socket & socket, int id,
     osmium::unsigned_object_id_type cop )
 {
 
@@ -65,26 +64,23 @@ unsigned justine::sampleclient::MyShmClient::gangsters ( boost::asio::ip::tcp::s
   unsigned f, t, s;
   int n {0};
   int nn {0};
-  std::vector<unsigned> gangsters;
+  std::vector<Gangster> gangsters;
 
   while ( std::sscanf ( data+nn, "<OK %d %u %u %u>%n", &idd, &f, &t, &s, &n ) == 4 )
     {
       nn += n;
-      gangsters.push_back ( f );
+      gangsters.push_back ( Gangster {idd, f, t, s} );
     }
 
-  std::sort ( gangsters.begin(), gangsters.end(), [this, cop] ( unsigned x, unsigned y )
+  std::sort ( gangsters.begin(), gangsters.end(), [this, cop] ( Gangster x, Gangster y )
   {
-    return dst ( cop, x ) < dst ( cop, y );
+    return dst ( cop, x.to ) < dst ( cop, y.to );
   } );
 
   std::cout.write ( data, length );
   std::cout << "Command GANGSTER sent." << std::endl;
 
-  if ( gangsters.size() >0 )
-    return gangsters[0];
-  else
-    return 0;
+  return gangsters;
 }
 
 int justine::sampleclient::MyShmClient::init ( boost::asio::ip::tcp::socket & socket )
@@ -239,42 +235,38 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
 
   pos ( socket, id );
 
-  bool pursuit {false};
-
   unsigned int g {0u};
   unsigned int f {0u};
   unsigned int t {0u};
   unsigned int s {0u};
 
+  std::vector<Gangster> gngstrs;
+
   for ( ;; )
     {
-
-      std::this_thread::sleep_for ( std::chrono::milliseconds ( 400 ) );
+      std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
 
       car ( socket, id, &f, &t, &s );
 
-      if ( !pursuit )
-        {
-          g = gangsters ( socket, id, f );
+      gngstrs = gangsters ( socket, id, t );
 
-          if ( g > 0 )
+      if ( gngstrs.size() > 0 )
+        g = gngstrs[0].to;
+      else
+        g = 0;
+      if ( g > 0 )
+        {
+
+          std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath ( t, g );
+
+          if ( path.size() > 1 )
             {
 
-              std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath ( f, g );
+              std::copy ( path.begin(), path.end(),
+                          std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " -> " ) );
 
-              if ( path.size() > 1 )
-                {
-
-                  std::copy ( path.begin(), path.end(),
-                              std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, "->" ) );
-
-                  route ( socket, id, path );
-                  pursuit = true;
-                }
+              route ( socket, id, path );
             }
         }
-
-      if ( t == g )
-        pursuit = false;
     }
 }
