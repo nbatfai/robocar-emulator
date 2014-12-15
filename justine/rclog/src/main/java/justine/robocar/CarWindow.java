@@ -153,6 +153,23 @@ public class CarWindow extends javax.swing.JFrame {
 
                     }
 
+                    StringBuilder sb = new StringBuilder();
+
+                    int sec = time / 5;
+                    int min = sec / 60;
+                    sec = sec - min * 60;
+                    time = time - sec * 5;
+
+                    sb.append("|");
+                    sb.append(min);
+                    sb.append(":");
+                    sb.append(sec);
+                    sb.append(":");
+                    sb.append(time);
+                    sb.append("|");
+                    sb.append(" Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
+
+                    setTitle(sb.toString());
                     waypointPainter.setWaypoints(waypoints);
 
                     jXMapViewer.repaint();
@@ -209,13 +226,13 @@ public class CarWindow extends javax.swing.JFrame {
 
         final org.jxmapviewer.viewer.TileFactory tileFactoryArray[] = {
             new org.jxmapviewer.viewer.DefaultTileFactory(
-                    new org.jxmapviewer.OSMTileFactoryInfo()),
+            new org.jxmapviewer.OSMTileFactoryInfo()),
             new org.jxmapviewer.viewer.DefaultTileFactory(
-                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.MAP)),
+            new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.MAP)),
             new org.jxmapviewer.viewer.DefaultTileFactory(
-                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.SATELLITE)),
+            new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.SATELLITE)),
             new org.jxmapviewer.viewer.DefaultTileFactory(
-                    new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.HYBRID))
+            new org.jxmapviewer.VirtualEarthTileFactoryInfo(org.jxmapviewer.VirtualEarthTileFactoryInfo.HYBRID))
 
         };
 
