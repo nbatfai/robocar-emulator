@@ -158,14 +158,14 @@ public class CarWindow extends javax.swing.JFrame {
                     int sec = time / 5;
                     int min = sec / 60;
                     sec = sec - min * 60;
-                    time = time - sec * 5;
+                    time = time - min * 60 * 5 - sec * 5;
 
                     sb.append("|");
                     sb.append(min);
                     sb.append(":");
                     sb.append(sec);
                     sb.append(":");
-                    sb.append(time);
+                    sb.append(2*time);
                     sb.append("|");
                     sb.append(" Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
 

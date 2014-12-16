@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" version="5.1" xml:lang="en"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude">    
+    <info>
+        <title>Team Qualification Paper</title>
+        <authorgroup>
+            <author>
+                <personname>
+                    <honorific></honorific>
+                    <surname>LeaderSurname</surname>
+                    <firstname>LeaderFirstname</firstname>        
+                </personname>    
+                <affiliation>
+                    <shortaffil></shortaffil>
+                    <jobtitle></jobtitle>
+                    <orgname></orgname>
+                    <orgdiv></orgdiv>
+                    <address>
+                        <email></email>
+                    </address>
+                </affiliation>
+                <address>
+                    <street></street>
+                    <city></city>
+                    <postcode></postcode>
+                    <country></country>
+                    <email></email>
+                    <otheraddr>
+                        <link xlink:href=""></link>
+                    </otheraddr>
+                </address>
+            </author>
+            <author>
+                <personname>
+                    <honorific></honorific>
+                    <surname>MemberSurname</surname>
+                    <firstname>MemberFirstname</firstname>        
+                </personname>    
+                <affiliation>
+                    <shortaffil></shortaffil>
+                    <jobtitle></jobtitle>
+                    <orgname></orgname>
+                    <orgdiv></orgdiv>
+                    <address>
+                        <email></email>
+                    </address>
+                </affiliation>
+                <address>
+                    <street></street>
+                    <city></city>
+                    <postcode></postcode>
+                    <country></country>
+                    <email></email>
+                    <otheraddr>
+                        <link xlink:href=""></link>
+                    </otheraddr>
+                </address>
+            </author>            
+        </authorgroup>
+        <pubdate>2014</pubdate>
+    </info>                                                                                                
+    <para>
+        Team name:
+    </para>
+    <para>
+        Team logo:
+        <link xlink:href=""></link>
+    </para>
+    <para>
+        Qualification video:
+        <link xlink:href=""></link>
+    </para>
+</article>
