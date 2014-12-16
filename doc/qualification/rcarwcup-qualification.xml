@@ -3,7 +3,8 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:xi="http://www.w3.org/2001/XInclude">    
     <info>
-        <title>Team Qualification Paper</title>
+        <title>Team Name</title>
+        <subtitle>Team Qualification Paper</subtitle>
         <authorgroup>
             <author>
                 <personname>
@@ -61,9 +62,6 @@
         <pubdate>2014</pubdate>
     </info>                                                                                                
     <para>
-        Team name:
-    </para>
-    <para>
         Team logo:
         <link xlink:href=""></link>
     </para>
@@ -71,4 +69,24 @@
         Qualification video:
         <link xlink:href=""></link>
     </para>
+    <para>        
+        Under what license is your source code released?
+    </para>
+    <para>        
+        Please list the highlights of your project (one or two sentences per item).
+        <itemizedlist>
+            <listitem>
+                <para>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>        
 </article>

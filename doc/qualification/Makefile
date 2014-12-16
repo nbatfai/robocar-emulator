@@ -2,7 +2,7 @@ all:	clean validate_xmllint rcarwcup-qualification.pdf
 epub:	clean validate_xmllint rcarwcup-qualification.epub
 
 rcarwcup-qualification.pdf: rcarwcup-qualification.xml robocaremu-hu.xls
-	dblatex -T simple rcarwcup-qualification.xml -p robocaremu-hu.xls
+	dblatex -T native rcarwcup-qualification.xml -p robocaremu-hu.xls
 
 rcarwcup-qualification.epub: rcarwcup-qualification.xml
 	dbtoepub -o rcarwcup-qualification.epub rcarwcup-qualification.xml
