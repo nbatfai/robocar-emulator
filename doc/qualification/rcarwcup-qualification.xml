@@ -63,15 +63,46 @@
     </info>                                                                                                
     <para>
         Team logo:
-        <link xlink:href=""></link>
     </para>
+    <mediaobject>
+        <imageobject>
+            <imagedata fileref="" scale="45"/>
+        </imageobject>
+        <textobject>
+            <phrase>
+                Team logo
+            </phrase>
+        </textobject>
+    </mediaobject>    
     <para>
         Qualification video:
-        <link xlink:href=""></link>
     </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <link xlink:href=""></link>
+            </para>
+        </listitem>
+    </itemizedlist>
     <para>        
         Under what license is your source code released?
     </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+            </para>
+        </listitem>
+    </itemizedlist>    
+    <para>
+        Where is your repo?
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <link xlink:href=""></link>
+            </para>
+        </listitem>
+    </itemizedlist>
     <para>        
         Please list the highlights of your project (one or two sentences per item).
         <itemizedlist>
