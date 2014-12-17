@@ -48,7 +48,8 @@ justine::robocar::SmartCar::SmartCar ( justine::robocar::Traffic & traffic,
 }
 
 justine::robocar::CopCar::CopCar ( justine::robocar::Traffic & traffic,
-                                   bool guided ) : justine::robocar::SmartCar ( traffic, CarType::POLICE, guided )
+                                   bool guided, const char *name ) : 
+                                   justine::robocar::SmartCar ( traffic, CarType::POLICE, guided ), m_name(name)
 {
 
 }
@@ -68,7 +69,7 @@ void justine::robocar::SmartCar::init()
 
   if ( m_guided )
     {
-
+/*
       osmium::unsigned_object_id_type ini {2969934868};
 
       if ( traffic.hasNode ( ini ) )
@@ -79,6 +80,9 @@ void justine::robocar::SmartCar::init()
         {
           m_from = traffic.node();
         }
+*/
+
+      m_from = traffic.node();
 
       m_to = 0;
       m_step = 0;

@@ -84,19 +84,25 @@ public:
   virtual void nextEdge ( void );
   virtual void nextSmarterEdge ( void );
 
+  virtual void print ( std::ostream & os ) const
+  {
+
+    os << m_from
+       << " "
+       << to_node()
+       << " "
+       << get_max_steps()
+       << " "
+       << get_step()
+       << " "
+       << static_cast<unsigned int> ( get_type() );
+
+  }
+
   friend std::ostream & operator<< ( std::ostream & os, Car & c )
   {
 
-    std::cout
-        << c.m_from
-        << " "
-        << c.to_node()
-        << " "
-        << c.get_max_steps()
-        << " "
-        << c.get_step()
-        << " "
-        << static_cast<unsigned int> ( c.get_type() );
+    c.print ( os );
 
     return os;
 
@@ -121,6 +127,21 @@ public:
   virtual void step();
   virtual void init();
 
+  virtual void print ( std::ostream & os ) const
+  {
+    
+    os << m_from
+    << " "
+    << to_node()
+    << " "
+    << get_max_steps()
+    << " "
+    << get_step()
+    << " "
+    << static_cast<unsigned int> ( get_type() );
+    
+  }
+  
   bool get_guided() const
   {
     return m_guided;
@@ -141,8 +162,27 @@ private:
 class CopCar : public SmartCar
 {
 public:
-  CopCar ( Traffic & traffic, bool guided );
+  CopCar ( Traffic & traffic, bool guided, const char *name );
 
+  virtual void print ( std::ostream & os ) const
+  {
+    
+    os << m_from
+    << " "
+    << to_node()
+    << " "
+    << get_max_steps()
+    << " "
+    << get_step()
+    << " "
+    << static_cast<unsigned int> ( get_type() )
+    << " "
+    << get_num_captured_gangsters()
+    << " "
+    << m_name;
+    
+  }  
+  
   int get_num_captured_gangsters() const
   {
     return m_num_captured_gangsters;
@@ -155,6 +195,7 @@ public:
 protected:
 
   int m_num_captured_gangsters {0};
+  std::string m_name;
 
 };
 

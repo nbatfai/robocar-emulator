@@ -35,7 +35,7 @@ int justine::robocar::Traffic::addCop ( CarLexer& cl )
 {
   std::shared_ptr<CopCar> c;
 
-  c = std::make_shared<CopCar> ( *this, cl.get_guided() );
+  c = std::make_shared<CopCar> ( *this, cl.get_guided(), cl.get_name() );
 
 //TODO majd ráér később inicializálni, hogy ne lassítsa a szimulációt
   c->init();

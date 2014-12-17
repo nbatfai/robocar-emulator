@@ -72,7 +72,7 @@ class Traffic
 {
 public:
 
-  Traffic ( int size, const char * shm_segment, double catchdist ) :m_size ( size ), m_catchdist(catchdist)
+  Traffic ( int size, const char * shm_segment, double catchdist ) :m_size ( size ), m_catchdist ( catchdist )
   {
 
 #ifdef DEBUG
@@ -140,6 +140,9 @@ public:
         std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
       }
 
+      for ( auto c:m_cop_cars )
+	std::cout  << c;	
+      
   }
 
   osmium::unsigned_object_id_type virtual node()
@@ -281,18 +284,16 @@ public:
   friend std::ostream & operator<< ( std::ostream & os, Traffic & t )
   {
 
-    std::cout <<
-              t.m_time <<
-              " " <<
-              t.shm_map->size()
-              << std::endl;
+    os << t.m_time <<
+       " " <<
+       t.shm_map->size()
+       << std::endl;
 
     for ( shm_map_Type::iterator iter=t.shm_map->begin();
           iter!=t.shm_map->end(); ++iter )
       {
 
-        std::cout
-            << iter->first
+        os  << iter->first
             << " "
             << iter->second.lon
             << " "
@@ -302,21 +303,18 @@ public:
             << " ";
 
         for ( auto noderef : iter->second.m_alist )
-          std::cout
-              << noderef
+          os  << noderef
               << " ";
 
         for ( auto noderef : iter->second.m_salist )
-          std::cout
-              << noderef
+          os  << noderef
               << " ";
 
         for ( auto noderef : iter->second.m_palist )
-          std::cout
-              << noderef
+          os  << noderef
               << " ";
 
-        std::cout << std::endl;
+        os << std::endl;
 
       }
 
@@ -350,7 +348,7 @@ private:
 
   int addCop ( CarLexer& cl );
   int addGangster ( CarLexer& cl );
-  
+
   int m_size {10000};
   int m_time {0};
   std::mutex m_mutex;

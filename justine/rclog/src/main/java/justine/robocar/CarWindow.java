@@ -33,14 +33,21 @@ package justine.robocar;
 class WaypointPolice implements org.jxmapviewer.viewer.Waypoint {
 
     org.jxmapviewer.viewer.GeoPosition geoPosition;
+    String name;
 
-    public WaypointPolice(double lat, double lon) {
+    public WaypointPolice(double lat, double lon, String name) {
         geoPosition = new org.jxmapviewer.viewer.GeoPosition(lat, lon);
+        this.name = name;
     }
 
     @Override
     public org.jxmapviewer.viewer.GeoPosition getPosition() {
         return geoPosition;
+    }
+
+    String getName() {
+
+        return name;
     }
 }
 
@@ -119,6 +126,10 @@ public class CarWindow extends javax.swing.JFrame {
                     int step = 0, maxstep = 1, type = 0;
                     double lat, lon;
                     double lat2, lon2;
+                    int num_captured_gangsters;
+                    String name = "Cop";
+
+                    java.util.Map<String, Integer> cops = new java.util.HashMap<String, Integer>();
 
                     for (int i = 0; i < size; ++i) {
 
@@ -127,6 +138,17 @@ public class CarWindow extends javax.swing.JFrame {
                         maxstep = scan.nextInt();
                         step = scan.nextInt();
                         type = scan.nextInt();
+
+                        if (type == 1) {
+                            num_captured_gangsters = scan.nextInt();
+                            name = scan.next();
+
+                            if (cops.containsKey(name)) {
+                                cops.put(name, cops.get(name) + num_captured_gangsters);
+                            } else {
+                                cops.put(name, num_captured_gangsters);
+                            }
+                        }
 
                         lat = lmap.get(ref_from).lat;
                         lon = lmap.get(ref_from).lon;
@@ -142,7 +164,7 @@ public class CarWindow extends javax.swing.JFrame {
                         lon += step * ((lon2 - lon) / maxstep);
 
                         if (type == 1) {
-                            waypoints.add(new WaypointPolice(lat, lon));
+                            waypoints.add(new WaypointPolice(lat, lon, name));
                         } else if (type == 2) {
                             waypoints.add(new WaypointGangster(lat, lon));
                         } else if (type == 3) {
@@ -151,6 +173,10 @@ public class CarWindow extends javax.swing.JFrame {
                             waypoints.add(new org.jxmapviewer.viewer.DefaultWaypoint(lat, lon));
                         }
 
+                    }
+
+                    if (time >= 10 * 60 * 1000 / 200) {
+                        scan = null;
                     }
 
                     StringBuilder sb = new StringBuilder();
@@ -165,9 +191,10 @@ public class CarWindow extends javax.swing.JFrame {
                     sb.append(":");
                     sb.append(sec);
                     sb.append(":");
-                    sb.append(2*time);
+                    sb.append(2 * time);
                     sb.append("|");
-                    sb.append(" Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
+                    //sb.append(" Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
+                    sb.append(java.util.Arrays.toString(cops.entrySet().toArray()));
 
                     setTitle(sb.toString());
                     waypointPainter.setWaypoints(waypoints);
@@ -275,6 +302,17 @@ public class CarWindow extends javax.swing.JFrame {
                         if (w instanceof WaypointPolice) {
                             g2d.drawImage(markerImgPolice, (int) point.getX() - markerImgPolice.getWidth(jXMapV),
                                     (int) point.getY() - markerImgPolice.getHeight(jXMapV), null);
+
+                            g2d.setFont(new java.awt.Font("Serif", java.awt.Font.BOLD, 14));
+                            java.awt.FontMetrics fm = g2d.getFontMetrics();
+                            int nameWidth = fm.stringWidth(((WaypointPolice) w).getName());
+                            g2d.setColor(java.awt.Color.GRAY);
+                            java.awt.Rectangle rect = new java.awt.Rectangle((int) point.getX(), (int) point.getY(), nameWidth + 4, 20);
+                            g2d.fill(rect);
+                            g2d.setColor(java.awt.Color.CYAN);
+                            g2d.draw(rect);
+                            g2d.setColor(java.awt.Color.WHITE);
+                            g2d.drawString(((WaypointPolice) w).getName(), (int) point.getX() + 2, (int) point.getY() + 20 - 5);
 
                         } else if (w instanceof WaypointGangster) {
                             g2d.drawImage(markerImgGangster, (int) point.getX() - markerImgGangster.getWidth(jXMapV),
