@@ -1,0 +1,29 @@
+.
+├── pom.xml
+├── README
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── justine
+    │   │       └── robocar
+    │   │           └── CarWindow.java
+    │   └── resources
+    │       ├── logo1.png
+    │       ├── logo2.png
+    │       └── logo3.png
+    ├── site
+    │   ├── apt
+    │   │   ├── download.apt.vm
+    │   │   └── index.apt.vm
+    │   ├── en
+    │   │   └── apt
+    │   │       ├── download.apt.vm
+    │   │       └── index.apt.vm
+    │   ├── site_en.xml
+    │   └── site.xml
+    └── test
+        └── java
+
+
+$ mvn clean compile package site assembly:assembly
+$ java -jar target/site/justine-rcwin-0.0.16-jar-with-dependencies.jar ../../../lmap.txt justine.inf.unideb.hu

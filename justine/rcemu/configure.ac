@@ -17,7 +17,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AC_INIT([justine], [0.0.15], [nbatfai@gmail.com])
+AC_INIT([justine], [0.0.16], [nbatfai@gmail.com])
 AC_CONFIG_FILES([Makefile])
 AM_INIT_AUTOMAKE
 AC_CHECK_LIB(pthread, pthread_create)

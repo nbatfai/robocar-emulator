@@ -50,7 +50,11 @@ CAR	"<car"
 POS	"<pos"
 GANGSTERS	"<gangsters"
 STAT	"<stat"
+DISP	"<disp>"
 %% 
+{DISP}					{
+					  m_cmd = 0;
+					}
 {POS}{WS}{INT}{WS}{INT}{WS}{INT}	{
 					  std::sscanf(yytext, "<pos %d %u %u", &m_id, &from, &to);
 					  m_cmd = 10001;

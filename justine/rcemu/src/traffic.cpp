@@ -52,7 +52,7 @@ int justine::robocar::Traffic::addCop ( CarLexer& cl )
 
   m_smart_cars_map[id] = c;
 
-  return id;  
+  return id;
 }
 
 int justine::robocar::Traffic::addGangster ( CarLexer& cl )
@@ -75,8 +75,8 @@ int justine::robocar::Traffic::addGangster ( CarLexer& cl )
   while ( m_smart_cars_map.find ( id ) != m_smart_cars_map.end() );
 
   m_smart_cars_map[id] = c;
-  
-  return id;  
+
+  return id;
 }
 
 
@@ -113,7 +113,45 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
           int num = cl.get_num();
           int id {0};
 
-          if ( cl.get_cmd() <100 )
+          if ( cl.get_cmd() == 0 )
+            {
+
+              for ( ;; )
+                {
+                  std::vector<std::shared_ptr<Car>> cars_copy;
+                  {
+                    std::lock_guard<std::mutex> lock ( cars_mutex );
+                    cars_copy = cars;
+                  }
+
+                  std::stringstream ss;
+                  ss <<
+                     m_time <<
+                     " " <<
+                     cars_copy.size()
+                     << std::endl;
+
+                  for ( auto car:cars_copy )
+                    {
+                      car->step();
+
+                      ss << *car
+                         <<  " " << std::endl;
+
+                    }
+
+                  boost::asio::write ( client_socket, boost::asio::buffer ( data, length ) );
+                  length = std::sprintf ( data,
+                                          "%s", ss.str().c_str() );
+
+                  boost::asio::write ( client_socket, boost::asio::buffer ( data, length ) );
+
+                  std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
+
+                }
+
+            }
+          else if ( cl.get_cmd() <100 )
             {
               std::lock_guard<std::mutex> lock ( cars_mutex );
 
@@ -121,9 +159,9 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
                 {
 
                   if ( cl.get_role() =='c' )
-                      id = addCop ( cl );
+                    id = addCop ( cl );
                   else
-                      id = addGangster ( cl );
+                    id = addGangster ( cl );
 
                   if ( !resp_code )
                     length += std::sprintf ( data+length,
