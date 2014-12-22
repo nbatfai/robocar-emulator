@@ -168,12 +168,14 @@
             <para>
                 A Robotautó Világbajnokság - Robocar City Emulator bemeneteként
                 szolgáló városi adatfelhő többek között az egyes útvonalak terheltségére
-                vonatkozó adatokat tartalmazza. A Robocar City Cloud rendszerről TODO.
-                Ezen adatok gyűjtése több módszerrel is történhet, de kézenfekvő
+                vonatkozó mért és becsült adatokat tartalmazza. 
+                <!--A Robocar City Cloud rendszerről TODO.-->
+                Ezen adatok gyűjtése több módszerrel is történhet. Az esetleges közösségi alapú méréseken túl kézenfekvő
                 egy automatikus (tehát emberi beavatkozást nem igénylő) rendszer kifejlesztése.
-                A Cloud-ot töltő rendszer alapvetően kétféle elemekből építhető fel. Számba vesszük majd
+                A Cloud-ot töltő rendszer alapvetően kétféle elemekből építhető fel. Ennek megfelelően számba vesszük majd
                 azt a lehetőséget, amelyben a széles körben elérhető hardver eszközökből építkezünk és
-                azt, amely kifejezetten erre a célra kifejlesztendő hardverelemeket tartalmaz.
+                azt, amely kifejezetten erre a célra kifejlesztendő hardverelemeket tartalmaz az automatikus adatgyűjtés
+                megvalósításához.
             </para>
         </section>
     </chapter>
@@ -187,12 +189,12 @@
         <section>
             <title>A Robotautó Világbajnokság/Robocar City Cloud áttekintés</title>
             <para>
-                Az Robocar City Cloud és az azokat töltő rendszerelemek áttekintése
+                Az Robocar City Cloud és az azokat töltő rendszerelemek áttekintése.
             </para>
             <section>
                 <title>A Robocar City Cloud koncepciója</title>
                 <para>
-                    A város-felhő befoglaló kontextusát lásd a 
+                    A városi adatfelhő befoglaló kontextusát lásd a 
                     <link xlink:href="https://code.google.com/p/robocar-emulator/source/browse/doc/SRS/robocaremu-SRS-hu.xml">A Robotautó Világbajnokság - Robocar City Emulator szoftverkövetelmény specifikációja</link>
                     című dokumentumban.
                 </para>
@@ -200,7 +202,9 @@
                     <title>A Robocar City Cloud koncepció</title>
                     <para>
                         A koncepciót a bevezetőben említett két irányban (populáris hardver eszközök vs. célhardver)
-                        bontjuk ki, ennek megfelelően vázoljuk az Ádám és az Éva kódnevű koncepciókat.
+                        bontjuk ki, ennek megfelelően vázoljuk az Ádám és az Éva kódnevű koncepciókat. Ezeknek az irányoknak a
+                        specifikálásának és az esetleges gyors prototípus formájában történő implementálásának a célja a tervezés 
+                        segítése.
                     </para>
                     <section>
                         <title>Ádám koncepció</title>
@@ -211,11 +215,8 @@
                 </section>
                 <section>
                     <title>A városi adatfelhőt töltő automatikus hardver és szoftver komponensek</title>
-
-
                     <section>
                         <title>Gyors protó az Ádámra</title>
-
                         <para>
                             Az egyes lehetőségek több csoportot alkotnak. Ezen csoportok elsősorban a processzor megléte (és annak típusa) vagy annak hiánya alapján különböztethető meg. Ami minden megoldásban közös, az egyes I/O hardverelemek. Ezek a bemeneti oldalon egy képszenzor (kamera tipusú), egy GPS modul, kimeneti oldalon GSM modul. (Megjegyzendő, hogy a prototípus nem feltétlenül kell tartalmazza a GSM modult.)
                         </para>
@@ -264,10 +265,7 @@
                                 Az ARM alapú megoldás egy többfunkciós, bővíthető rendszert kínál. A szoftprocesszoros rendszer fő előnye, hogy nincs olyan megkötésünk, hogy az ARM utasításkészletét kell használnunk. Akár saját, képfeldolgozási (vagy egyéb) feladatokra optimalizált processzor fejlesztésére is lehetőségünk van. A processzor nélküli megoldás a legmasszívabb hardver szempontból, viszont csak a teljes rendszer átalakításával bővíthető, valamint fejlesztési ideje is a leghosszabb.
                             </para>
                         </section>
-
-
                     </section>
-
                     <section>
                         <title>Gyors protó az Évára</title>
                         <para>
@@ -286,7 +284,6 @@
             </para>
             <section>
                 <title>Ádám követelmények</title>
-
                 <section>
                     <title>Hardverkövetelmények</title>
                     <para>
@@ -358,7 +355,6 @@
                     </para>
                 </section>
             </section>
-
             <section>
                 <title>Éva követelmények</title>
                 <section>
@@ -378,7 +374,6 @@
                     </para>
                 </section>
             </section>
-
             <section>
                 <title>Licenc</title>
                 <para>
