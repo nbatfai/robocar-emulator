@@ -1,0 +1,59 @@
+    <glossary xmlns="http://docbook.org/ns/docbook" version="5.1" xml:lang="hu"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Szójegyzék</title>
+    <glossdiv>
+        <title>I</title>
+        <glossentry xml:id="ieee1998">
+            <glossterm>IEEE Recommended Practice for Software Requirements Specifications</glossterm>
+            <acronym>IEEE, 1998</acronym>
+            <abbrev>IEEE Std 830-1998</abbrev>
+            <glossdef>
+                <para>A szoftverkövetelmény dokumentum
+                    <link xlink:href="http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5841">IEEE szabványa</link>.
+                </para>
+            </glossdef>
+        </glossentry>
+    </glossdiv>
+    <glossdiv>
+        <title>R</title>
+        <glossentry xml:id="rcemu">
+            <glossterm>Robocar World Championship</glossterm>
+            <abbrev>rcemu</abbrev>
+            <glossdef>
+                <para>TODO</para>
+            </glossdef>
+        </glossentry>
+        <glossentry xml:id="robocarcup">
+            <glossterm>Robocar City Emulator</glossterm>
+            <abbrev>robocarcup</abbrev>
+            <glossdef>
+                <para>TODO</para>
+            </glossdef>
+        </glossentry>
+        <glossentry xml:id="robocarcloud">
+            <glossterm>Robocar City Cloud</glossterm>
+            <abbrev>robocarcloud</abbrev>
+            <glossdef>
+                <para>TODO</para>
+            </glossdef>
+        </glossentry>
+    </glossdiv>
+    <glossdiv>
+        <title>U</title>
+        <glossentry xml:id="udprog">
+            <glossterm>The Yearbook of the Programmers of University of Debrecen</glossterm>
+            <abbrev>UDPROG</abbrev>
+            <glossdef>
+                <para>A Debreceni Egyetem <link xlink:href="http://progpater.blog.hu/2014/05/31/ez_a_prog1_mi_lesz_a">reguláris programozás oktatásához</link> kapcsolódó,
+                    Linkedin-en szervezett
+                    <link xlink:href="https://www.linkedin.com/groups/Yearbook-Programmers-University-Debrecen-7446358?homeNewMember=&amp;gid=7446358&amp;fromEmail=&amp;ut=2mVSHNO5Dwwm41&amp;trk=eml-grp-sub">fejlesztői közösség</link>,
+                    melynek egyik gyújtópontjában <link xlink:href="http://sourceforge.net/p/udprog/code/ci/master/tree/">szoftverek</link>,
+                    a másikban maga az
+                    <link xlink:href="http://sourceforge.net/projects/udprog/files/?source=navbar">évkönyv</link> áll.
+                </para>
+            </glossdef>
+        </glossentry>
+    </glossdiv>
+</glossary>
+
