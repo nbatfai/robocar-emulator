@@ -1,5 +1,5 @@
 #
-# GNU Robocar City Emulator and Robocar World Championship
+# Robocar City Emulator and Robocar World Championship
 # Justine - this is a rapid prototype for development of Robocar City Emulator
 # Copyright (C) 2014 Norbert Bátfai, batfai.norbert@inf.unideb.hu
 #
@@ -17,7 +17,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AC_INIT([justine], [0.0.16], [nbatfai@gmail.com])
+AC_INIT([justine], [0.0.17], [nbatfai@gmail.com])
 AC_CONFIG_FILES([Makefile])
 AM_INIT_AUTOMAKE
 AC_CHECK_LIB(pthread, pthread_create)

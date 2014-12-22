@@ -23,7 +23,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @section DESCRIPTION
- * GNU Robocar City Emulator and Robocar World Championship
+ * Robocar City Emulator and Robocar World Championship
  *
  * desc
  *
@@ -47,7 +47,7 @@ int main ( int argc, char* argv[] )
      boost::program_options::notify ( vm );
 
      if ( vm.count ( "version" ) ) {
-          std::cout << "GNU Robocar City Emulator and Robocar World Championship, Sample SHM Client" << std::endl
+          std::cout << "Robocar City Emulator and Robocar World Championship, Sample SHM Client" << std::endl
                     << "Copyright (C) 2014, 2015 Norbert Bátfai\n" << std::endl
                     << "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>" << std::endl
                     << "This is free software: you are free to change and redistribute it." << std::endl
@@ -56,7 +56,7 @@ int main ( int argc, char* argv[] )
      }
 
      if ( vm.count ( "help" ) ) {
-          std::cout << "GNU Robocar City Emulator and Robocar World Championship home page: https://code.google.com/p/robocar-emulator/" << std::endl;
+          std::cout << "Robocar City Emulator and Robocar World Championship home page: https://code.google.com/p/robocar-emulator/" << std::endl;
           std::cout << desc << std::endl;
           std::cout << "Please report bugs to: nbatfai@gmail.com" << std::endl;
           return 0;
@@ -82,7 +82,7 @@ int main ( int argc, char* argv[] )
      */
 
      // Do not remove this copyright notice!
-     std::cout << "GNU Robocar City Emulator and Robocar World Championship, Sample SHM Client" << std::endl
+     std::cout << "Robocar City Emulator and Robocar World Championship, Sample SHM Client" << std::endl
                << "Copyright (C) 2014, 2015 Norbert Bátfai" << std::endl
                << "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>" << std::endl
                << "This is free software: you are free to change and redistribute it." << std::endl

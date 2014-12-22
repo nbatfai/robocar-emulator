@@ -23,7 +23,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @section DESCRIPTION
- * GNU Robocar City Emulator and Robocar World Championship
+ * Robocar City Emulator and Robocar World Championship
  *
  * desc
  *
@@ -83,8 +83,8 @@ int justine::robocar::Traffic::addGangster ( CarLexer& cl )
 void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket client_socket )
 {
   const int network_buffer_size = 524288;
-  char data[524288]; // TODO buffered write...
-
+  char data[network_buffer_size]; // TODO buffered write...
+  
   try
     {
       for ( ;; )

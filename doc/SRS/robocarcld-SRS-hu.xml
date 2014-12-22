@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.1" xml:lang="hu"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+    <info>
+        <title>A Robotautó Világbajnokság - A városi adatfelhő szoftverkövetelmény specifikációja</title>
+        <subtitle>Az intelligens város és a robotautók kapcsolata vizsgálatának kutatási platformja</subtitle>
+        <titleabbrev>RCCLD</titleabbrev>
+        <authorgroup>
+            <author>
+                <personname>
+                    <surname>Besenczi</surname>
+                    <firstname>Renátó</firstname>
+                </personname>
+                <affiliation>
+                    <shortaffil>MSc hallgató, DEIK.</shortaffil>
+                    <jobtitle>MSc hallgató</jobtitle>
+                    <orgname>Debreceni Egyetem, Informatikai Kar</orgname>
+                    <orgdiv>Információtechnológiai Tanszék</orgdiv>
+                    <address>
+                        <email>renato.besenczi@gmail.com</email>
+                    </address>
+                </affiliation>
+                <address>
+                    <street>Kassai út 26.</street>
+                    <city>Debrecen</city>
+                    <postcode>4028</postcode>
+                    <country>Magyarország</country>
+                    <email>renato.besenczi@gmail.com</email>
+                </address>
+            </author>
+            <author>
+                <personname>
+                    <honorific>Dr.</honorific>
+                    <surname>Bátfai</surname>
+                    <firstname>Norbert</firstname>
+                </personname>
+                <affiliation>
+                    <shortaffil>E. adjunktus, DEIK.</shortaffil>
+                    <jobtitle>Egyetemi adjunktus</jobtitle>
+                    <orgname>Debreceni Egyetem, Informatikai Kar</orgname>
+                    <orgdiv>Információtechnológiai Tanszék</orgdiv>
+                    <address>
+                        <email>batfai.norbert@inf.unideb.hu</email>
+                        <email>nbatfai@gmail.com</email>
+                    </address>
+                </affiliation>
+                <address>
+                    <street>Kassai út 26.</street>
+                    <city>Debrecen</city>
+                    <postcode>4028</postcode>
+                    <country>Magyarország</country>
+                    <email>batfai.norbert@inf.unideb.hu</email>
+                    <otheraddr>
+                        <link xlink:href="http://www.inf.unideb.hu/~nbatfai">http://www.inf.unideb.hu/~nbatfai</link>
+                    </otheraddr>
+                </address>
+            </author>
+            <author>
+                <personname>
+                    <surname>Mamenyák</surname>
+                    <firstname>András</firstname>
+                </personname>
+                <affiliation>
+                    <jobtitle>MI BSc hallgató</jobtitle>
+                    <orgname>Debreceni Egyetem, Informatikai Kar</orgname>
+                    <orgdiv>Információtechnológiai Tanszék</orgdiv>
+                    <address>
+                        <email>mamenyaka@gmail.com</email>
+                    </address>
+                </affiliation>
+            </author>
+        </authorgroup>
+        <edition>SRS, Robocar City Cloud, v. 0.0.4</edition>
+        <pubdate>2014</pubdate>
+        <copyright>
+            <year>2014</year>
+            <holder>Besenczi Renátó</holder>
+            <holder>Dr. Bátfai Norbert</holder>
+            <holder>Mamenyák András</holder>
+        </copyright>
+        <legalnotice>
+            <para>Robocar World Championship/Robocar City Cloud
+            </para>
+            <para>
+                Copyright (C) 2014, Besenczi Renátó, <email>renato.besenczi@gmail.com</email>
+            </para>
+            <para>
+                Norbert Bátfai. Ph.D., <email>batfai.norbert@inf.unideb.hu</email>
+            </para>
+            <para>
+                Mamenyák András, <email>mamenyaka@gmail.com</email>
+            </para>
+            <para>
+                This program is free software: you can redistribute it and/or modify
+                it under the terms of the GNU General Public License as published by
+                the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.
+            </para>
+            <para>
+                This program is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                GNU General Public License for more details.
+            </para>
+            <para>
+                You should have received a copy of the GNU General Public License
+                along with this program.  If not, see
+                <link xlink:href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</link>.
+            </para>
+            <para>
+                Ez a program szabad szoftver; terjeszthető illetve módosítható a
+                Free Software Foundation által kiadott GNU General Public License
+                dokumentumában leírtak; akár a licenc 3-as, akár (tetszőleges) későbbi
+                változata szerint.
+            </para>
+            <para>
+                Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz,
+                de minden egyéb GARANCIA NÉLKÜL, az ELADHATÓSÁGRA vagy VALAMELY CÉLRA
+                VALÓ ALKALMAZHATÓSÁGRA való származtatott garanciát is beleértve.
+                További részleteket a GNU General Public License tartalmaz.
+            </para>
+            <para>
+                A felhasználónak a programmal együtt meg kell kapnia a GNU General
+                Public License egy példányát; ha mégsem kapta meg, akkor
+                tekintse meg a
+                <link xlink:href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</link>
+                oldalon.
+            </para>
+            <para>
+                <link xlink:href="http://gnu.hu/gplv3.html">http://gnu.hu/gplv3.html</link>
+            </para>
+        </legalnotice>
+        <revhistory>
+            <revision>
+                <revnumber>0.0.1</revnumber>
+                <date>2014-12-20</date>
+                <revremark>Initial document and system plan</revremark>
+            </revision>
+            <revision>
+                <revnumber>0.0.2</revnumber>
+                <date>2014-12-21</date>
+                <revremark>A dokumentum szervezése, a szereplő és utólag Ádám kódnévvel ellátott koncepció mellé az Éva bevezetése.</revremark>
+            </revision>
+            <revision>
+                <revnumber>0.0.3</revnumber>
+                <date>2014-12-22</date>
+                <revremark>Éva követelmények</revremark>
+            </revision>
+        </revhistory>
+    </info>
+    <glossary>
+        <title>Szójegyzék</title>
+        <glossdiv>
+            <title>I</title>
+            <glossentry xml:id="ieee1998">
+                <glossterm>IEEE Recommended Practice for Software Requirements Specifications</glossterm>
+                <acronym>IEEE, 1998</acronym>
+                <abbrev>IEEE Std 830-1998</abbrev>
+                <glossdef>
+                    <para>A szoftverkövetelmény dokumentum
+                        <link xlink:href="http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5841">IEEE szabványa</link>.
+                    </para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>
+        <glossdiv>
+            <title>R</title>
+            <glossentry xml:id="rcemu">
+                <glossterm>Robocar World Championship</glossterm>
+                <abbrev>rcemu</abbrev>
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+            <glossentry xml:id="robocarcup">
+                <glossterm>Robocar City Emulator</glossterm>
+                <abbrev>robocarcup</abbrev>
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+            <glossentry xml:id="robocarcloud">
+                <glossterm>Robocar City Cloud</glossterm>
+                <abbrev>robocarcloud</abbrev>
+                <glossdef>
+                    <para>TODO</para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>
+        <glossdiv>
+            <title>U</title>
+            <glossentry xml:id="udprog">
+                <glossterm>The Yearbook of the Programmers of University of Debrecen</glossterm>
+                <abbrev>UDPROG</abbrev>
+                <glossdef>
+                    <para>A Debreceni Egyetem <link xlink:href="http://progpater.blog.hu/2014/05/31/ez_a_prog1_mi_lesz_a">reguláris programozás oktatásához</link> kapcsolódó,
+                        Linkedin-en szervezett
+                        <link xlink:href="https://www.linkedin.com/groups/Yearbook-Programmers-University-Debrecen-7446358?homeNewMember=&amp;gid=7446358&amp;fromEmail=&amp;ut=2mVSHNO5Dwwm41&amp;trk=eml-grp-sub">fejlesztői közösség</link>,
+                        melynek egyik gyújtópontjában <link xlink:href="http://sourceforge.net/p/udprog/code/ci/master/tree/">szoftverek</link>,
+                        a másikban maga az
+                        <link xlink:href="http://sourceforge.net/projects/udprog/files/?source=navbar">évkönyv</link> áll.
+                    </para>
+                </glossdef>
+            </glossentry>
+        </glossdiv>
+    </glossary>
+    <chapter>
+        <info>
+            <title>Bevezetés</title>
+            <keywordset>
+                <keyword></keyword>
+            </keywordset>
+        </info>
+        <section>
+            <title>Célok</title>
+            <para>
+                A Robotauto Világbajnokság - Robocar City Emulator bemeneteként
+                szolgáló városi adatfelhő többek között az egyes útvonalak terheltségére
+                vonatkozó adatokat tartalmazza. A Robocar City Cloud rendszerről TODO.
+                Ezen adatok gyűjtése több módszerrel is történhet, de kézenfekvő
+                egy automatikus (tehát emberi beavatkozást nem igénylő) rendszer kifejlesztése.
+                A Cloud-ot töltő rendszer alapvetően kétféle elemekből építhető fel. Számba vesszük majd
+                azt a lehetőséget, amelyben a széles körben elérhető hardver eszközökből építkezünk és
+                azt, amely kifejezetten erre a célra kifejlesztendő hardverelemeket tartalmaz.
+            </para>
+        </section>
+    </chapter>
+    <chapter>
+        <info>
+            <title>A fejlesztendő rendszer áttekintése</title>
+            <keywordset>
+                <keyword></keyword>
+            </keywordset>
+        </info>
+        <section>
+            <title>A Robotautó Világbajnokság/Robocar City Cloud áttekintés</title>
+            <para>
+                Az Robocar City Cloud és az azokat töltő rendszerelemek áttekintése
+            </para>
+            <section>
+                <title>A Robocar City Cloud koncepciója</title>
+                <para>
+                    Maga a Cloud
+                </para>
+                <section>
+                    <title>A Robocar City Cloud koncepció</title>
+                    <para>
+                        A koncepciót a bevezetőben említett két irányban (populáris hardver eszközök vs. célhardver)
+                        bontjuk ki, ennek megfelelően vázoljuk az Ádám és az Éva kódnevű koncepciókat.
+                    </para>
+                    <section>
+                        <title>Ádám koncepció</title>
+                    </section>
+                    <section>
+                        <title>Éva koncepció</title>
+                    </section>
+                </section>
+                <section>
+                    <title>A városi adatfelhőt töltő automatikus hardver és szoftver komponensek</title>
+
+
+                    <section>
+                        <title>Gyors protó az Ádámra</title>
+
+                        <para>
+                            Az egyes lehetőségek több csoportot alkotnak. Ezen csoportok elsősorban a processzor megléte (és annak típusa) vagy annak hiánya alapján különböztethető meg. Ami minden megoldásban közös, az egyes I/O hardverelemek. Ezek a bemeneti oldalon egy képszenzor (kamera tipusú), egy GPS modul, kimeneti oldalon GSM modul. (Megjegyzendő, hogy a prototípus nem feltétlenül kell tartalmazza a GSM modult.)
+                        </para>
+                        <section>
+                            <title>ARM alapú megoldások</title>
+                            <para>
+                                Ezen megoldásoknál a hardver magját egy ARM processzor és egy programozható logika alkotja. A programozható logika elsősorban az I/O kezelésért, valamint a memória kezeléséért felelős, az ARM egy szabványos felületet ad a számítási feladatokhoz. Prototípusfejlesztés un. development boardokon lehetséges (pl. Digilent Zybo). Fő előnye, hogy egy Embedded Linux System (pl. Xilinx PetaLinux) könnyedén telepíthető ilyen hardverre, amellyel elérhető egyfajta multifunkcionalitás (tehát nem csak egy dologra lesz alkalmas a hardver, könnyedén fejleszthető, telepíthető más szoftver is.) Fejlesztőkörnyezete a Xilinx Vivado, Xilinx SDK, Xilinx PetaLinux.
+                            </para>
+                            <section>
+                                <title>Konkrét elképzelés</title>
+                                <para>
+                                    A Digilent Zybo boardon egy Zynq tipusú dual-core ARM processzor I/O portjainak és a hozzá kapcsolódó logika felprogramozása. Bemeneti eszköz egy standard kézikamera, amely HDMI porton csatlakozik a boardhoz, valamint GPS modul kézi beépítése a board tetszőleges I/O portjaira. Kimeneti eszközként a GSM modul beépítése a board tetszőleges I/O portjára. A fejlesztés első lépcsőjeként a Xilinx Vivado fejlesztőkörnyezetben az egyes eszközök I/O portjait be kell építeni a rendszerbe. Emiatt a telepítésre kerülő PetaLinux rendszer elérhetővé teszi számunkra. Innentől magának az alkalmazásnak a fejlesztése C/C++ környezetben elvégezhető. Magának a rendszernek (az alkalmazásokkal együtt) a telepítése történhet SD kártyára, innen a board (és a PetaLinux) már külső beavatkozás nélkül is tud bootolni. Maga a forgalomszámlálás egy klasszikus képfeldolgozási feladat, akár az OpenCV library is alkalmazható.
+                                    Opcionális, de megfontolható egy Embedded Java System alkalmazása.
+                                    Sematikus ábra TODO
+                                </para>
+                            </section>
+                        </section>
+                        <section>
+                            <title>Softprocessor alapú megoldások</title>
+                            <para>
+                                A megoldás alapját egy tetszőlegesen programozható logika alkotja. Alaphelyzetben semmiféle processzorunk nincs, nekünk kell egyet a hardwaredesign-hoz hozzáadnunk. A Xilinx MicroBlaze megoldása optimálisnak tűnik. Magának a processzornak a működését C nyelven írhatjuk le. Opcionális esetként megemlíthetjük, hogy akár saját, képfeldolgozási célokra optimalizált processzort is létrehozhatunk.
+                            </para>
+                            <section>
+                                <title>Konkrét elképzelés</title>
+                                <para>
+                                    A Digilent Nexys 3 és az Embedded Micro Mojo boardon egy Xilinx Spartan 6 tipusú programozható logika (FPGA) található. Ezen FPGA elegendő erőforrással rendelkezik a feladat megoldásához. Hasonlóan I/O portjaira a képszenzor, a GPS és a GSM modul kerülne. Fejlesztőkörnyezete a Xilinx Vivado/ISE.
+                                    Sematikus ábra TODO
+                                </para>
+                            </section>
+                        </section>
+                        <section>
+                            <title>Processzor nélküli megoldások</title>
+                            <para>
+                                Ezen megoldások semmiféle processzort nem használnak a működésük során. Gyakorlatilag alacsony szintű hardverprogramozás (tulajdonképpen logikai kapuk programozása) történik hardverleíró nyelven.
+                            </para>
+                            <section>
+                                <title>Konkrét elképzelés</title>
+                                <para>
+                                    A Digilent Nexys 3 és az Embedded Micro Mojo boardon egy Xilinx Spartan 6 tipusú programozható logika (FPGA) található. Ezen FPGA elegendő erőforrással rendelkezik a feladat megoldásához. Processzor nélküli rendszer, az egyes modulok I/O adatainak feldolgozása és a képfeldolgozási folyamat is hardverleíró nyelven implementálható (VHDL, Verilog). Sematikus ábra TODO.
+                                </para>
+                            </section>
+                        </section>
+                        <section>
+                            <title>Összegzés</title>
+                            <para>
+                                Az ARM alapú megoldás egy többfunkciós, bővíthető rendszert kínál. A szoftprocesszoros rendszer fő előnye, hogy nincs olyan megkötésünk, hogy az ARM utasításkészletét kell használnunk. Akár saját, képfeldolgozási (vagy egyéb) feladatokra optimalizált processzor fejlesztésére is lehetőségünk van. A processzor nélküli megoldás a legmasszívabb hardver szempontból, viszont csak a teljes rendszer átalakításával bővíthető, valamint fejlesztési ideje is a leghosszabb.
+                            </para>
+                        </section>
+
+
+                    </section>
+
+                    <section>
+                        <title>Gyors protó az Évára</title>
+                        <para>
+                            A rendkívül népszerű Raspberry Pi mini számítógép kis méretének és olcsóságának köszönhetően
+                            ideális eszköz lehet számunkra. A hozzá tartozó kamera modul lehetővé teszi az út forgalmának monitorozását,
+                            amit az eszközön futó tetszőleges linux programmal fel tudunk dolgozni.
+                        </para>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section>
+            <title>Követelmények a fejlesztéssel kapcsolatosan</title>
+            <para>
+                Általános követelmények a rendszerrel kapcsolatban
+            </para>
+            <section>
+                <title>Ádám követelmények</title>
+
+                <section>
+                    <title>Hardverkövetelmények</title>
+                    <para>
+                        Development board-ok:
+                        <itemizedlist>
+                            <listitem>
+                                <para>Digilent Zybo
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Digilent Nexys 3
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Embedded Micro Mojo
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        I/O eszközök:
+                        <itemizedlist>
+                            <listitem>
+                                <para>HDMI képes kamera
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Képszenzor (pontos típus később)
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>GPS modul (pontos típus később)
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </section>
+                <section>
+                    <title>Szoftverkövetelmények</title>
+                    <para>
+                        Fejlesztőkörnyezet:
+                        <itemizedlist>
+                            <listitem>
+                                <para>Xilinx ISE
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Xilinx Vivado
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Xilinx SDK
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        Egyéb szoftverek:
+                        <itemizedlist>
+                            <listitem>
+                                <para>Xilinx PetaLinux
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>Xilinx MicroBlaze Soft Processor
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>OpenCV library
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </section>
+            </section>
+
+            <section>
+                <title>Éva követelmények</title>
+                <section>
+                    <title>Hardverkövetelmények</title>
+                    <para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>Raspberry Pi model B+
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.raspberrypi.org/documentation/hardware/camera.md">Raspberry Pi camera module</link>
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </section>
+            </section>
+
+            <section>
+                <title>Licenc</title>
+                <para>
+                    TODO
+                </para>
+            </section>
+        </section>
+        <section>
+            <title>Összefoglalás</title>
+            <para>
+                TODO
+            </para>
+        </section>
+    </chapter>
+</book>

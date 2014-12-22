@@ -26,7 +26,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @section DESCRIPTION
- * GNU Robocar City Emulator and Robocar World Championship
+ * Robocar City Emulator and Robocar World Championship
  *
  * desc
  *

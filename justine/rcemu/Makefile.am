@@ -1,5 +1,5 @@
 #
-# GNU Robocar City Emulator and Robocar World Championship
+# Robocar City Emulator and Robocar World Championship
 # Justine - this is a rapid prototype for development of Robocar City Emulator
 # Copyright (C) 2014 Norbert Bátfai, batfai.norbert@inf.unideb.hu
 #
