@@ -226,9 +226,9 @@ public class CarWindow extends javax.swing.JFrame {
                 }
 
             } catch (java.io.IOException e) {
-                
+
                 System.out.println(e.toString());
-                
+
                 CarWindow.this.dispatchEvent(
                         new java.awt.event.WindowEvent(CarWindow.this,
                                 java.awt.event.WindowEvent.WINDOW_CLOSING));
@@ -520,7 +520,10 @@ public class CarWindow extends javax.swing.JFrame {
 
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    new CarWindow(47.5467, 21.6389, lmap, "localhost").setVisible(true);
+
+                    java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
+
+                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, "localhost").setVisible(true);
                 }
             });
 
@@ -532,13 +535,16 @@ public class CarWindow extends javax.swing.JFrame {
 
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    new CarWindow(47.5467, 21.6389, lmap, hostname).setVisible(true);
+
+                    java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
+
+                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname).setVisible(true);
                 }
             });
 
         } else {
 
-            System.out.println("java -jar target/site/justine-rcwin-0.0.16-jar-with-dependencies.jar ../../../lmap.txt justine.inf.unideb.hu");
+            System.out.println("java -jar target/site/justine-rcwin-0.0.16-jar-with-dependencies.jar ../../../lmap.txt localhost");
         }
 
     }
