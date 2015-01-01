@@ -36,6 +36,10 @@
 #include <iostream>
 #include <vector>
 
+#include <osmreader.hpp>
+#include <algorithm>
+
+
 namespace justine
 {
 namespace robocar
@@ -118,6 +122,36 @@ protected:
 private:
 
 };
+
+class AntCar : public Car
+{
+public:
+  AntCar ( Traffic & traffic);
+
+  virtual void nextSmarterEdge ( void );
+  
+  virtual void print ( std::ostream & os ) const
+  {
+    
+    os << m_from
+    << " "
+    << to_node()
+    << " "
+    << get_max_steps()
+    << " "
+    << get_step()
+    << " "
+    << static_cast<unsigned int> ( get_type() );
+    
+  }
+  
+    static AdjacencyList alist;
+    
+private:
+  bool rnd {true};
+  
+};
+
 
 class SmartCar : public Car
 {

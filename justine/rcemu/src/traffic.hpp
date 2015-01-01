@@ -68,15 +68,24 @@ namespace justine
 namespace robocar
 {
 
+
+enum class TrafficType: unsigned int
+{
+  NORMAL=0, ANT, ANT_RND
+};
+
 class Traffic
 {
 public:
 
-  Traffic ( int size, const char * shm_segment, double catchdist ) :m_size ( size ), m_catchdist ( catchdist )
+  Traffic ( int size, const char * shm_segment, double catchdist, TrafficType type = TrafficType::NORMAL )
+    :m_size ( size ), m_catchdist ( catchdist ), m_type ( type )
   {
 
 #ifdef DEBUG
-    std::cout << "Attaching shared memory... " << std::endl;
+    std::cout << "Attaching shared memory segment called "
+              << shm_segment
+              << "... " << std::endl;
 #endif
 
     segment = new boost::interprocess::managed_shared_memory (
@@ -90,15 +99,38 @@ public:
     std::cout << "Initializing routine cars ... " << std::endl;
 #endif
 
+    if ( type != TrafficType::NORMAL )
+      for ( shm_map_Type::iterator iter=shm_map->begin();
+            iter!=shm_map->end(); ++iter )
+        {
+
+          for ( auto noderef : iter->second.m_alist )
+            AntCar::alist[iter->first].push_back ( 1 );
+
+        }
+
     for ( int i {0}; i < m_size; ++i )
       {
 
         //std::unique_ptr<Car> car(std::make_unique<Car>(*this)); //14, 4.9
         //std::unique_ptr<Car> car(new Car {*this});
-        std::shared_ptr<Car> car ( new Car {*this} );
 
-        car->init();
-        cars.push_back ( car );
+        if ( type == TrafficType::NORMAL )
+          {
+            std::shared_ptr<Car> car ( new Car {*this} );
+
+            car->init();
+            cars.push_back ( car );
+          }
+        else
+          {
+            std::shared_ptr<AntCar> car ( new AntCar {*this} );
+
+            car->init();
+            cars.push_back ( car );
+
+          }
+
 
       }
 
@@ -140,9 +172,9 @@ public:
         std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
       }
 
-      for ( auto c:m_cop_cars )
-	std::cout  << c;	
-      
+    for ( auto c:m_cop_cars )
+      std::cout  << c;
+
   }
 
   osmium::unsigned_object_id_type virtual node()
@@ -334,6 +366,10 @@ public:
       osmium::unsigned_object_id_type to,
       osmium::unsigned_object_id_type step );
 
+  TrafficType get_type() const
+  {
+    return m_type;
+  }
 
 protected:
 
@@ -361,6 +397,8 @@ private:
   std::map<int, std::shared_ptr<SmartCar>> m_smart_cars_map;
 
   std::mutex cars_mutex;
+
+  TrafficType m_type {TrafficType::NORMAL};
 };
 
 }

@@ -121,6 +121,7 @@ public class CarWindow extends javax.swing.JFrame {
     java.util.Scanner scan = null;
 
     String hostname = "localhost";
+    int port = 10007;
 
     javax.swing.SwingWorker<Void, Traffic> worker = new javax.swing.SwingWorker<Void, Traffic>() {
 
@@ -128,7 +129,7 @@ public class CarWindow extends javax.swing.JFrame {
         protected Void doInBackground() throws Exception {
 
             try {
-                java.net.Socket trafficServer = new java.net.Socket(hostname, 10007);
+                java.net.Socket trafficServer = new java.net.Socket(hostname, port);
                 java.io.OutputStream os = trafficServer.getOutputStream();
                 java.io.DataOutputStream dos
                         = new java.io.DataOutputStream(os);
@@ -371,10 +372,11 @@ public class CarWindow extends javax.swing.JFrame {
 
     };
 
-    public CarWindow(double lat, double lon, java.util.Map<Long, Loc> lmap, String hostname) {
+    public CarWindow(double lat, double lon, java.util.Map<Long, Loc> lmap, String hostname, int port) {
 
         this.lmap = lmap;
         this.hostname = hostname;
+        this.port = port;
 
         final org.jxmapviewer.viewer.TileFactory tileFactoryArray[] = {
             new org.jxmapviewer.viewer.DefaultTileFactory(
@@ -523,7 +525,7 @@ public class CarWindow extends javax.swing.JFrame {
 
                     java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
 
-                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, "localhost").setVisible(true);
+                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, "localhost", 10007).setVisible(true);
                 }
             });
 
@@ -538,9 +540,25 @@ public class CarWindow extends javax.swing.JFrame {
 
                     java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
 
-                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname).setVisible(true);
+                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname, 10007).setVisible(true);
                 }
             });
+            
+        } else if (args.length == 3) {
+
+            readMap(lmap, args[0]);
+
+            final String hostname = args[1];
+            final int port = Integer.parseInt(args[2]);
+            
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+
+                    java.util.Map.Entry<Long, Loc> e = lmap.entrySet().iterator().next();
+
+                    new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname, port).setVisible(true);
+                }
+            });            
 
         } else {
 

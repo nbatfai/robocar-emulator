@@ -40,6 +40,14 @@ justine::robocar::Car::Car (
 
 }
 
+justine::robocar::AdjacencyList justine::robocar::AntCar::alist;
+
+justine::robocar::AntCar::AntCar ( justine::robocar::Traffic & traffic ) : justine::robocar::Car ( traffic )
+{
+
+}
+
+
 justine::robocar::SmartCar::SmartCar ( justine::robocar::Traffic & traffic,
                                        justine::robocar::CarType type,
                                        bool guided ) : justine::robocar::Car ( traffic, type ), m_guided ( guided )
@@ -48,8 +56,8 @@ justine::robocar::SmartCar::SmartCar ( justine::robocar::Traffic & traffic,
 }
 
 justine::robocar::CopCar::CopCar ( justine::robocar::Traffic & traffic,
-                                   bool guided, const char *name ) : 
-                                   justine::robocar::SmartCar ( traffic, CarType::POLICE, guided ), m_name(name)
+                                   bool guided, const char *name ) :
+  justine::robocar::SmartCar ( traffic, CarType::POLICE, guided ), m_name ( name )
 {
 
 }
@@ -69,18 +77,18 @@ void justine::robocar::SmartCar::init()
 
   if ( m_guided )
     {
-/*
-      osmium::unsigned_object_id_type ini {2969934868};
+      /*
+            osmium::unsigned_object_id_type ini {2969934868};
 
-      if ( traffic.hasNode ( ini ) )
-        {
-          m_from = ini;
-        }
-      else
-        {
-          m_from = traffic.node();
-        }
-*/
+            if ( traffic.hasNode ( ini ) )
+              {
+                m_from = ini;
+              }
+            else
+              {
+                m_from = traffic.node();
+              }
+      */
 
       m_from = traffic.node();
 
@@ -92,6 +100,69 @@ void justine::robocar::SmartCar::init()
   else
     Car::init();
 
+}
+
+
+void justine::robocar::AntCar::nextSmarterEdge ( void )
+{
+  osmium::unsigned_object_id_type next_m_from = traffic.alist ( m_from, m_to );
+  size_t nes = traffic.nedges ( next_m_from );
+  if ( !nes )
+    return;
+
+  // osmium::unsigned_object_id_type next_m_to = std::rand() % nes;
+
+  osmium::unsigned_object_id_type next_m_to; 
+
+  if ( traffic.get_type() == TrafficType::ANT )
+    {
+      AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
+
+      WayNodesVect::iterator i = std::max_element ( iter->second.begin(), iter->second.end() );
+
+      next_m_to = std::distance ( iter->second.begin(), i );
+
+      ++*i;
+    }
+  else
+    {
+      AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
+
+      int sum = std::accumulate ( iter->second.begin(), iter->second.end(), 0 );
+
+      int rnd = std::rand() % sum;
+
+      int sum2 = 0;
+
+      WayNodesVect::iterator j=iter->second.begin();
+      for ( ; j!= iter->second.end(); ++j )
+        {
+          sum2 += *j;
+          if ( sum2 >= rnd )
+            break;
+        }
+
+      next_m_to = std::distance ( iter->second.begin(), j );
+
+      ++*j;
+    }
+
+
+  if ( traffic.alist ( next_m_from, next_m_to ) == m_from )
+    next_m_to = ( next_m_to + 1 ) % nes;
+
+  if ( traffic.palist ( next_m_from, next_m_to ) >
+       traffic.salist ( next_m_from, next_m_to ) )
+    {
+
+      traffic.set_salist ( m_from, m_to, traffic.salist ( m_from, m_to )-1 );
+
+      m_from = next_m_from;
+      m_to = next_m_to;
+      m_step = 0;
+
+      traffic.set_salist ( m_from, m_to, traffic.salist ( m_from, m_to ) +1 );
+    }
 }
 
 
@@ -319,7 +390,7 @@ void justine::robocar::SmartCar::set_route ( std::vector<unsigned int> & route )
 {
   this->route = route;
   m_routed = true;
-  
+
   if ( m_from == route[0] )
     {
       int next_m_to = traffic.alist_inv ( m_from, route[1] );
