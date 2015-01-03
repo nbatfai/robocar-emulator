@@ -50,8 +50,9 @@ int main ( int argc, char* argv[] )
   ( "shm", boost::program_options::value< std::string > (), "shared memory segment name" )
   ( "port", boost::program_options::value< std::string > (), "the TCP port that the traffic server is listening on to allow agents to communicate with the traffic simulation, the default value is 10007" )
   ( "nrcars", boost::program_options::value<int>(), "number of the random cars" )
+  ( "minutes", boost::program_options::value<int>(), "how long does the traffic simulation run for?" )
   ( "catchdist", boost::program_options::value<double>(), "the catch distance of cop cars" )
-  ( "traffict", boost::program_options::value< std::string > (), "traffic type = NORMAL|ANTS|ANTS_RND" )
+  ( "traffict", boost::program_options::value< std::string > (), "traffic type = NORMAL|ANTS|ANTS_RND|ANTS_RERND" )
   ;
   
   boost::program_options::variables_map vm;
@@ -92,6 +93,10 @@ int main ( int argc, char* argv[] )
   if ( vm.count ( "nrcars" ) )
     nrcars = vm["nrcars"].as < int > ();
 
+  int minutes {10};
+  if ( vm.count ( "minutes" ) )
+    minutes = vm["minutes"].as < int > ();
+  
   int catchdist {15.5};
   if ( vm.count ( "catchdist" ) )
     catchdist = vm["catchdist"].as < int > ();
@@ -105,12 +110,14 @@ int main ( int argc, char* argv[] )
   justine::robocar::TrafficType type;
   if(traffict == "ANTS_RND")
     type = justine::robocar::TrafficType::ANT_RND;
+  else if(traffict == "ANTS_RERND")
+    type = justine::robocar::TrafficType::ANT_RERND;
   else if(traffict == "ANTS")
     type = justine::robocar::TrafficType::ANT;
   else
     type = justine::robocar::TrafficType::NORMAL;
   
-  justine::robocar::Traffic traffic {nrcars, shm.c_str(), catchdist, type };
+  justine::robocar::Traffic traffic {nrcars, shm.c_str(), catchdist, type, minutes };
 
   try
     {

@@ -71,15 +71,15 @@ namespace robocar
 
 enum class TrafficType: unsigned int
 {
-  NORMAL=0, ANT, ANT_RND
+  NORMAL=0, ANT, ANT_RND, ANT_RERND
 };
 
 class Traffic
 {
 public:
 
-  Traffic ( int size, const char * shm_segment, double catchdist, TrafficType type = TrafficType::NORMAL )
-    :m_size ( size ), m_catchdist ( catchdist ), m_type ( type )
+  Traffic ( int size, const char * shm_segment, double catchdist, TrafficType type = TrafficType::NORMAL, int minutes = 10 )
+    :m_size ( size ), m_catchdist ( catchdist ), m_type ( type ), m_minutes(minutes)
   {
 
 #ifdef DEBUG
@@ -164,7 +164,7 @@ public:
     for ( ; m_run; )
       {
 
-        if ( ++m_time > ( 10*60*1000 ) /m_delay )
+        if ( ++m_time > ( m_minutes*60*1000 ) /m_delay )
           m_run = false;
 
         traffic_run();
@@ -387,6 +387,7 @@ private:
 
   int m_size {10000};
   int m_time {0};
+  int m_minutes {10};
   std::mutex m_mutex;
   std::condition_variable m_cv;
   std::thread m_thread {&Traffic::processes, this};

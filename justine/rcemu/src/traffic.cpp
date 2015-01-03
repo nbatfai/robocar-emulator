@@ -128,6 +128,8 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
                   ss <<
                      m_time <<
                      " " <<
+                     m_minutes <<
+                     " " <<
                      cars_copy.size()
                      << std::endl;
 
