@@ -126,30 +126,30 @@ private:
 class AntCar : public Car
 {
 public:
-  AntCar ( Traffic & traffic);
+  AntCar ( Traffic & traffic );
 
   virtual void nextSmarterEdge ( void );
-  
+
   virtual void print ( std::ostream & os ) const
   {
-    
+
     os << m_from
-    << " "
-    << to_node()
-    << " "
-    << get_max_steps()
-    << " "
-    << get_step()
-    << " "
-    << static_cast<unsigned int> ( get_type() );
-    
+       << " "
+       << to_node()
+       << " "
+       << get_max_steps()
+       << " "
+       << get_step()
+       << " "
+       << static_cast<unsigned int> ( get_type() );
+
   }
-  
-    static AdjacencyList alist;
-    
+
+  static AdjacencyList alist;
+
 private:
   bool rnd {true};
-  
+
 };
 
 
@@ -163,24 +163,24 @@ public:
 
   virtual void print ( std::ostream & os ) const
   {
-    
+
     os << m_from
-    << " "
-    << to_node()
-    << " "
-    << get_max_steps()
-    << " "
-    << get_step()
-    << " "
-    << static_cast<unsigned int> ( get_type() );
-    
+       << " "
+       << to_node()
+       << " "
+       << get_max_steps()
+       << " "
+       << get_step()
+       << " "
+       << static_cast<unsigned int> ( get_type() );
+
   }
-  
+
   bool get_guided() const
   {
     return m_guided;
   }
-  void set_route ( std::vector<unsigned int> & route );
+  bool set_route ( std::vector<unsigned int> & route );
   virtual void nextEdge ( void );
   virtual void nextGuidedEdge ( void );
   bool set_fromto ( unsigned int from, unsigned int to );
@@ -200,23 +200,28 @@ public:
 
   virtual void print ( std::ostream & os ) const
   {
-    
+
     os << m_from
-    << " "
-    << to_node()
-    << " "
-    << get_max_steps()
-    << " "
-    << get_step()
-    << " "
-    << static_cast<unsigned int> ( get_type() )
-    << " "
-    << get_num_captured_gangsters()
-    << " "
-    << m_name;
-    
-  }  
-  
+       << " "
+       << to_node()
+       << " "
+       << get_max_steps()
+       << " "
+       << get_step()
+       << " "
+       << static_cast<unsigned int> ( get_type() )
+       << " "
+       << get_num_captured_gangsters()
+       << " "
+       << m_name;
+
+  }
+
+  std::string get_name() const
+  {
+    return m_name;
+  }
+
   int get_num_captured_gangsters() const
   {
     return m_num_captured_gangsters;

@@ -84,7 +84,7 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
 {
   const int network_buffer_size = 524288;
   char data[network_buffer_size]; // TODO buffered write...
-  
+
   try
     {
       for ( ;; )
@@ -183,9 +183,12 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
                 {
 
                   std::shared_ptr<SmartCar> c = m_smart_cars_map[cl.get_id()];
-                  c->set_route ( cl.get_route() );
 
-                  length += std::sprintf ( data+length, "<OK %d>", cl.get_id() );
+                  if ( c->set_route ( cl.get_route() ) )
+                    length += std::sprintf ( data+length, "<OK %d>", cl.get_id() );
+                  else
+                    length += std::sprintf ( data+length, "<ERR bad routing vector>" );
+
                 }
               else
                 length += std::sprintf ( data+length, "<ERR unknown car id>" );

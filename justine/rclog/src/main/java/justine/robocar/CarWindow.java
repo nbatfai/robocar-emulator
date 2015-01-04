@@ -117,9 +117,10 @@ public class CarWindow extends javax.swing.JFrame {
 
                 try {
 
-                    int time = 0, size = 0;
+                    int time = 0, size = 0, minutes = 0;
 
                     time = scan.nextInt();
+                    minutes = scan.nextInt();
                     size = scan.nextInt();
 
                     long ref_from = 0, ref_to = 0;
@@ -175,7 +176,7 @@ public class CarWindow extends javax.swing.JFrame {
 
                     }
 
-                    if (time >= 10 * 60 * 1000 / 200) {
+                    if (time >= minutes * 60 * 1000 / 200) {
                         scan = null;
                     }
 
@@ -414,7 +415,7 @@ public class CarWindow extends javax.swing.JFrame {
         } else {
 
             System.out.println("To use as a logplayer:\njava -jar target/justineroadwindow-0.0.1-jar-with-dependencies.jar lmap.txt traffic.txt");
-            System.out.println("       as an on-line player:\nsrc/traffic 10007|java -jar ../justine-car-window-0.0.1-jar-with-dependencies.jar lmap.txt");
+            System.out.println("       as an on-line player:\nsrc/traffic 10007|java -jar ../justine-car-window-0.0.1-jar-with-dependencies.jar lmap.txt - DEPRECATED");
         }
 
     }

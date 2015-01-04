@@ -267,9 +267,10 @@ public class CarWindow extends javax.swing.JFrame {
 
                 try {
 
-                    int time = 0, size = 0;
+                    int time = 0, size = 0, minutes = 0;
 
                     time = scan.nextInt();
+                    minutes = scan.nextInt();                    
                     size = scan.nextInt();
 
                     long ref_from = 0, ref_to = 0;
@@ -325,7 +326,7 @@ public class CarWindow extends javax.swing.JFrame {
 
                     }
 
-                    if (time >= 50 * 60 * 1000 / 200) {
+                    if (time >= minutes * 60 * 1000 / 200) {
                         scan = null;
                     }
 

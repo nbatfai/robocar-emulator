@@ -37,7 +37,7 @@ DX_INIT_DOXYGEN(justine, Doxyfile, doc)
 
 AC_LANG([C++])
 CXXFLAGS='-Wall -std=c++1y -O3'
-LDFLAGS='-lboost_system -lpthread'
+LDFLAGS='-lboost_system -lpthread -lboost_date_time -lboost_filesystem'
 AX_CXX_COMPILE_STDCXX_11()
 AC_PROG_LIBTOOL
 BOOST_REQUIRE([1.46.0])
@@ -46,6 +46,7 @@ BOOST_SYSTEM
 BOOST_PROGRAM_OPTIONS
 BOOST_THREAD
 BOOST_ASIO
+BOOST_DATE_TIME
 #BOOST_LOG
 
 CXXFLAGS="$AM_CXXFLAGS $CXXFLAGS"

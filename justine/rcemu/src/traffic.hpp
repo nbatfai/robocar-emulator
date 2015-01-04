@@ -63,6 +63,10 @@
 
 #include <carlexer.hpp>
 
+#include <fstream>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem.hpp>
+
 namespace justine
 {
 namespace robocar
@@ -79,7 +83,7 @@ class Traffic
 public:
 
   Traffic ( int size, const char * shm_segment, double catchdist, TrafficType type = TrafficType::NORMAL, int minutes = 10 )
-    :m_size ( size ), m_catchdist ( catchdist ), m_type ( type ), m_minutes(minutes)
+    :m_size ( size ), m_catchdist ( catchdist ), m_type ( type ), m_minutes ( minutes )
   {
 
 #ifdef DEBUG
@@ -138,7 +142,14 @@ public:
     std::cout << "All routine cars initialized." <<"\n";
 #endif
 
+    boost::posix_time::ptime now = boost::posix_time::second_clock::universal_time();
+
+    logfile = boost::posix_time::to_simple_string ( now );
+    logFile = new std::fstream ( logfile.c_str() , std::ios_base::out );
+
     m_cv.notify_one();
+
+    std::cout << "The traffic server is ready." << std::endl;
 
   }
 
@@ -165,16 +176,48 @@ public:
       {
 
         if ( ++m_time > ( m_minutes*60*1000 ) /m_delay )
-          m_run = false;
-
-        traffic_run();
-
-        std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
+          {
+            m_run = false;
+            break;
+          }
+        else
+          {
+            traffic_run();
+            std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
+          }
+          
       }
 
-    for ( auto c:m_cop_cars )
-      std::cout  << c;
+    std::cout << "The traffic simulation is over." << std::endl;
 
+    for ( auto c:m_cop_cars )
+      *logFile  << *c << std::endl;
+
+    logFile->close ();
+
+    boost::filesystem::rename (
+      boost::filesystem::path ( logfile ),
+      boost::filesystem::path ( get_title ( logfile ) ) );
+
+  }
+
+  std::string get_title ( std::string name )
+  {
+
+    std::map <std::string, int> res;
+    for ( auto c:m_cop_cars )
+      {
+        res[c->get_name()] += c->get_num_captured_gangsters();
+      }
+
+    std::ostringstream ss;
+
+    for ( auto r: res )
+      ss << r.first << " " << res[r.first] << " ";
+
+    ss << name << ".txt";
+
+    return ss.str();
   }
 
   osmium::unsigned_object_id_type virtual node()
@@ -204,18 +247,20 @@ public:
 
     std::lock_guard<std::mutex> lock ( cars_mutex );
 
-    std::cout <<
-              m_time <<
-              " " <<
-              cars.size()
-              << std::endl;
+    *logFile <<
+             m_time <<
+             " " <<
+             m_minutes <<
+             " " <<             
+             cars.size()
+             << std::endl;
 
     for ( auto car:cars )
       {
         car->step();
 
-        std::cout << *car
-                  <<  " " << std::endl;
+        *logFile << *car
+                 <<  " " << std::endl;
 
       }
   }
@@ -400,6 +445,9 @@ private:
   std::mutex cars_mutex;
 
   TrafficType m_type {TrafficType::NORMAL};
+
+  std::fstream* logFile;
+  std::string logfile;
 };
 
 }
