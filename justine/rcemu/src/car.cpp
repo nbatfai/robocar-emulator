@@ -41,6 +41,7 @@ justine::robocar::Car::Car (
 }
 
 justine::robocar::AdjacencyList justine::robocar::AntCar::alist;
+justine::robocar::AdjacencyList justine::robocar::AntCar::alist_evaporate;
 
 justine::robocar::AntCar::AntCar ( justine::robocar::Traffic & traffic ) : justine::robocar::Car ( traffic )
 {
@@ -102,6 +103,128 @@ void justine::robocar::SmartCar::init()
 
 }
 
+osmium::unsigned_object_id_type justine::robocar::AntCar::ant ( void )
+{
+
+  AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
+
+  WayNodesVect::iterator i = std::max_element ( iter->second.begin(), iter->second.end() );
+
+  osmium::unsigned_object_id_type next_m_to = std::distance ( iter->second.begin(), i );
+
+  ++*i;
+
+  return next_m_to;
+}
+
+osmium::unsigned_object_id_type justine::robocar::AntCar::ant_rnd ( void )
+{
+
+  AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
+
+  int sum = std::accumulate ( iter->second.begin(), iter->second.end(), 0 );
+
+  int rnd = std::rand() % sum;
+
+  int sum2 = 0;
+
+  WayNodesVect::iterator j=iter->second.begin();
+  for ( ; j!= iter->second.end(); ++j )
+    {
+      sum2 += *j;
+      if ( sum2 >= rnd )
+        break;
+    }
+
+  osmium::unsigned_object_id_type next_m_to = std::distance ( iter->second.begin(), j );
+
+  ++*j;
+
+  return next_m_to;
+}
+
+osmium::unsigned_object_id_type justine::robocar::AntCar::ant_rernd ( void )
+{
+
+  AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
+
+  WayNodesVect cpv = iter->second;
+
+  int sum = std::accumulate ( cpv.begin(), cpv.end(), 0 );
+
+  int res = ( int ) ( ( double ) sum/.75 );
+
+  int total = sum + cpv.size() * ( res/cpv.size() );
+
+  for ( osmium::unsigned_object_id_type& v : cpv )
+    v += res/cpv.size();
+
+  int rnd = std::rand() % total;
+
+  int sum2 = 0;
+
+  WayNodesVect::iterator j=cpv.begin();
+  for ( ; j!= cpv.end(); ++j )
+    {
+      sum2 += *j;
+      if ( sum2 >= rnd )
+        break;
+    }
+
+  osmium::unsigned_object_id_type next_m_to = std::distance ( cpv.begin(), j );
+
+  ++*j;
+
+  return next_m_to;
+}
+
+osmium::unsigned_object_id_type justine::robocar::AntCar::ant_mrernd ( void )
+{
+  AdjacencyList::iterator iter = AntCar::alist.find ( m_from );
+  AdjacencyList::iterator iter2 = AntCar::alist_evaporate.find ( m_from );
+
+  for ( WayNodesVect::iterator j=iter->second.begin(); j!= iter->second.end(); ++j )
+    {
+
+      int del = traffic.get_time() - iter2->second[std::distance ( iter->second.begin(), j )];
+
+      int pheromone = *j - del;
+
+      if ( pheromone > 1 ) *j = pheromone;
+      else *j = 1;
+    }
+
+  WayNodesVect cpv = iter->second;
+
+  int sum = std::accumulate ( cpv.begin(), cpv.end(), 0 );
+
+  int res = ( int ) ( ( double ) sum/.6 );
+
+  int total = sum + cpv.size() * ( res/cpv.size() );
+
+  for ( osmium::unsigned_object_id_type& v : cpv )
+    v += res/cpv.size();
+
+  int rnd = std::rand() % total;
+
+  int sum2 = 0;
+
+  WayNodesVect::iterator j=cpv.begin();
+  for ( ; j!= cpv.end(); ++j )
+    {
+      sum2 += *j;
+      if ( sum2 >= rnd )
+        break;
+    }
+
+  osmium::unsigned_object_id_type next_m_to = std::distance ( cpv.begin(), j );
+
+  ++*j;
+  iter2->second[std::distance (cpv.begin(), j )] = traffic.get_time();
+
+  return next_m_to;
+}
+
 
 void justine::robocar::AntCar::nextSmarterEdge ( void )
 {
@@ -110,74 +233,24 @@ void justine::robocar::AntCar::nextSmarterEdge ( void )
   if ( !nes )
     return;
 
-  // osmium::unsigned_object_id_type next_m_to = std::rand() % nes;
-
   osmium::unsigned_object_id_type next_m_to;
 
   if ( traffic.get_type() == TrafficType::ANT )
     {
-      AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
-
-      WayNodesVect::iterator i = std::max_element ( iter->second.begin(), iter->second.end() );
-
-      next_m_to = std::distance ( iter->second.begin(), i );
-
-      ++*i;
+      next_m_to = ant();
     }
   else if ( traffic.get_type() == TrafficType::ANT_RND )
     {
-      AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
-
-      int sum = std::accumulate ( iter->second.begin(), iter->second.end(), 0 );
-
-      int rnd = std::rand() % sum;
-
-      int sum2 = 0;
-
-      WayNodesVect::iterator j=iter->second.begin();
-      for ( ; j!= iter->second.end(); ++j )
-        {
-          sum2 += *j;
-          if ( sum2 >= rnd )
-            break;
-        }
-
-      next_m_to = std::distance ( iter->second.begin(), j );
-
-      ++*j;
+      next_m_to = ant_rnd();
+    }
+  else if ( traffic.get_type() == TrafficType::ANT_RERND )
+    {
+      next_m_to = ant_rernd();
     }
   else
     {
-      AdjacencyList::iterator iter= AntCar::alist.find ( m_from );
-
-      WayNodesVect cpv = iter->second;
-
-      int sum = std::accumulate ( cpv.begin(), cpv.end(), 0 );
-
-      int res = ( int ) ( ( double ) sum/.75 );
-
-      int total = sum + cpv.size() * ( res/cpv.size() );
-
-      for ( osmium::unsigned_object_id_type& v : cpv )
-        v += res/cpv.size();
-
-      int rnd = std::rand() % total;
-
-      int sum2 = 0;
-
-      WayNodesVect::iterator j=cpv.begin();
-      for ( ; j!= cpv.end(); ++j )
-        {
-          sum2 += *j;
-          if ( sum2 >= rnd )
-            break;
-        }
-
-      next_m_to = std::distance ( cpv.begin(), j );
-
-      ++*j;
+      next_m_to = ant_mrernd();
     }
-
 
 
   if ( traffic.alist ( next_m_from, next_m_to ) == m_from )
@@ -421,12 +494,12 @@ osmium::unsigned_object_id_type justine::robocar::Car::get_max_steps() const
 bool justine::robocar::SmartCar::set_route ( std::vector<unsigned int> & route )
 {
 
-  if(route.size() < 2)
+  if ( route.size() < 2 )
     return false;
-    
+
   this->route = route;
-  m_routed = true;  
-  
+  m_routed = true;
+
   if ( m_from == route[0] )
     {
 
@@ -439,9 +512,9 @@ bool justine::robocar::SmartCar::set_route ( std::vector<unsigned int> & route )
           m_step = 0;
         }
     }
-    
-    return true;
-    
+
+  return true;
+
 }
 
 bool justine::robocar::SmartCar::set_fromto ( unsigned int from, unsigned int to )

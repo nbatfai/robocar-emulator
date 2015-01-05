@@ -145,7 +145,14 @@ public:
 
   }
 
+  osmium::unsigned_object_id_type ant ( void );  
+  osmium::unsigned_object_id_type ant_rnd ( void );  
+  osmium::unsigned_object_id_type ant_rernd ( void );  
+  osmium::unsigned_object_id_type ant_mrernd ( void );  
+  
   static AdjacencyList alist;
+  static AdjacencyList alist_evaporate;
+  
 
 private:
   bool rnd {true};

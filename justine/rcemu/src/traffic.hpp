@@ -75,7 +75,7 @@ namespace robocar
 
 enum class TrafficType: unsigned int
 {
-  NORMAL=0, ANT, ANT_RND, ANT_RERND
+  NORMAL=0, ANT, ANT_RND, ANT_RERND, ANT_MRERND
 };
 
 class Traffic
@@ -109,8 +109,10 @@ public:
         {
 
           for ( auto noderef : iter->second.m_alist )
-            AntCar::alist[iter->first].push_back ( 1 );
-
+            {
+              AntCar::alist[iter->first].push_back ( 1 );
+              AntCar::alist_evaporate[iter->first].push_back ( 1 );
+            }
         }
 
     for ( int i {0}; i < m_size; ++i )
@@ -185,7 +187,7 @@ public:
             traffic_run();
             std::this_thread::sleep_for ( std::chrono::milliseconds ( m_delay ) );
           }
-          
+
       }
 
     std::cout << "The traffic simulation is over." << std::endl;
@@ -251,7 +253,7 @@ public:
              m_time <<
              " " <<
              m_minutes <<
-             " " <<             
+             " " <<
              cars.size()
              << std::endl;
 
@@ -416,6 +418,11 @@ public:
     return m_type;
   }
 
+  int get_time() const
+  {
+    return m_time;
+  }
+  
 protected:
 
   boost::interprocess::managed_shared_memory *segment;

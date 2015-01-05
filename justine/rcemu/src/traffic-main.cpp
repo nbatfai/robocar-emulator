@@ -52,7 +52,7 @@ int main ( int argc, char* argv[] )
   ( "nrcars", boost::program_options::value<int>(), "number of the random cars" )
   ( "minutes", boost::program_options::value<int>(), "how long does the traffic simulation run for?" )
   ( "catchdist", boost::program_options::value<double>(), "the catch distance of cop cars" )
-  ( "traffict", boost::program_options::value< std::string > (), "traffic type = NORMAL|ANTS|ANTS_RND|ANTS_RERND" )
+  ( "traffict", boost::program_options::value< std::string > (), "traffic type = NORMAL|ANTS|ANTS_RND|ANTS_RERND|ANTS_MRERND" )
   ;
   
   boost::program_options::variables_map vm;
@@ -112,6 +112,8 @@ int main ( int argc, char* argv[] )
     type = justine::robocar::TrafficType::ANT_RND;
   else if(traffict == "ANTS_RERND")
     type = justine::robocar::TrafficType::ANT_RERND;
+  else if(traffict == "ANTS_MRERND")
+    type = justine::robocar::TrafficType::ANT_MRERND;
   else if(traffict == "ANTS")
     type = justine::robocar::TrafficType::ANT;
   else
