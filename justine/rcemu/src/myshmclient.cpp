@@ -319,6 +319,10 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
 void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_service, const char * port )
 {
 
+#ifdef DEBUG
+  foo();
+#endif
+
   boost::asio::ip::tcp::resolver resolver ( io_service );
   boost::asio::ip::tcp::resolver::query query ( boost::asio::ip::tcp::v4(), "localhost", port );
   boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve ( query );
@@ -349,7 +353,7 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
             g = gngstrs[0].to;
           else
             g = 0;
-	  
+
           if ( g > 0 )
             {
 

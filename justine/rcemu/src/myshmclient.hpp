@@ -67,6 +67,8 @@
 #include <chrono>
 #endif
 
+#include <boost/graph/bellman_ford_shortest_paths.hpp>
+
 namespace justine
 {
 namespace sampleclient
@@ -87,6 +89,7 @@ typedef boost::property_map<NodeRefGraph, boost::vertex_index_t>::type VertexInd
 typedef boost::iterator_property_map <NRGVertex*, VertexIndexMap, NRGVertex, NRGVertex&> PredecessorMap;
 typedef boost::iterator_property_map <int*, VertexIndexMap, int, int&> DistanceMap;
 
+typedef boost::property_map<NodeRefGraph, boost::edge_weight_t>::type EdgeWeightMap;
 
 /**
  * @brief A sample class used for testing the routing algorithms.
@@ -107,7 +110,7 @@ public:
    * This constructor creates the BGL graph from the map graph that
    * is placed in the shared memory segment.
    */
-  MyShmClient ( const char * shm_segment, std::string teamname ) : ShmClient ( shm_segment ), m_teamname(teamname)
+  MyShmClient ( const char * shm_segment, std::string teamname ) : ShmClient ( shm_segment ), m_teamname ( teamname )
   {
 
     nr_graph = bgl_graph();
@@ -142,7 +145,7 @@ public:
   void start ( boost::asio::io_service& io_service, const char * port );
 
   void start10 ( boost::asio::io_service& io_service, const char * port );
-  
+
   /**
    * @brief This function counts the number of vertices and number of edges in the map graph.
    * @param [out] sum_edges the number of edges
@@ -381,6 +384,83 @@ public:
   }
 
 
+  /**
+   * @brief This function solves the shortest path problem using Bellman-Ford algorithm.
+   * @param source the source node
+   * @param target the target node
+   * @return the shortest path between nodes source and target
+   *
+   * This function determines the shortest path from the source node to the target node.
+   */
+  std::vector<osmium::unsigned_object_id_type> hasBellmanFordPath ( osmium::unsigned_object_id_type from, osmium::unsigned_object_id_type to )
+  {
+
+#ifdef DEBUG
+    auto start = std::chrono::high_resolution_clock::now();
+#endif
+
+    std::vector<NRGVertex> parents ( boost::num_vertices ( *nr_graph ) );
+    for ( int i = 0; i < boost::num_vertices ( *nr_graph ); ++i )
+      parents[i] = i;
+
+    std::vector<int> distances ( boost::num_vertices ( *nr_graph ), ( std::numeric_limits<int>::max ) () );
+    distances[ nr2v[from] ] = 0;
+
+    VertexIndexMap vertexIndexMap = boost::get ( boost::vertex_index, *nr_graph );
+    EdgeWeightMap weightMap = boost::get ( boost::edge_weight_t(), *nr_graph );
+
+    PredecessorMap predecessorMap ( &parents[0], vertexIndexMap );
+    DistanceMap distanceMap ( &distances[0], vertexIndexMap );
+
+    boost::bellman_ford_shortest_paths ( *nr_graph, boost::num_vertices ( *nr_graph ),
+                                         boost::weight_map ( weightMap ).
+                                         distance_map ( distanceMap ).predecessor_map ( predecessorMap ) );
+
+    VertexNameMap vertexNameMap = boost::get ( boost::vertex_name, *nr_graph );
+
+    std::vector<osmium::unsigned_object_id_type> path;
+
+    NRGVertex tov = nr2v[to];
+    NRGVertex fromv = predecessorMap[tov];
+
+#ifdef DEBUG
+    int dist {0};
+#endif
+
+    while ( fromv != tov )
+      {
+
+        NRGEdge edge = boost::edge ( fromv, tov, *nr_graph ).first;
+
+#ifdef DEBUG
+        std::cout << vertexNameMap[boost::source ( edge, *nr_graph )]
+                  << " -> "
+                  << vertexNameMap[boost::target ( edge, *nr_graph )] << std::endl;
+        dist += distanceMap[fromv];
+#endif
+
+        path.push_back ( vertexNameMap[boost::target ( edge, *nr_graph )] );
+
+        tov = fromv;
+        fromv = predecessorMap[tov];
+      }
+    path.push_back ( from );
+
+    std::reverse ( path.begin(), path.end() );
+
+#ifdef DEBUG
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds> (
+                std::chrono::high_resolution_clock::now() - start ).count()
+              << " ms " << dist << " meters" << std::endl;
+
+    std::copy ( path.begin(), path.end(),
+                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " " ) );
+#endif
+
+    return path;
+  }
+
+
 protected:
 
   NodeRefGraph* nr_graph;
@@ -399,9 +479,27 @@ private:
   void foo ( void )
   {
 
-    std::vector<osmium::unsigned_object_id_type> path = hasDijkstraPath ( 2969934868, 1348670117 );
-    std::copy ( path.begin(), path.end(),
-                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " " ) );
+    std::cout << std::endl;
+    std::vector<osmium::unsigned_object_id_type> pathD = hasDijkstraPath ( 2969934868, 1348670117 );
+    std::cout << std::endl;
+    std::copy ( pathD.begin(), pathD.end(),
+                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, "  -D-> " ) );
+
+    std::vector<osmium::unsigned_object_id_type> pathBF = hasBellmanFordPath ( 2969934868, 1348670117 );
+    std::cout << std::endl;
+    std::copy ( pathBF.begin(), pathBF.end(),
+                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " -BF-> " ) );
+
+    std::cout << std::endl;
+    pathD = hasDijkstraPath ( 2969934868, 1402222861 );
+    std::copy ( pathD.begin(), pathD.end(),
+                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, "  -D-> " ) );
+
+    std::cout << std::endl;
+    pathBF = hasBellmanFordPath ( 2969934868, 1402222861 );
+    std::cout << std::endl;
+    std::copy ( pathBF.begin(), pathBF.end(),
+                std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " -BF-> " ) );
 
   }
 
@@ -415,9 +513,9 @@ private:
     int step;
   };
 
-  typedef SmartCar Gangster;  
-  typedef int Cop;  
-  
+  typedef SmartCar Gangster;
+  typedef int Cop;
+
   std::vector<Gangster> gangsters ( boost::asio::ip::tcp::socket & socket, int id, osmium::unsigned_object_id_type cop );
   std::vector<Cop> initcops ( boost::asio::ip::tcp::socket & socket );
   void pos ( boost::asio::ip::tcp::socket & socket, int id );
