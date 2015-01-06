@@ -1,0 +1,300 @@
+2015-01-06  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp: Added a function to solve the
+	shortest path problem using Bellman-Ford algorithm.  I have aleady tried to make routing decisions using Bellman-Ford
+	algorithm now, but it seems quite slow to me if compared to
+	Dijkstra's algorithm: 9 ms 292 meters 2969934868  -D-> 651365957  -D-> 320900801  -D-> 1348670109  -D->
+	320900594  -D-> 1348670117 471 ms 292 meters 2969934868 -BF-> 651365957 -BF-> 320900801 -BF-> 1348670109 -BF->
+	320900594 -BF-> 1348670117 7 ms 31598 meters 2969934868  -D-> 651365957  -D-> 320900801  -D-> 1348670109  -D->
+	320900594  -D-> 243202117  -D-> 243202116  -D-> 243202115  -D->
+	2922046851  -D-> 243202114  -D-> 243202113  -D-> 1348532561  -D->
+	1348532552  -D-> 243202111  -D-> 243202110  -D-> 2922046855  -D->
+	243202109  -D-> 2514926785  -D-> 2514926787  -D-> 243202108  -D->
+	2514926789  -D-> 243202107  -D-> 2910082303  -D-> 478733357  -D->
+	2161329974  -D-> 478733121  -D-> 2910082305  -D-> 243202104  -D->
+	1349183844  -D-> 422996186  -D-> 422994755  -D-> 2949636208  -D->
+	243202103  -D-> 243202101  -D-> 249428985  -D-> 249428982  -D->
+	243201690  -D-> 469214586  -D-> 974491043  -D-> 974491161  -D->
+	243201688  -D-> 2930896634  -D-> 683559151  -D-> 974491006  -D->
+	343568265  -D-> 1491981012  -D-> 2930896633  -D-> 243201685  -D->
+	974491152  -D-> 243201684  -D-> 243201683  -D-> 1403150166  -D->
+	2527928712  -D-> 1534647916  -D-> 1491981015  -D-> 1499371531  -D->
+	243201656  -D-> 2527928713  -D-> 1499371537  -D-> 243201657  -D->
+	974491118  -D-> 2527928714  -D-> 977774216  -D-> 974491065  -D->
+	1402222970  -D-> 1402222983  -D-> 1402222987  -D-> 2527928721  -D->
+	26755459  -D-> 2527928727  -D-> 1402222861 467 ms 31598 meters 2969934868 -BF-> 651365957 -BF-> 320900801 -BF-> 1348670109 -BF->
+	320900594 -BF-> 243202117 -BF-> 243202116 -BF-> 243202115 -BF->
+	2922046851 -BF-> 243202114 -BF-> 243202113 -BF-> 1348532561 -BF->
+	1348532552 -BF-> 243202111 -BF-> 243202110 -BF-> 2922046855 -BF->
+	243202109 -BF-> 2514926785 -BF-> 2514926787 -BF-> 243202108 -BF->
+	2514926789 -BF-> 243202107 -BF-> 2910082303 -BF-> 478733357 -BF->
+	2161329974 -BF-> 478733121 -BF-> 2910082305 -BF-> 243202104 -BF->
+	1349183844 -BF-> 422996186 -BF-> 422994755 -BF-> 2949636208 -BF->
+	243202103 -BF-> 243202101 -BF-> 249428985 -BF-> 249428982 -BF->
+	243201690 -BF-> 469214586 -BF-> 974491043 -BF-> 974491161 -BF->
+	243201688 -BF-> 2930896634 -BF-> 683559151 -BF-> 974491006 -BF->
+	343568265 -BF-> 1491981012 -BF-> 2930896633 -BF-> 243201685 -BF->
+	974491152 -BF-> 243201684 -BF-> 243201683 -BF-> 1403150166 -BF->
+	2527928712 -BF-> 1534647916 -BF-> 1491981015 -BF-> 1499371531 -BF->
+	243201656 -BF-> 2527928713 -BF-> 1499371537 -BF-> 243201657 -BF->
+	974491118 -BF-> 2527928714 -BF-> 977774216 -BF-> 974491065 -BF->
+	1402222970 -BF-> 1402222983 -BF-> 1402222987 -BF-> 2527928721 -BF->
+	26755459 -BF-> 2527928727 -BF-> 1402222861 -BF-
+
+2015-01-05  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/car.cpp, justine/rcemu/src/car.hpp,
+	justine/rcemu/src/traffic-main.cpp, justine/rcemu/src/traffic.hpp,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java: Decrease
+	of pheromone values of nodes may be achieved through pheromone
+	evaporation.
+
+2015-01-04  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/configure.ac, justine/rcemu/src/Makefile.am,
+	justine/rcemu/src/car.cpp, justine/rcemu/src/car.hpp,
+	justine/rcemu/src/traffic.cpp, justine/rcemu/src/traffic.hpp,
+	justine/rclog/README,
+	justine/rclog/src/main/java/justine/robocar/CarWindow.java,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java: Major
+	bugs of v0.1 has been fixed.
+
+2015-01-03  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/car.cpp, justine/rcemu/src/traffic-main.cpp,
+	justine/rcemu/src/traffic.cpp, justine/rcemu/src/traffic.hpp,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java: Added
+	ant simulations for moving routine cars on the city map The traffic server has been modified so that now ant simulation can
+	also be used to move routine cars. The class AntCar is derived from
+	class Car and overrides the virtual method nextSmarterEdge() where I
+	have been experimenting with several settings: TrafficType::ANT     the routine cars select the edge that was chosen the most number
+	of times out of the possible edges in the previous steps.  TrafficType::ANT_RND     the next edge will be chosen with a probability that increases
+	with the number of past selections of the given edge.  TrafficType::ANT_RERND     it is similar to the previous one, but the sum of the previous
+	probabilities of all possible edge is only equal to 3/4.  The actual results can be seen on the attached screenshots. But
+	routine cars still cannot exhibit ant-like behavior... I would like
+	to provide a solution that is more similar to patterns that can be
+	seen in the ant simulations of
+	http://javacska.lib.unideb.hu/programkak/hangyak.html or
+	http://javacska.lib.unideb.hu/hangyak/
+
+2015-01-02  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/car.cpp, justine/rcemu/src/car.hpp,
+	justine/rcemu/src/traffic-main.cpp, justine/rcemu/src/traffic.hpp,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java: Added
+	support for ant simulations.
+
+2014-12-24  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/THANKS,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java: Map
+	positioned to show the given city at starting
+
+2014-12-23  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/osmreader.hpp, justine/rcemu/src/smartcity.cpp,
+	justine/rcemu/src/smartcity.hpp: osmium::index::map::StlMap replaced
+	by std::map
+
+2014-12-22  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/SRS/robocarcld-SRS-hu.xml: Small improvements
+
+2014-12-22  András Mamenyák <mamenyaka@gmail.com>
+
+	* justine/rcemu/ChangeLog: add ChangeLog
+
+2014-12-22  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/SRS/robocarglssry-SRS-hu.xml: Glossary moved to a separated
+	file.
+
+2014-12-22  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/SRS/robocarcld-SRS-hu.xml, doc/SRS/robocaremu-SRS-hu.xml: 
+	Refactored XML sources to use XInclude
+
+2014-12-22  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/SRS/Makefile, doc/SRS/robocarcld-SRS-hu.xml,
+	justine/rcemu/AUTHORS, justine/rcemu/Makefile.am,
+	justine/rcemu/README, justine/rcemu/THANKS,
+	justine/rcemu/configure.ac, justine/rcemu/src/Makefile.am,
+	justine/rcemu/src/car.cpp, justine/rcemu/src/car.hpp,
+	justine/rcemu/src/carlexer.hpp, justine/rcemu/src/carlexer.ll,
+	justine/rcemu/src/myshmclient-main.cpp,
+	justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp, justine/rcemu/src/osmreader.hpp,
+	justine/rcemu/src/shmclient-main.cpp,
+	justine/rcemu/src/shmclient.cpp, justine/rcemu/src/shmclient.hpp,
+	justine/rcemu/src/smartcity.cpp, justine/rcemu/src/smartcity.hpp,
+	justine/rcemu/src/traffic-main.cpp, justine/rcemu/src/traffic.cpp,
+	justine/rcemu/src/traffic.hpp: Added an initial document that
+	describes the city cloud.
+
+2014-12-19  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/NEWS, justine/rcemu/configure.ac,
+	justine/rcemu/src/carlexer.ll, justine/rcemu/src/traffic.cpp,
+	justine/rcwin/README, justine/rcwin/pom.xml,
+	justine/rcwin/src/main/java/justine/robocar/CarWindow.java,
+	justine/rcwin/src/site/apt/download.apt.vm,
+	justine/rcwin/src/site/apt/index.apt.vm,
+	justine/rcwin/src/site/en/apt/download.apt.vm,
+	justine/rcwin/src/site/en/apt/index.apt.vm,
+	justine/rcwin/src/site/site.xml, justine/rcwin/src/site/site_en.xml: 
+	The first round of the first competition of the Robocar World
+	Championship, http://youtu.be/GMUGdbIXW5Q; Added rcwin project to
+	visualize the competition.
+
+2014-12-17  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/car.cpp, justine/rcemu/src/car.hpp,
+	justine/rcemu/src/myshmclient-main.cpp,
+	justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp, justine/rcemu/src/traffic.cpp,
+	justine/rcemu/src/traffic.hpp,
+	justine/rclog/src/main/java/justine/robocar/CarWindow.java: Fixed
+	tons of bugs and improved the logplayer
+
+2014-12-16  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/qualification/rcarwcup-qualification.xml: small improvements
+
+2014-12-16  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/qualification/Makefile,
+	doc/qualification/rcarwcup-qualification.xml: Updated TQP template
+
+2014-12-16  Norbert Batfai <nbatfai@gmail.com>
+
+	* doc/Makefile, doc/SRS/Makefile, doc/SRS/robocaremu-SRS-hu.xml,
+	doc/SRS/robocaremu-hu.xls, doc/qualification/Makefile,
+	doc/qualification/rcarwcup-qualification.xml,
+	doc/qualification/robocaremu-hu.xls, doc/robocaremu-SRS-hu.xml,
+	doc/robocaremu-hu.xls,
+	justine/rclog/src/main/java/justine/robocar/CarWindow.java: Added
+	initial template of Team Qualification Paper
+
+2014-12-15  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rclog/src/main/java/justine/robocar/CarWindow.java: Added
+	indication of server time in the window title name.
+
+2014-12-15  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/configure.ac, justine/rcemu/src/car.cpp,
+	justine/rcemu/src/car.hpp, justine/rcemu/src/carlexer.hpp,
+	justine/rcemu/src/carlexer.ll, justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp,
+	justine/rcemu/src/traffic-main.cpp, justine/rcemu/src/traffic.cpp,
+	justine/rcemu/src/traffic.hpp: Many bug fixes
+
+2014-12-13  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/shmclient.cpp: Trivial bugfix.
+
+2014-12-13  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/Doxyfile, justine/rcemu/NEWS,
+	justine/rcemu/configure.ac, justine/rcemu/src/car.cpp,
+	justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp, justine/rcemu/src/shmclient.cpp,
+	justine/rcemu/src/shmclient.hpp, justine/rcemu/src/smartcity.hpp: 
+	Added MyShmClient class to make routing easier.
+
+2014-12-11  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/NEWS, justine/rcemu/README,
+	justine/rcemu/configure.ac, justine/rcemu/src/Makefile.am,
+	justine/rcemu/src/myshmclient-main.cpp,
+	justine/rcemu/src/myshmclient.cpp,
+	justine/rcemu/src/myshmclient.hpp, justine/rcemu/src/osmreader.hpp,
+	justine/rcemu/src/shmclient.hpp, justine/rcemu/src/smartcity.cpp,
+	justine/rcemu/src/smartcity.hpp, justine/rcemu/src/traffic.hpp: 
+	Added a simple class called MyShmClient to test the routing
+	algorithms.
+
+2014-12-09  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/shmclient.cpp: Trivial bugfix.
+
+2014-12-09  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rclog/src/main/java/justine/robocar/CarWindow.java: 
+	Trivial bugfix.
+
+2014-12-09  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/car.cpp, justine/rcemu/src/shmclient.cpp,
+	justine/rcemu/src/traffic.cpp: bugfix: increased network buffer-size
+	to512 Kbytes
+
+2014-12-09  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/README, justine/rcemu/src/car.cpp,
+	justine/rcemu/src/car.hpp, justine/rcemu/src/traffic.cpp,
+	justine/rcemu/src/traffic.hpp, justine/rclog/pom.xml: bugfix:
+	improved car movement in justine::robocar::SmartCar::nextGuidedEdge
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/traffic.hpp: Oops
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/src/traffic.hpp: The traffic simulation lasts 10
+	minutes.
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rclog/src/main/java/justine/robocar/CarWindow.java: Added
+	the possibility to switch OSM view to
+	VirtualEarthTileFactoryInfo.SATELLITE or
+	VirtualEarthTileFactoryInfo.HYBRID view.
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rclog/src/main/java/justine/robocar/CarWindow.java: bugfix
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rclog/src/main/java/justine/robocar/CarWindow.java: Added
+	the WaypointCaught class for visualizing captured gangsters.
+
+2014-12-08  Norbert Batfai <nbatfai@gmail.com>
+
+	* justine/rcemu/AUTHORS, justine/rcemu/COPYING,
+	justine/rcemu/Doxyfile, justine/rcemu/INSTALL,
+	justine/rcemu/Makefile.am, justine/rcemu/NEWS,
+	justine/rcemu/README, justine/rcemu/THANKS,
+	justine/rcemu/aminclude.am, justine/rcemu/configure.ac,
+	justine/rcemu/m4/boost.m4, justine/rcemu/m4/libtool.m4,
+	justine/rcemu/m4/ltoptions.m4, justine/rcemu/m4/ltsugar.m4,
+	justine/rcemu/m4/ltversion.m4, justine/rcemu/m4/lt~obsolete.m4,
+	justine/rcemu/m4/m4-ax_prog_doxygen.m4,
+	justine/rcemu/m4/m4_ax_cxx_compile_stdcxx_11.m4,
+	justine/rcemu/src/Makefile.am, justine/rcemu/src/car.cpp,
+	justine/rcemu/src/car.hpp, justine/rcemu/src/carlexer.hpp,
+	justine/rcemu/src/carlexer.ll, justine/rcemu/src/mainpage.h,
+	justine/rcemu/src/osmreader.hpp,
+	justine/rcemu/src/shmclient-main.cpp,
+	justine/rcemu/src/shmclient.cpp, justine/rcemu/src/shmclient.hpp,
+	justine/rcemu/src/smartcity.cpp, justine/rcemu/src/smartcity.hpp,
+	justine/rcemu/src/traffic-main.cpp, justine/rcemu/src/traffic.cpp,
+	justine/rcemu/src/traffic.hpp, justine/rclog/README,
+	justine/rclog/pom.xml,
+	justine/rclog/src/main/java/justine/robocar/CarWindow.java,
+	justine/rclog/src/site/apt/download.apt.vm,
+	justine/rclog/src/site/apt/index.apt.vm,
+	justine/rclog/src/site/en/apt/download.apt.vm,
+	justine/rclog/src/site/en/apt/index.apt.vm,
+	justine/rclog/src/site/site.xml, justine/rclog/src/site/site_en.xml: 
+	Justine 0.0.10 (rcemu, rclog), an initial version of Robocar City
+	Emulation Platform
+
+2014-11-05  Norbert Batfai <nbatfai@gmail.com>
+
+	* Initial document release for comment.
+
