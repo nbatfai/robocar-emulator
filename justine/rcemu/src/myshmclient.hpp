@@ -69,6 +69,9 @@
 
 #include <boost/graph/bellman_ford_shortest_paths.hpp>
 
+#include <boost/graph/graphviz.hpp>
+#include <fstream>
+
 namespace justine
 {
 namespace sampleclient
@@ -118,6 +121,8 @@ public:
 #ifdef DEBUG
     print_vertices ( 10 );
     print_edges ( 10 );
+    std::fstream graph_log( teamname+".dot" , std::ios_base::out );
+    boost::write_graphviz(graph_log, *nr_graph);		   
 #endif
 
   }

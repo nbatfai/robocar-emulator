@@ -133,7 +133,7 @@ int justine::sampleclient::MyShmClient::init ( boost::asio::ip::tcp::socket & so
 
   boost::system::error_code err;
 
-  size_t length = std::sprintf ( data, "<init guided Norbi 1 c>" );
+  size_t length = std::sprintf ( data, "<init guided %s 1 c>", m_teamname.c_str() );
 
   socket.send ( boost::asio::buffer ( data, length ) );
 
