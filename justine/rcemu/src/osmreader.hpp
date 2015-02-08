@@ -38,12 +38,11 @@
 #include <osmium/osm/node.hpp>
 #include <osmium/osm/way.hpp>
 #include <osmium/osm/relation.hpp>
-#include <osmium/index/map/sparse_table.hpp>
+#include <osmium/index/map/sparse_mem_table.hpp>
+#include <osmium/index/map/sparse_mem_map.hpp>
 #include <osmium/handler/node_locations_for_ways.hpp>
 #include <osmium/geom/haversine.hpp>
 #include <osmium/geom/coordinates.hpp>
-#include <osmium/index/map/vector.hpp>
-#include <osmium/index/map/stl_map.hpp>
 #include <iostream>
 #include <map>
 #include <set>
@@ -59,8 +58,7 @@ namespace justine
 {
 namespace robocar
 {
-
-typedef osmium::index::map::SparseTable<osmium::unsigned_object_id_type, osmium::Location> OSMLocations;
+typedef osmium::index::map::SparseMemTable<osmium::unsigned_object_id_type, osmium::Location> OSMLocations;
 
 typedef std::vector<osmium::unsigned_object_id_type> WayNodesVect;
 typedef std::map<std::string, WayNodesVect> WayNodesMap;
@@ -69,7 +67,7 @@ typedef std::map<osmium::unsigned_object_id_type, osmium::Location> WaynodeLocat
 typedef std::map<osmium::unsigned_object_id_type, WayNodesVect> Way2Nodes;
 
 typedef std::map<osmium::unsigned_object_id_type, WayNodesVect> AdjacencyList;
-typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, int > Vertices;
+typedef osmium::index::map::SparseMemMap<osmium::unsigned_object_id_type, int > Vertices;
 
 class OSMReader : public osmium::handler::Handler
 {
@@ -96,7 +94,7 @@ public:
         osmium::io::File infile ( osm_file );
         osmium::io::Reader reader ( infile, osmium::osm_entity_bits::all );
 
-        using SparseLocations = osmium::index::map::SparseTable<osmium::unsigned_object_id_type, osmium::Location>;
+        using SparseLocations = osmium::index::map::SparseMemTable<osmium::unsigned_object_id_type, osmium::Location>;
         osmium::handler::NodeLocationsForWays<SparseLocations> node_locations ( locations );
 
         osmium::apply ( reader, node_locations, *this );

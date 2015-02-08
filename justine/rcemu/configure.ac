@@ -56,6 +56,7 @@ AC_CHECK_HEADERS([osmium/osm/relation.hpp osmium/io/any_input.hpp],,
   [[
 #include <osmium/osm/relation.hpp>
 #include <osmium/io/any_input.hpp>
+#include <osmium/index/map/sparse_mem_table.hpp>
     ]])
 
 LIBS="-lbz2 $LIBS"
