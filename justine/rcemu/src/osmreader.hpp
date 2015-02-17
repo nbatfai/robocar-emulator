@@ -58,7 +58,7 @@ namespace justine
 {
 namespace robocar
 {
-typedef osmium::index::map::SparseMemTable<osmium::unsigned_object_id_type, osmium::Location> OSMLocations;
+typedef osmium::index::map::SparseMemMap<osmium::unsigned_object_id_type, osmium::Location> OSMLocations;
 
 typedef std::vector<osmium::unsigned_object_id_type> WayNodesVect;
 typedef std::map<std::string, WayNodesVect> WayNodesMap;
@@ -94,7 +94,7 @@ public:
         osmium::io::File infile ( osm_file );
         osmium::io::Reader reader ( infile, osmium::osm_entity_bits::all );
 
-        using SparseLocations = osmium::index::map::SparseMemTable<osmium::unsigned_object_id_type, osmium::Location>;
+        using SparseLocations = osmium::index::map::SparseMemMap<osmium::unsigned_object_id_type, osmium::Location>;
         osmium::handler::NodeLocationsForWays<SparseLocations> node_locations ( locations );
 
         osmium::apply ( reader, node_locations, *this );
