@@ -476,10 +476,9 @@ public class CarWindow extends javax.swing.JFrame {
 
         setTitle("Justine - Car Window (log player for Robocar City Emulator, Robocar World Championshin in Debrecen)");
         getContentPane().add(jXMapViewer);
-        
-        java.awt.Dimension screenDim = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        
-        setSize(screenDim.width/2, screenDim.height/2);
+
+        setSize(800, 600);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 
         worker.execute();
