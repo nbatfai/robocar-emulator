@@ -1,0 +1,32 @@
+.
+├── pom.xml
+├── README
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── justine
+    │   │       └── robocar
+    │   │           └── CarWindow.java
+    │   └── resources
+    │       ├── logo1.png
+    │       ├── logo2.png
+    │       └── logo3.png
+    ├── site
+    │   ├── apt
+    │   │   ├── download.apt.vm
+    │   │   └── index.apt.vm
+    │   ├── en
+    │   │   └── apt
+    │   │       ├── download.apt.vm
+    │   │       └── index.apt.vm
+    │   ├── site_en.xml
+    │   └── site.xml
+    └── test
+        └── java
+
+
+nbatfai@orchmach:~/ROBOCAR/robocar-emulator/justine/rcstat$ mvn clean
+compile package site assembly:assembly
+nbatfai@orchmach:~/ROBOCAR/robocar-emulator/justine/rcstat$ java -jar
+target/site/justine-car-window-0.0.10-jar-with-dependencies.jar way.txt
+2015-Jul-12\ 17\:56\:49

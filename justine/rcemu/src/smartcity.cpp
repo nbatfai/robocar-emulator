@@ -103,7 +103,8 @@ int main ( int argc, char* argv[] )
   ( "city", boost::program_options::value< std::string > (), "the name of the city" )
   ( "shm", boost::program_options::value< std::string > (), "shared memory segment name" )
   ( "node2gps", boost::program_options::value< std::string > (), "node2gps file name" )
-  ;
+  ( "node2way", boost::program_options::value< std::string > (), "node2way file name" )
+ ;
 
   boost::program_options::variables_map vm;
   boost::program_options::store ( boost::program_options::parse_command_line ( argc, argv, desc ), vm );
@@ -139,6 +140,12 @@ int main ( int argc, char* argv[] )
   else
     node2gps_output.assign ( "../lmap.txt" );
 
+  std::string node2way_output;
+  if ( vm.count ( "node2way" ) )
+    node2way_output.assign ( vm["node2way"].as < std::string > () );
+  else
+    node2way_output.assign ( "../lmap.txt" );  
+  
   std::string city;
   if ( vm.count ( "city" ) )
     city.assign ( vm["city"].as < std::string > () );
@@ -163,7 +170,9 @@ int main ( int argc, char* argv[] )
     {
 
       if ( vm.count ( "node2gps" ) )
-        justine::robocar::SmartCity smartCity ( osm_input.c_str(), shm.c_str(), node2gps_output.c_str() );
+        justine::robocar::SmartCity smartCity ( osm_input.c_str(), shm.c_str(), node2gps_output.c_str(), 0 );
+      else if ( vm.count ( "node2way" ) )
+        justine::robocar::SmartCity smartCity ( osm_input.c_str(), shm.c_str(), node2way_output.c_str(), 1 );
       else
         justine::robocar::SmartCity smartCity ( osm_input.c_str(), shm.c_str() );
 

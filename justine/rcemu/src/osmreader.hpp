@@ -69,6 +69,8 @@ typedef std::map<osmium::unsigned_object_id_type, WayNodesVect> Way2Nodes;
 typedef std::map<osmium::unsigned_object_id_type, WayNodesVect> AdjacencyList;
 typedef osmium::index::map::SparseMemMap<osmium::unsigned_object_id_type, int > Vertices;
 
+typedef std::map<osmium::unsigned_object_id_type, std::string> WayNames;
+
 class OSMReader : public osmium::handler::Handler
 {
 public:
@@ -77,11 +79,14 @@ public:
               AdjacencyList & palist,
               WaynodeLocations & waynode_locations,
               WayNodesMap & busWayNodesMap,
-              Way2Nodes & way2nodes ) : alist ( alist ),
+              Way2Nodes & way2nodes,
+              WayNames & way2name
+            ) : alist ( alist ),
     palist ( palist ),
     waynode_locations ( waynode_locations ),
     busWayNodesMap ( busWayNodesMap ),
-    way2nodes ( way2nodes )
+    way2nodes ( way2nodes ),
+    way2name ( way2name )
   {
 
     try
@@ -210,6 +215,12 @@ public:
       }
 
     ++nOSM_ways;
+
+    const char* wayname = way.tags() ["name"];
+    if ( wayname )
+      way2name[way.id()] = wayname;
+    else
+      way2name[way.id()] = "UNS "+std::to_string ( way.id() );
 
     double way_length = osmium::geom::haversine::distance ( way.nodes() );
     sum_highhway_length += way_length;
@@ -385,6 +396,7 @@ private:
   WaynodeLocations & waynode_locations;
   WayNodesMap & busWayNodesMap;
   Way2Nodes & way2nodes;
+  WayNames & way2name;
 
 };
 
