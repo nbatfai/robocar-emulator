@@ -123,6 +123,8 @@ public class CarWindow extends javax.swing.JFrame {
     String hostname = "localhost";
     int port = 10007;
 
+    java.awt.Robot robot;
+
     javax.swing.SwingWorker<Void, Traffic> worker = new javax.swing.SwingWorker<Void, Traffic>() {
 
         @Override
@@ -270,7 +272,7 @@ public class CarWindow extends javax.swing.JFrame {
                     int time = 0, size = 0, minutes = 0;
 
                     time = scan.nextInt();
-                    minutes = scan.nextInt();                    
+                    minutes = scan.nextInt();
                     size = scan.nextInt();
 
                     long ref_from = 0, ref_to = 0;
@@ -470,7 +472,16 @@ public class CarWindow extends javax.swing.JFrame {
                     jXMapViewer.setTileFactory(tileFactoryArray[++index % 4]);
                     jXMapViewer.repaint();
                     repaint();
+                } else if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_S) {
+                    jXMapViewer.repaint();
+                    repaint();
+
+                    shootScreenshot(robot.createScreenCapture(new java.awt.Rectangle(
+                            getLocation().x, getLocation().y,
+                            getSize().width, getSize().height)));
+
                 }
+
             }
         });
 
@@ -481,8 +492,35 @@ public class CarWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 
+        try {
+            robot = new java.awt.Robot(
+                    java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().
+                    getDefaultScreenDevice());
+        } catch (java.awt.AWTException e) {
+            java.util.logging.Logger.getLogger(
+                    CarWindow.class.getName()).log(java.util.logging.Level.SEVERE, "Nem lesz pillanatfelvétel...", e);
+        }
+
         worker.execute();
 
+    }
+
+    public void shootScreenshot(java.awt.image.BufferedImage mapview) {
+
+        StringBuffer sb = new StringBuffer();
+        sb = sb.delete(0, sb.length());
+        sb.append("OOCWC-");
+        sb.append(new java.util.Date());
+        sb.append(".png");
+
+        try {
+            javax.imageio.ImageIO.write(mapview, "png",
+                    new java.io.File(sb.toString()));
+
+        } catch (java.io.IOException e) {
+            java.util.logging.Logger.getLogger(
+                    CarWindow.class.getName()).log(java.util.logging.Level.SEVERE, "Pillanatfelvétel hiba...", e);
+        }
     }
 
     public static void readMap(java.util.Map<Long, Loc> lmap, String name) {
@@ -547,14 +585,14 @@ public class CarWindow extends javax.swing.JFrame {
                     new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname, 10007).setVisible(true);
                 }
             });
-            
+
         } else if (args.length == 3) {
 
             readMap(lmap, args[0]);
 
             final String hostname = args[1];
             final int port = Integer.parseInt(args[2]);
-            
+
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 
@@ -562,7 +600,7 @@ public class CarWindow extends javax.swing.JFrame {
 
                     new CarWindow(e.getValue().lat, e.getValue().lon, lmap, hostname, port).setVisible(true);
                 }
-            });            
+            });
 
         } else {
 
