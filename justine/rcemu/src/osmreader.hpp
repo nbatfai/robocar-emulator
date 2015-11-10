@@ -134,12 +134,14 @@ public:
         std::set<osmium::unsigned_object_id_type> sum_vertices;
         std::map<osmium::unsigned_object_id_type, size_t>  word_map;
         int sum_edges {0};
+        std::map <int, int> node_degrees;
         for ( auto busit = begin ( alist );
               busit != end ( alist ); ++busit )
           {
 
             sum_vertices.insert ( busit->first );
             sum_edges+=busit->second.size();
+            node_degrees[busit->second.size()]++;
 
             for ( const auto &v : busit->second )
               {
@@ -147,10 +149,16 @@ public:
               }
 
           }
-        std::cout << " #citymap edges = "<< sum_edges<< std::endl;
+        std::cout << " #citymap edges = "<< sum_edges << std::endl;
         std::cout << " #citymap vertices = "<< sum_vertices.size() << std::endl;
         std::cout << " #citymap vertices (deg- >= 1) = "<< alist.size() << std::endl;
-        std::cout << " #onewayc = "<< onewayc<< std::endl;
+        std::cout << " #onewayc = "<< onewayc << std::endl;
+        std::cout << " #distribution of out degrees:" << std::endl;
+        std::cout << " #";
+        for ( const auto &i : node_degrees )
+          std::cout << "deg-=" << i.first << ":" << i.second << ", ";
+        std::cout << std::endl;
+        std::cout << " #mean of out degrees:" << ( double ) sum_edges / ( double ) alist.size() << std::endl;
 
 #endif
 

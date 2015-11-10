@@ -462,7 +462,7 @@ public class CarWindow extends javax.swing.JFrame {
         jXMapViewer.setZoom(9);
         jXMapViewer.setAddressLocation(debrecen);
         jXMapViewer.setCenterPosition(debrecen);
-
+        
         jXMapViewer.addKeyListener(new java.awt.event.KeyAdapter() {
             int index = 0;
 
