@@ -42,6 +42,7 @@
 #include <boost/interprocess/containers/map.hpp>
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/containers/string.hpp>
+#include <google/protobuf/descriptor.h>
 
 #include <exception>
 #include <stdexcept>
@@ -200,7 +201,7 @@ public:
     catch ( boost::interprocess::bad_alloc e )
       {
 
-        std::cerr << " Out of shared memory..." << std::cerr;
+        std::cerr << " Out of shared memory..." << std::endl;
         std::cout << e.what() <<std::endl;
 
         std::cerr

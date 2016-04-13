@@ -341,6 +341,7 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
 
   for ( ;; )
     {
+      gChased.clear();
       std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
 
       for ( auto cop:cops )
@@ -348,11 +349,23 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
           car ( socket, cop, &f, &t, &s );
 
           gngstrs = gangsters ( socket, cop, t );
+          
+          g = 0;
 
-          if ( gngstrs.size() > 0 )
-            g = gngstrs[0].to;
-          else
-            g = 0;
+          for (size_t gi = 0; gi < gngstrs.size(); gi++) {
+              auto it = std::find(gChased.begin(), gChased.end(),
+                                  gngstrs[gi].to);
+              if (it == gChased.end()) {
+                  g = gngstrs[gi].to;
+                  gChased.push_back(gngstrs[gi].to);
+                  break;
+              }
+          }
+
+          //if ( gngstrs.size() > 0 )
+            //g = gngstrs[0].to;
+          //else
+            //g = 0;
 
           if ( g > 0 )
             {

@@ -521,6 +521,7 @@ private:
   typedef SmartCar Gangster;
   typedef int Cop;
 
+  std::vector<unsigned int> gChased;
   std::vector<Gangster> gangsters ( boost::asio::ip::tcp::socket & socket, int id, osmium::unsigned_object_id_type cop );
   std::vector<Cop> initcops ( boost::asio::ip::tcp::socket & socket );
   void pos ( boost::asio::ip::tcp::socket & socket, int id );
