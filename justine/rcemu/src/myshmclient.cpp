@@ -30,7 +30,7 @@
  */
 
 #include <myshmclient.hpp>
-#include <iterator>
+//#include <iterator>
 
 //#include <trafficlexer.hpp>
 
@@ -291,6 +291,7 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
 
     for ( ;; )
     {
+
         std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
 
         car ( socket, id, &f, &t, &s );
@@ -318,6 +319,7 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
     }
 }
 
+
 void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_service, const char * port )
 {
 
@@ -340,32 +342,38 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
     unsigned int s {0u};
 
     std::vector<Gangster> gngstrs;
-    std::vector<unsigned int> chased;
-    chased.clear();
-    //egy vectorban feldolgozzunk hogy ki uldozott
+    std::vector<unsigned int> nodes= {2526560861,2162387267};
+    int kapcsolo=0;
+    int hova=0;
 
     for ( ;; )
     {
         std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
+        kapcsolo=0;
 
-        gngstrs = gangsters(socket, cops[0], t);//rendezve kellenek a gang-ek
-
-        if (gngstrs.size() <= cop)//ha kevesebb gang van mint cop, de van cop akkor
+        for ( auto cop:cops )
         {
-            if(gngstrs.size() > 0)
+            if(kapcsolo==0)
             {
-                g = gngstrs[0].to;
-            }
-            else
-            {
-                g = 0;
-            }
+                kapcsolo=1;
 
-
-            for ( auto cop:cops )//minden rendor uldozi a hozza legkozelebbit ganget
-            {
                 car ( socket, cop, &f, &t, &s );
 
+                gngstrs = gangsters ( socket, cop, t );
+
+                if ( hova == 0 )
+                {
+                    g = nodes[hova];
+                    hova=1;
+                }
+                else
+                {
+                    g = nodes[hova];
+                    hova=0;
+                }
+
+
+                //g = nodes[0];
                 if ( g > 0 )
                 {
 
@@ -381,28 +389,16 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
                     }
                 }
             }
-        }
-        else
-        {
-            //for(std::vector<int>::iterator i = cops.begin() ; i != cops.end(); ++i) //auto helyett iteratorral jarjuk vegig a rendorooket a valtozatossag kedveert
-            for ( auto cop:cops )
+            else
             {
                 car ( socket, cop, &f, &t, &s );
 
                 gngstrs = gangsters ( socket, cop, t );
 
-                g = 0;
-                //majd a rendorok megint a hozzajuk legkozelebbit uldozik, de ha mar az a gang uldozott akkor nezik a kovetkezo legkozelebbit, mivel sok gang van ezert van miben valogatni
-                for (std::vector<Gangster>::iterator gi = gngsters.begin(); gi != gngstrs.end(); gi++)
-                {
-                    auto it = std::find(chased.begin(), chased.end(),gngstrs[gi].to);
-                    if (it == chased.end())
-                    {
-                        g = gngstrs[gi].to;
-                        chased.push_back(gngstrs[gi].to);
-                        break;
-                    }
-                }
+                if ( gngstrs.size() > 0 )
+                    g = gngstrs[0].to;
+                else
+                    g = 0;
 
                 if ( g > 0 )
                 {
