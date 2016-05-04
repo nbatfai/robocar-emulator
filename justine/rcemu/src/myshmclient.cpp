@@ -342,9 +342,9 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
     unsigned int s {0u};
 
     std::vector<Gangster> gngstrs;
-    std::vector<unsigned int> nodes= {2526560861,2162387267};
+    std::vector<unsigned int> nodes= {196329009,1510346310};
     int kapcsolo=0;
-    int hova=0;
+    int hely=0;
 
     for ( ;; )
     {
@@ -361,17 +361,17 @@ void justine::sampleclient::MyShmClient::start10 ( boost::asio::io_service& io_s
 
                 gngstrs = gangsters ( socket, cop, t );
 
-                if ( hova == 0 )
+                if ( hely == 0 )
                 {
-                    g = nodes[hova];
-                    hova=1;
+                    g = nodes[1];
+                    hely=1;
                 }
                 else
                 {
-                    g = nodes[hova];
-                    hova=0;
+                    g = nodes[0];
+                    hely=0;
                 }
-
+		
 
                 //g = nodes[0];
                 if ( g > 0 )
